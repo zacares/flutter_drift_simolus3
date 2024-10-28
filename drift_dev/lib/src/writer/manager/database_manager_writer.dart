@@ -8,6 +8,7 @@ part 'table_manager_writer.dart';
 
 class DatabaseManagerWriter {
   final Scope _scope;
+  // The original name of the database class without any the `_$` prefixes
   final String _dbClassName;
   final List<DriftTable> _addedTables;
 
@@ -41,12 +42,6 @@ class DatabaseManagerWriter {
     }
   }
 
-  /// The code for the database manager getter which will be added to the main database class
-  ///
-  /// E.g. `AppDatabase get managers => AppDatabaseManager(this);`
-  String get databaseManagerGetter =>
-      '${_templates.databaseManagerName(_dbClassName)} get managers => ${_templates.databaseManagerName(_dbClassName)}(this);';
-
   /// Write the database manager class
   void writeDatabaseManager() {
     final leaf = _scope.leaf();
@@ -67,5 +62,14 @@ class DatabaseManagerWriter {
           '$rootTableManagerClass get ${table.dbGetterName} => $rootTableManagerClass(_db, _db.${table.dbGetterName});');
     }
     leaf.writeln('}');
+
+    // Write the extension for the database class
+    if (!_scope.generationOptions.isModular) {
+      leaf.write("""
+extension ${_templates.databaseManagerName(_dbClassName)}Ext on $_dbClassName {
+  ${_templates.databaseManagerName(_dbClassName)} get managers => ${_templates.databaseManagerName(_dbClassName)}(this);
+}
+""");
+    }
   }
 }

@@ -425,7 +425,6 @@ typedef $$ShoppingCartEntriesTableProcessedTableManager
 
 abstract class $RelationalDatabase extends i0.GeneratedDatabase {
   $RelationalDatabase(i0.QueryExecutor e) : super(e);
-  $RelationalDatabaseManager get managers => $RelationalDatabaseManager(this);
   late final i1.$BuyableItemsTable buyableItems = i1.$BuyableItemsTable(this);
   late final i2.$ShoppingCartsTable shoppingCarts =
       i2.$ShoppingCartsTable(this);

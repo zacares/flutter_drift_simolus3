@@ -3,7 +3,7 @@ import 'package:mockito/annotations.dart';
 import 'package:uuid/uuid.dart';
 
 // Generate mocks for drift
-@GenerateNiceMocks([MockSpec<TodoDb>()])
+@GenerateNiceMocks([MockSpec<TodoDb>(), MockSpec<$TodoDbManager>()])
 // ignore: unused_import
 import 'todos.mocks.dart';
 

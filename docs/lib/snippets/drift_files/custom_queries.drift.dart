@@ -5,7 +5,6 @@ import 'package:drift_docs/snippets/_shared/todo_tables.drift.dart' as i1;
 
 abstract class $MyDatabase extends i0.GeneratedDatabase {
   $MyDatabase(i0.QueryExecutor e) : super(e);
-  $MyDatabaseManager get managers => $MyDatabaseManager(this);
   late final i1.$CategoriesTable categories = i1.$CategoriesTable(this);
   late final i1.$TodoItemsTable todoItems = i1.$TodoItemsTable(this);
   i0.Selectable<CategoriesWithCountResult> categoriesWithCount() {

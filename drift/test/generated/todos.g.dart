@@ -3344,7 +3344,6 @@ class $TodoWithCategoryViewView
 
 abstract class _$TodoDb extends GeneratedDatabase {
   _$TodoDb(QueryExecutor e) : super(e);
-  $TodoDbManager get managers => $TodoDbManager(this);
   late final $CategoriesTable categories = $CategoriesTable(this);
   late final $TodosTableTable todosTable = $TodosTableTable(this);
   late final $UsersTable users = $UsersTable(this);
@@ -5942,6 +5941,10 @@ class $TodoDbManager {
       $$StoreTableTableManager(_db, _db.store);
   $$ListingTableTableManager get listing =>
       $$ListingTableTableManager(_db, _db.listing);
+}
+
+extension $TodoDbManagerExt on _$TodoDb {
+  $TodoDbManager get managers => $TodoDbManager(this);
 }
 
 class AllTodosWithCategoryResult extends CustomResultSet {

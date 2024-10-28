@@ -914,7 +914,6 @@ class GroupCount extends ViewInfo<GroupCount, GroupCountData>
 
 abstract class _$Database extends GeneratedDatabase {
   _$Database(QueryExecutor e) : super(e);
-  $DatabaseManager get managers => $DatabaseManager(this);
   late final $UsersTable users = $UsersTable(this);
   late final Groups groups = Groups(this);
   late final Notes notes = Notes(this);
@@ -1626,4 +1625,8 @@ class $DatabaseManager {
       $$UsersTableTableManager(_db, _db.users);
   $GroupsTableManager get groups => $GroupsTableManager(_db, _db.groups);
   $NotesTableManager get notes => $NotesTableManager(_db, _db.notes);
+}
+
+extension $DatabaseManagerExt on _$Database {
+  $DatabaseManager get managers => $DatabaseManager(this);
 }

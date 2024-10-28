@@ -579,7 +579,6 @@ class FriendshipsCompanion extends UpdateCompanion<Friendship> {
 
 abstract class _$Database extends GeneratedDatabase {
   _$Database(QueryExecutor e) : super(e);
-  $DatabaseManager get managers => $DatabaseManager(this);
   late final $UsersTable users = $UsersTable(this);
   late final $FriendshipsTable friendships = $FriendshipsTable(this);
   Selectable<User> mostPopularUsers(int amount) {
@@ -1026,6 +1025,10 @@ class $DatabaseManager {
       $$UsersTableTableManager(_db, _db.users);
   $$FriendshipsTableTableManager get friendships =>
       $$FriendshipsTableTableManager(_db, _db.friendships);
+}
+
+extension $DatabaseManagerExt on _$Database {
+  $DatabaseManager get managers => $DatabaseManager(this);
 }
 
 class FriendshipsOfResult {

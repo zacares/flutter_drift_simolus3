@@ -151,7 +151,12 @@ class DatabaseWriter {
     // Write the main database manager and, if we're doing a monolithic build,
     // the manager classes for involved tables.
     if (scope.options.generateManager) {
-      final managerWriter = DatabaseManagerWriter(scope.child(), dbClassName);
+      // Managers try to use the public database class. If we're generating a
+      // public class (e.g. not for schema generation), we use the users class
+      // in the manager. Otherwise, we use the generated class.
+      final managerDbClassName = isAbstract ? className : db.id.name;
+      final managerWriter =
+          DatabaseManagerWriter(scope.child(), managerDbClassName);
       for (var table in elements.whereType<DriftTable>()) {
         managerWriter.addTable(table);
       }
@@ -162,7 +167,6 @@ class DatabaseWriter {
       // Write main class for managers and reference it in a getter from the
       // database class.
       managerWriter.writeDatabaseManager();
-      firstLeaf.writeln(managerWriter.databaseManagerGetter);
     }
 
     // Write implementation for query methods

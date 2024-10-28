@@ -659,7 +659,6 @@ class TextEntriesCompanion extends UpdateCompanion<TextEntry> {
 
 abstract class _$AppDatabase extends GeneratedDatabase {
   _$AppDatabase(QueryExecutor e) : super(e);
-  $AppDatabaseManager get managers => $AppDatabaseManager(this);
   late final $CategoriesTable categories = $CategoriesTable(this);
   late final $TodoEntriesTable todoEntries = $TodoEntriesTable(this);
   late final TextEntries textEntries = TextEntries(this);
@@ -1329,6 +1328,10 @@ class $AppDatabaseManager {
       $$TodoEntriesTableTableManager(_db, _db.todoEntries);
   $TextEntriesTableManager get textEntries =>
       $TextEntriesTableManager(_db, _db.textEntries);
+}
+
+extension $AppDatabaseManagerExt on _$AppDatabase {
+  $AppDatabaseManager get managers => $AppDatabaseManager(this);
 }
 
 class CategoriesWithCountResult {

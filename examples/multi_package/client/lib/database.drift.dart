@@ -8,7 +8,6 @@ import 'package:drift/internal/modular.dart' as i4;
 
 abstract class $ClientDatabase extends i0.GeneratedDatabase {
   $ClientDatabase(i0.QueryExecutor e) : super(e);
-  $ClientDatabaseManager get managers => $ClientDatabaseManager(this);
   late final i1.$UsersTable users = i1.$UsersTable(this);
   late final i2.Posts posts = i2.Posts(this);
   i3.SharedDrift get sharedDrift => i4.ReadDatabaseContainer(this)

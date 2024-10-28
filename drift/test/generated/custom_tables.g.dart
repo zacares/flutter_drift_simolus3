@@ -1710,7 +1710,6 @@ class MyView extends ViewInfo<MyView, MyViewData> implements HasResultSet {
 
 abstract class _$CustomTablesDb extends GeneratedDatabase {
   _$CustomTablesDb(QueryExecutor e) : super(e);
-  $CustomTablesDbManager get managers => $CustomTablesDbManager(this);
   late final NoIds noIds = NoIds(this);
   late final WithDefaults withDefaults = WithDefaults(this);
   late final WithConstraints withConstraints = WithConstraints(this);
@@ -2946,6 +2945,10 @@ class $CustomTablesDbManager {
   $EmailTableManager get email => $EmailTableManager(_db, _db.email);
   $WeirdTableTableManager get weirdTable =>
       $WeirdTableTableManager(_db, _db.weirdTable);
+}
+
+extension $CustomTablesDbManagerExt on _$CustomTablesDb {
+  $CustomTablesDbManager get managers => $CustomTablesDbManager(this);
 }
 
 typedef ReadMultiple$clause = OrderBy Function(ConfigTable config);

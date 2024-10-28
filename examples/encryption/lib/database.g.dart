@@ -182,7 +182,6 @@ class NotesCompanion extends UpdateCompanion<Note> {
 
 abstract class _$MyEncryptedDatabase extends GeneratedDatabase {
   _$MyEncryptedDatabase(QueryExecutor e) : super(e);
-  $MyEncryptedDatabaseManager get managers => $MyEncryptedDatabaseManager(this);
   late final $NotesTable notes = $NotesTable(this);
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
@@ -311,4 +310,8 @@ class $MyEncryptedDatabaseManager {
   $MyEncryptedDatabaseManager(this._db);
   $$NotesTableTableManager get notes =>
       $$NotesTableTableManager(_db, _db.notes);
+}
+
+extension $MyEncryptedDatabaseManagerExt on _$MyEncryptedDatabase {
+  $MyEncryptedDatabaseManager get managers => $MyEncryptedDatabaseManager(this);
 }

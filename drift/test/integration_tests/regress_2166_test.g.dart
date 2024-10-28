@@ -191,7 +191,6 @@ class _SomeTableCompanion extends UpdateCompanion<_SomeTableData> {
 
 abstract class _$_SomeDb extends GeneratedDatabase {
   _$_SomeDb(QueryExecutor e) : super(e);
-  $_SomeDbManager get managers => $_SomeDbManager(this);
   late final $_SomeTableTable someTable = $_SomeTableTable(this);
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
@@ -326,4 +325,8 @@ class $_SomeDbManager {
   $_SomeDbManager(this._db);
   $$_SomeTableTableTableManager get someTable =>
       $$_SomeTableTableTableManager(_db, _db.someTable);
+}
+
+extension $_SomeDbManagerExt on _$_SomeDb {
+  $_SomeDbManager get managers => $_SomeDbManager(this);
 }

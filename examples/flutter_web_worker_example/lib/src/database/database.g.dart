@@ -182,7 +182,6 @@ class EntriesCompanion extends UpdateCompanion<Entry> {
 
 abstract class _$MyDatabase extends GeneratedDatabase {
   _$MyDatabase(QueryExecutor e) : super(e);
-  $MyDatabaseManager get managers => $MyDatabaseManager(this);
   late final Entries entries = Entries(this);
   Selectable<Entry> allEntries() {
     return customSelect('SELECT * FROM entries', variables: [], readsFrom: {
@@ -330,4 +329,8 @@ class $MyDatabaseManager {
   final _$MyDatabase _db;
   $MyDatabaseManager(this._db);
   $EntriesTableManager get entries => $EntriesTableManager(_db, _db.entries);
+}
+
+extension $MyDatabaseManagerExt on _$MyDatabase {
+  $MyDatabaseManager get managers => $MyDatabaseManager(this);
 }

@@ -189,7 +189,6 @@ class ExampleTableCompanion extends UpdateCompanion<ExampleTableData> {
 
 abstract class _$ExampleDatabase extends GeneratedDatabase {
   _$ExampleDatabase(QueryExecutor e) : super(e);
-  $ExampleDatabaseManager get managers => $ExampleDatabaseManager(this);
   late final $ExampleTableTable exampleTable = $ExampleTableTable(this);
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
@@ -327,4 +326,8 @@ class $ExampleDatabaseManager {
   $ExampleDatabaseManager(this._db);
   $$ExampleTableTableTableManager get exampleTable =>
       $$ExampleTableTableTableManager(_db, _db.exampleTable);
+}
+
+extension $ExampleDatabaseManagerExt on _$ExampleDatabase {
+  $ExampleDatabaseManager get managers => $ExampleDatabaseManager(this);
 }

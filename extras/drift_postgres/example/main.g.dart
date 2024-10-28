@@ -190,8 +190,6 @@ class UsersCompanion extends UpdateCompanion<User> {
 
 abstract class _$DriftPostgresDatabase extends GeneratedDatabase {
   _$DriftPostgresDatabase(QueryExecutor e) : super(e);
-  $DriftPostgresDatabaseManager get managers =>
-      $DriftPostgresDatabaseManager(this);
   late final $UsersTable users = $UsersTable(this);
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
@@ -326,4 +324,9 @@ class $DriftPostgresDatabaseManager {
   $DriftPostgresDatabaseManager(this._db);
   $$UsersTableTableManager get users =>
       $$UsersTableTableManager(_db, _db.users);
+}
+
+extension $DriftPostgresDatabaseManagerExt on _$DriftPostgresDatabase {
+  $DriftPostgresDatabaseManager get managers =>
+      $DriftPostgresDatabaseManager(this);
 }

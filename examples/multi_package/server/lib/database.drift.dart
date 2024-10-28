@@ -201,7 +201,6 @@ typedef $$ActiveSessionsTableProcessedTableManager = i0.ProcessedTableManager<
 
 abstract class $ServerDatabase extends i0.GeneratedDatabase {
   $ServerDatabase(i0.QueryExecutor e) : super(e);
-  $ServerDatabaseManager get managers => $ServerDatabaseManager(this);
   late final i1.$UsersTable users = i1.$UsersTable(this);
   late final i2.Posts posts = i2.Posts(this);
   late final i3.$ActiveSessionsTable activeSessions =

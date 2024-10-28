@@ -11,7 +11,6 @@ import 'package:drift/internal/modular.dart' as i7;
 
 abstract class $Database extends i0.GeneratedDatabase {
   $Database(i0.QueryExecutor e) : super(e);
-  $DatabaseManager get managers => $DatabaseManager(this);
   late final i1.Users users = i1.Users(this);
   late final i2.Posts posts = i2.Posts(this);
   late final i3.SearchInPosts searchInPosts = i3.SearchInPosts(this);

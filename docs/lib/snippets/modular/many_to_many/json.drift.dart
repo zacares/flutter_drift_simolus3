@@ -138,7 +138,6 @@ typedef $$ShoppingCartsTableProcessedTableManager = i0.ProcessedTableManager<
 
 abstract class $JsonBasedDatabase extends i0.GeneratedDatabase {
   $JsonBasedDatabase(i0.QueryExecutor e) : super(e);
-  $JsonBasedDatabaseManager get managers => $JsonBasedDatabaseManager(this);
   late final i1.$BuyableItemsTable buyableItems = i1.$BuyableItemsTable(this);
   late final i2.$ShoppingCartsTable shoppingCarts =
       i2.$ShoppingCartsTable(this);

@@ -209,7 +209,7 @@ typedef $$ExampleTableTableUpdateCompanionBuilder = ExampleTableCompanion
 });
 
 class $$ExampleTableTableFilterComposer
-    extends Composer<_$ExampleDatabase, $ExampleTableTable> {
+    extends Composer<ExampleDatabase, $ExampleTableTable> {
   $$ExampleTableTableFilterComposer({
     required super.$db,
     required super.$table,
@@ -225,7 +225,7 @@ class $$ExampleTableTableFilterComposer
 }
 
 class $$ExampleTableTableOrderingComposer
-    extends Composer<_$ExampleDatabase, $ExampleTableTable> {
+    extends Composer<ExampleDatabase, $ExampleTableTable> {
   $$ExampleTableTableOrderingComposer({
     required super.$db,
     required super.$table,
@@ -241,7 +241,7 @@ class $$ExampleTableTableOrderingComposer
 }
 
 class $$ExampleTableTableAnnotationComposer
-    extends Composer<_$ExampleDatabase, $ExampleTableTable> {
+    extends Composer<ExampleDatabase, $ExampleTableTable> {
   $$ExampleTableTableAnnotationComposer({
     required super.$db,
     required super.$table,
@@ -257,7 +257,7 @@ class $$ExampleTableTableAnnotationComposer
 }
 
 class $$ExampleTableTableTableManager extends RootTableManager<
-    _$ExampleDatabase,
+    ExampleDatabase,
     $ExampleTableTable,
     ExampleTableData,
     $$ExampleTableTableFilterComposer,
@@ -267,12 +267,11 @@ class $$ExampleTableTableTableManager extends RootTableManager<
     $$ExampleTableTableUpdateCompanionBuilder,
     (
       ExampleTableData,
-      BaseReferences<_$ExampleDatabase, $ExampleTableTable, ExampleTableData>
+      BaseReferences<ExampleDatabase, $ExampleTableTable, ExampleTableData>
     ),
     ExampleTableData,
     PrefetchHooks Function()> {
-  $$ExampleTableTableTableManager(
-      _$ExampleDatabase db, $ExampleTableTable table)
+  $$ExampleTableTableTableManager(ExampleDatabase db, $ExampleTableTable table)
       : super(TableManagerState(
           db: db,
           table: table,
@@ -306,7 +305,7 @@ class $$ExampleTableTableTableManager extends RootTableManager<
 }
 
 typedef $$ExampleTableTableProcessedTableManager = ProcessedTableManager<
-    _$ExampleDatabase,
+    ExampleDatabase,
     $ExampleTableTable,
     ExampleTableData,
     $$ExampleTableTableFilterComposer,
@@ -316,18 +315,18 @@ typedef $$ExampleTableTableProcessedTableManager = ProcessedTableManager<
     $$ExampleTableTableUpdateCompanionBuilder,
     (
       ExampleTableData,
-      BaseReferences<_$ExampleDatabase, $ExampleTableTable, ExampleTableData>
+      BaseReferences<ExampleDatabase, $ExampleTableTable, ExampleTableData>
     ),
     ExampleTableData,
     PrefetchHooks Function()>;
 
-class $ExampleDatabaseManager {
-  final _$ExampleDatabase _db;
-  $ExampleDatabaseManager(this._db);
+class ExampleDatabaseManager {
+  final ExampleDatabase _db;
+  ExampleDatabaseManager(this._db);
   $$ExampleTableTableTableManager get exampleTable =>
       $$ExampleTableTableTableManager(_db, _db.exampleTable);
 }
 
-extension $ExampleDatabaseManagerExt on _$ExampleDatabase {
-  $ExampleDatabaseManager get managers => $ExampleDatabaseManager(this);
+extension ExampleDatabaseManagerExt on ExampleDatabase {
+  ExampleDatabaseManager get managers => ExampleDatabaseManager(this);
 }

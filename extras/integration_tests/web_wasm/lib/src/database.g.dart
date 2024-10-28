@@ -203,7 +203,7 @@ typedef $$TestTableTableUpdateCompanionBuilder = TestTableCompanion Function({
 });
 
 class $$TestTableTableFilterComposer
-    extends Composer<_$TestDatabase, $TestTableTable> {
+    extends Composer<TestDatabase, $TestTableTable> {
   $$TestTableTableFilterComposer({
     required super.$db,
     required super.$table,
@@ -219,7 +219,7 @@ class $$TestTableTableFilterComposer
 }
 
 class $$TestTableTableOrderingComposer
-    extends Composer<_$TestDatabase, $TestTableTable> {
+    extends Composer<TestDatabase, $TestTableTable> {
   $$TestTableTableOrderingComposer({
     required super.$db,
     required super.$table,
@@ -235,7 +235,7 @@ class $$TestTableTableOrderingComposer
 }
 
 class $$TestTableTableAnnotationComposer
-    extends Composer<_$TestDatabase, $TestTableTable> {
+    extends Composer<TestDatabase, $TestTableTable> {
   $$TestTableTableAnnotationComposer({
     required super.$db,
     required super.$table,
@@ -251,7 +251,7 @@ class $$TestTableTableAnnotationComposer
 }
 
 class $$TestTableTableTableManager extends RootTableManager<
-    _$TestDatabase,
+    TestDatabase,
     $TestTableTable,
     TestTableData,
     $$TestTableTableFilterComposer,
@@ -261,11 +261,11 @@ class $$TestTableTableTableManager extends RootTableManager<
     $$TestTableTableUpdateCompanionBuilder,
     (
       TestTableData,
-      BaseReferences<_$TestDatabase, $TestTableTable, TestTableData>
+      BaseReferences<TestDatabase, $TestTableTable, TestTableData>
     ),
     TestTableData,
     PrefetchHooks Function()> {
-  $$TestTableTableTableManager(_$TestDatabase db, $TestTableTable table)
+  $$TestTableTableTableManager(TestDatabase db, $TestTableTable table)
       : super(TableManagerState(
           db: db,
           table: table,
@@ -299,7 +299,7 @@ class $$TestTableTableTableManager extends RootTableManager<
 }
 
 typedef $$TestTableTableProcessedTableManager = ProcessedTableManager<
-    _$TestDatabase,
+    TestDatabase,
     $TestTableTable,
     TestTableData,
     $$TestTableTableFilterComposer,
@@ -309,18 +309,18 @@ typedef $$TestTableTableProcessedTableManager = ProcessedTableManager<
     $$TestTableTableUpdateCompanionBuilder,
     (
       TestTableData,
-      BaseReferences<_$TestDatabase, $TestTableTable, TestTableData>
+      BaseReferences<TestDatabase, $TestTableTable, TestTableData>
     ),
     TestTableData,
     PrefetchHooks Function()>;
 
-class $TestDatabaseManager {
-  final _$TestDatabase _db;
-  $TestDatabaseManager(this._db);
+class TestDatabaseManager {
+  final TestDatabase _db;
+  TestDatabaseManager(this._db);
   $$TestTableTableTableManager get testTable =>
       $$TestTableTableTableManager(_db, _db.testTable);
 }
 
-extension $TestDatabaseManagerExt on _$TestDatabase {
-  $TestDatabaseManager get managers => $TestDatabaseManager(this);
+extension TestDatabaseManagerExt on TestDatabase {
+  TestDatabaseManager get managers => TestDatabaseManager(this);
 }

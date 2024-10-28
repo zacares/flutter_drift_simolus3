@@ -755,11 +755,11 @@ typedef $$CategoriesTableUpdateCompanionBuilder = CategoriesCompanion Function({
 });
 
 final class $$CategoriesTableReferences
-    extends BaseReferences<_$AppDatabase, $CategoriesTable, Category> {
+    extends BaseReferences<AppDatabase, $CategoriesTable, Category> {
   $$CategoriesTableReferences(super.$_db, super.$_table, super.$_typedResult);
 
   static MultiTypedResultKey<$TodoEntriesTable, List<TodoEntry>>
-      _todoEntriesRefsTable(_$AppDatabase db) => MultiTypedResultKey.fromTable(
+      _todoEntriesRefsTable(AppDatabase db) => MultiTypedResultKey.fromTable(
           db.todoEntries,
           aliasName:
               $_aliasNameGenerator(db.categories.id, db.todoEntries.category));
@@ -775,7 +775,7 @@ final class $$CategoriesTableReferences
 }
 
 class $$CategoriesTableFilterComposer
-    extends Composer<_$AppDatabase, $CategoriesTable> {
+    extends Composer<AppDatabase, $CategoriesTable> {
   $$CategoriesTableFilterComposer({
     required super.$db,
     required super.$table,
@@ -817,7 +817,7 @@ class $$CategoriesTableFilterComposer
 }
 
 class $$CategoriesTableOrderingComposer
-    extends Composer<_$AppDatabase, $CategoriesTable> {
+    extends Composer<AppDatabase, $CategoriesTable> {
   $$CategoriesTableOrderingComposer({
     required super.$db,
     required super.$table,
@@ -836,7 +836,7 @@ class $$CategoriesTableOrderingComposer
 }
 
 class $$CategoriesTableAnnotationComposer
-    extends Composer<_$AppDatabase, $CategoriesTable> {
+    extends Composer<AppDatabase, $CategoriesTable> {
   $$CategoriesTableAnnotationComposer({
     required super.$db,
     required super.$table,
@@ -876,7 +876,7 @@ class $$CategoriesTableAnnotationComposer
 }
 
 class $$CategoriesTableTableManager extends RootTableManager<
-    _$AppDatabase,
+    AppDatabase,
     $CategoriesTable,
     Category,
     $$CategoriesTableFilterComposer,
@@ -887,7 +887,7 @@ class $$CategoriesTableTableManager extends RootTableManager<
     (Category, $$CategoriesTableReferences),
     Category,
     PrefetchHooks Function({bool todoEntriesRefs})> {
-  $$CategoriesTableTableManager(_$AppDatabase db, $CategoriesTable table)
+  $$CategoriesTableTableManager(AppDatabase db, $CategoriesTable table)
       : super(TableManagerState(
           db: db,
           table: table,
@@ -950,7 +950,7 @@ class $$CategoriesTableTableManager extends RootTableManager<
 }
 
 typedef $$CategoriesTableProcessedTableManager = ProcessedTableManager<
-    _$AppDatabase,
+    AppDatabase,
     $CategoriesTable,
     Category,
     $$CategoriesTableFilterComposer,
@@ -977,10 +977,10 @@ typedef $$TodoEntriesTableUpdateCompanionBuilder = TodoEntriesCompanion
 });
 
 final class $$TodoEntriesTableReferences
-    extends BaseReferences<_$AppDatabase, $TodoEntriesTable, TodoEntry> {
+    extends BaseReferences<AppDatabase, $TodoEntriesTable, TodoEntry> {
   $$TodoEntriesTableReferences(super.$_db, super.$_table, super.$_typedResult);
 
-  static $CategoriesTable _categoryTable(_$AppDatabase db) =>
+  static $CategoriesTable _categoryTable(AppDatabase db) =>
       db.categories.createAlias(
           $_aliasNameGenerator(db.todoEntries.category, db.categories.id));
 
@@ -996,7 +996,7 @@ final class $$TodoEntriesTableReferences
 }
 
 class $$TodoEntriesTableFilterComposer
-    extends Composer<_$AppDatabase, $TodoEntriesTable> {
+    extends Composer<AppDatabase, $TodoEntriesTable> {
   $$TodoEntriesTableFilterComposer({
     required super.$db,
     required super.$table,
@@ -1035,7 +1035,7 @@ class $$TodoEntriesTableFilterComposer
 }
 
 class $$TodoEntriesTableOrderingComposer
-    extends Composer<_$AppDatabase, $TodoEntriesTable> {
+    extends Composer<AppDatabase, $TodoEntriesTable> {
   $$TodoEntriesTableOrderingComposer({
     required super.$db,
     required super.$table,
@@ -1074,7 +1074,7 @@ class $$TodoEntriesTableOrderingComposer
 }
 
 class $$TodoEntriesTableAnnotationComposer
-    extends Composer<_$AppDatabase, $TodoEntriesTable> {
+    extends Composer<AppDatabase, $TodoEntriesTable> {
   $$TodoEntriesTableAnnotationComposer({
     required super.$db,
     required super.$table,
@@ -1113,7 +1113,7 @@ class $$TodoEntriesTableAnnotationComposer
 }
 
 class $$TodoEntriesTableTableManager extends RootTableManager<
-    _$AppDatabase,
+    AppDatabase,
     $TodoEntriesTable,
     TodoEntry,
     $$TodoEntriesTableFilterComposer,
@@ -1124,7 +1124,7 @@ class $$TodoEntriesTableTableManager extends RootTableManager<
     (TodoEntry, $$TodoEntriesTableReferences),
     TodoEntry,
     PrefetchHooks Function({bool category})> {
-  $$TodoEntriesTableTableManager(_$AppDatabase db, $TodoEntriesTable table)
+  $$TodoEntriesTableTableManager(AppDatabase db, $TodoEntriesTable table)
       : super(TableManagerState(
           db: db,
           table: table,
@@ -1203,7 +1203,7 @@ class $$TodoEntriesTableTableManager extends RootTableManager<
 }
 
 typedef $$TodoEntriesTableProcessedTableManager = ProcessedTableManager<
-    _$AppDatabase,
+    AppDatabase,
     $TodoEntriesTable,
     TodoEntry,
     $$TodoEntriesTableFilterComposer,
@@ -1223,7 +1223,7 @@ typedef $TextEntriesUpdateCompanionBuilder = TextEntriesCompanion Function({
   Value<int> rowid,
 });
 
-class $TextEntriesFilterComposer extends Composer<_$AppDatabase, TextEntries> {
+class $TextEntriesFilterComposer extends Composer<AppDatabase, TextEntries> {
   $TextEntriesFilterComposer({
     required super.$db,
     required super.$table,
@@ -1235,8 +1235,7 @@ class $TextEntriesFilterComposer extends Composer<_$AppDatabase, TextEntries> {
       column: $table.description, builder: (column) => ColumnFilters(column));
 }
 
-class $TextEntriesOrderingComposer
-    extends Composer<_$AppDatabase, TextEntries> {
+class $TextEntriesOrderingComposer extends Composer<AppDatabase, TextEntries> {
   $TextEntriesOrderingComposer({
     required super.$db,
     required super.$table,
@@ -1249,7 +1248,7 @@ class $TextEntriesOrderingComposer
 }
 
 class $TextEntriesAnnotationComposer
-    extends Composer<_$AppDatabase, TextEntries> {
+    extends Composer<AppDatabase, TextEntries> {
   $TextEntriesAnnotationComposer({
     required super.$db,
     required super.$table,
@@ -1262,7 +1261,7 @@ class $TextEntriesAnnotationComposer
 }
 
 class $TextEntriesTableManager extends RootTableManager<
-    _$AppDatabase,
+    AppDatabase,
     TextEntries,
     TextEntry,
     $TextEntriesFilterComposer,
@@ -1270,10 +1269,10 @@ class $TextEntriesTableManager extends RootTableManager<
     $TextEntriesAnnotationComposer,
     $TextEntriesCreateCompanionBuilder,
     $TextEntriesUpdateCompanionBuilder,
-    (TextEntry, BaseReferences<_$AppDatabase, TextEntries, TextEntry>),
+    (TextEntry, BaseReferences<AppDatabase, TextEntries, TextEntry>),
     TextEntry,
     PrefetchHooks Function()> {
-  $TextEntriesTableManager(_$AppDatabase db, TextEntries table)
+  $TextEntriesTableManager(AppDatabase db, TextEntries table)
       : super(TableManagerState(
           db: db,
           table: table,
@@ -1307,7 +1306,7 @@ class $TextEntriesTableManager extends RootTableManager<
 }
 
 typedef $TextEntriesProcessedTableManager = ProcessedTableManager<
-    _$AppDatabase,
+    AppDatabase,
     TextEntries,
     TextEntry,
     $TextEntriesFilterComposer,
@@ -1315,13 +1314,13 @@ typedef $TextEntriesProcessedTableManager = ProcessedTableManager<
     $TextEntriesAnnotationComposer,
     $TextEntriesCreateCompanionBuilder,
     $TextEntriesUpdateCompanionBuilder,
-    (TextEntry, BaseReferences<_$AppDatabase, TextEntries, TextEntry>),
+    (TextEntry, BaseReferences<AppDatabase, TextEntries, TextEntry>),
     TextEntry,
     PrefetchHooks Function()>;
 
-class $AppDatabaseManager {
-  final _$AppDatabase _db;
-  $AppDatabaseManager(this._db);
+class AppDatabaseManager {
+  final AppDatabase _db;
+  AppDatabaseManager(this._db);
   $$CategoriesTableTableManager get categories =>
       $$CategoriesTableTableManager(_db, _db.categories);
   $$TodoEntriesTableTableManager get todoEntries =>
@@ -1330,8 +1329,8 @@ class $AppDatabaseManager {
       $TextEntriesTableManager(_db, _db.textEntries);
 }
 
-extension $AppDatabaseManagerExt on _$AppDatabase {
-  $AppDatabaseManager get managers => $AppDatabaseManager(this);
+extension AppDatabaseManagerExt on AppDatabase {
+  AppDatabaseManager get managers => AppDatabaseManager(this);
 }
 
 class CategoriesWithCountResult {

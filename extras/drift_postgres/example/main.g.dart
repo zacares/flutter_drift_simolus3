@@ -210,7 +210,7 @@ typedef $$UsersTableUpdateCompanionBuilder = UsersCompanion Function({
 });
 
 class $$UsersTableFilterComposer
-    extends Composer<_$DriftPostgresDatabase, $UsersTable> {
+    extends Composer<DriftPostgresDatabase, $UsersTable> {
   $$UsersTableFilterComposer({
     required super.$db,
     required super.$table,
@@ -226,7 +226,7 @@ class $$UsersTableFilterComposer
 }
 
 class $$UsersTableOrderingComposer
-    extends Composer<_$DriftPostgresDatabase, $UsersTable> {
+    extends Composer<DriftPostgresDatabase, $UsersTable> {
   $$UsersTableOrderingComposer({
     required super.$db,
     required super.$table,
@@ -242,7 +242,7 @@ class $$UsersTableOrderingComposer
 }
 
 class $$UsersTableAnnotationComposer
-    extends Composer<_$DriftPostgresDatabase, $UsersTable> {
+    extends Composer<DriftPostgresDatabase, $UsersTable> {
   $$UsersTableAnnotationComposer({
     required super.$db,
     required super.$table,
@@ -258,7 +258,7 @@ class $$UsersTableAnnotationComposer
 }
 
 class $$UsersTableTableManager extends RootTableManager<
-    _$DriftPostgresDatabase,
+    DriftPostgresDatabase,
     $UsersTable,
     User,
     $$UsersTableFilterComposer,
@@ -266,10 +266,10 @@ class $$UsersTableTableManager extends RootTableManager<
     $$UsersTableAnnotationComposer,
     $$UsersTableCreateCompanionBuilder,
     $$UsersTableUpdateCompanionBuilder,
-    (User, BaseReferences<_$DriftPostgresDatabase, $UsersTable, User>),
+    (User, BaseReferences<DriftPostgresDatabase, $UsersTable, User>),
     User,
     PrefetchHooks Function()> {
-  $$UsersTableTableManager(_$DriftPostgresDatabase db, $UsersTable table)
+  $$UsersTableTableManager(DriftPostgresDatabase db, $UsersTable table)
       : super(TableManagerState(
           db: db,
           table: table,
@@ -307,7 +307,7 @@ class $$UsersTableTableManager extends RootTableManager<
 }
 
 typedef $$UsersTableProcessedTableManager = ProcessedTableManager<
-    _$DriftPostgresDatabase,
+    DriftPostgresDatabase,
     $UsersTable,
     User,
     $$UsersTableFilterComposer,
@@ -315,18 +315,18 @@ typedef $$UsersTableProcessedTableManager = ProcessedTableManager<
     $$UsersTableAnnotationComposer,
     $$UsersTableCreateCompanionBuilder,
     $$UsersTableUpdateCompanionBuilder,
-    (User, BaseReferences<_$DriftPostgresDatabase, $UsersTable, User>),
+    (User, BaseReferences<DriftPostgresDatabase, $UsersTable, User>),
     User,
     PrefetchHooks Function()>;
 
-class $DriftPostgresDatabaseManager {
-  final _$DriftPostgresDatabase _db;
-  $DriftPostgresDatabaseManager(this._db);
+class DriftPostgresDatabaseManager {
+  final DriftPostgresDatabase _db;
+  DriftPostgresDatabaseManager(this._db);
   $$UsersTableTableManager get users =>
       $$UsersTableTableManager(_db, _db.users);
 }
 
-extension $DriftPostgresDatabaseManagerExt on _$DriftPostgresDatabase {
-  $DriftPostgresDatabaseManager get managers =>
-      $DriftPostgresDatabaseManager(this);
+extension DriftPostgresDatabaseManagerExt on DriftPostgresDatabase {
+  DriftPostgresDatabaseManager get managers =>
+      DriftPostgresDatabaseManager(this);
 }

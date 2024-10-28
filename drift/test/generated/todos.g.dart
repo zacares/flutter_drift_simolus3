@@ -3467,11 +3467,11 @@ typedef $$CategoriesTableUpdateCompanionBuilder = CategoriesCompanion Function({
 });
 
 final class $$CategoriesTableReferences
-    extends BaseReferences<_$TodoDb, $CategoriesTable, Category> {
+    extends BaseReferences<TodoDb, $CategoriesTable, Category> {
   $$CategoriesTableReferences(super.$_db, super.$_table, super.$_typedResult);
 
   static MultiTypedResultKey<$TodosTableTable, List<TodoEntry>> _todosTable(
-          _$TodoDb db) =>
+          TodoDb db) =>
       MultiTypedResultKey.fromTable(db.todosTable,
           aliasName:
               $_aliasNameGenerator(db.categories.id, db.todosTable.category));
@@ -3487,7 +3487,7 @@ final class $$CategoriesTableReferences
 }
 
 class $$CategoriesTableFilterComposer
-    extends Composer<_$TodoDb, $CategoriesTable> {
+    extends Composer<TodoDb, $CategoriesTable> {
   $$CategoriesTableFilterComposer({
     required super.$db,
     required super.$table,
@@ -3535,7 +3535,7 @@ class $$CategoriesTableFilterComposer
 }
 
 class $$CategoriesTableOrderingComposer
-    extends Composer<_$TodoDb, $CategoriesTable> {
+    extends Composer<TodoDb, $CategoriesTable> {
   $$CategoriesTableOrderingComposer({
     required super.$db,
     required super.$table,
@@ -3558,7 +3558,7 @@ class $$CategoriesTableOrderingComposer
 }
 
 class $$CategoriesTableAnnotationComposer
-    extends Composer<_$TodoDb, $CategoriesTable> {
+    extends Composer<TodoDb, $CategoriesTable> {
   $$CategoriesTableAnnotationComposer({
     required super.$db,
     required super.$table,
@@ -3601,7 +3601,7 @@ class $$CategoriesTableAnnotationComposer
 }
 
 class $$CategoriesTableTableManager extends RootTableManager<
-    _$TodoDb,
+    TodoDb,
     $CategoriesTable,
     Category,
     $$CategoriesTableFilterComposer,
@@ -3612,7 +3612,7 @@ class $$CategoriesTableTableManager extends RootTableManager<
     (Category, $$CategoriesTableReferences),
     Category,
     PrefetchHooks Function({bool todos})> {
-  $$CategoriesTableTableManager(_$TodoDb db, $CategoriesTable table)
+  $$CategoriesTableTableManager(TodoDb db, $CategoriesTable table)
       : super(TableManagerState(
           db: db,
           table: table,
@@ -3674,7 +3674,7 @@ class $$CategoriesTableTableManager extends RootTableManager<
 }
 
 typedef $$CategoriesTableProcessedTableManager = ProcessedTableManager<
-    _$TodoDb,
+    TodoDb,
     $CategoriesTable,
     Category,
     $$CategoriesTableFilterComposer,
@@ -3703,10 +3703,10 @@ typedef $$TodosTableTableUpdateCompanionBuilder = TodosTableCompanion Function({
 });
 
 final class $$TodosTableTableReferences
-    extends BaseReferences<_$TodoDb, $TodosTableTable, TodoEntry> {
+    extends BaseReferences<TodoDb, $TodosTableTable, TodoEntry> {
   $$TodosTableTableReferences(super.$_db, super.$_table, super.$_typedResult);
 
-  static $CategoriesTable _categoryTable(_$TodoDb db) =>
+  static $CategoriesTable _categoryTable(TodoDb db) =>
       db.categories.createAlias(
           $_aliasNameGenerator(db.todosTable.category, db.categories.id));
 
@@ -3722,7 +3722,7 @@ final class $$TodosTableTableReferences
 }
 
 class $$TodosTableTableFilterComposer
-    extends Composer<_$TodoDb, $TodosTableTable> {
+    extends Composer<TodoDb, $TodosTableTable> {
   $$TodosTableTableFilterComposer({
     required super.$db,
     required super.$table,
@@ -3771,7 +3771,7 @@ class $$TodosTableTableFilterComposer
 }
 
 class $$TodosTableTableOrderingComposer
-    extends Composer<_$TodoDb, $TodosTableTable> {
+    extends Composer<TodoDb, $TodosTableTable> {
   $$TodosTableTableOrderingComposer({
     required super.$db,
     required super.$table,
@@ -3816,7 +3816,7 @@ class $$TodosTableTableOrderingComposer
 }
 
 class $$TodosTableTableAnnotationComposer
-    extends Composer<_$TodoDb, $TodosTableTable> {
+    extends Composer<TodoDb, $TodosTableTable> {
   $$TodosTableTableAnnotationComposer({
     required super.$db,
     required super.$table,
@@ -3861,7 +3861,7 @@ class $$TodosTableTableAnnotationComposer
 }
 
 class $$TodosTableTableTableManager extends RootTableManager<
-    _$TodoDb,
+    TodoDb,
     $TodosTableTable,
     TodoEntry,
     $$TodosTableTableFilterComposer,
@@ -3872,7 +3872,7 @@ class $$TodosTableTableTableManager extends RootTableManager<
     (TodoEntry, $$TodosTableTableReferences),
     TodoEntry,
     PrefetchHooks Function({bool category})> {
-  $$TodosTableTableTableManager(_$TodoDb db, $TodosTableTable table)
+  $$TodosTableTableTableManager(TodoDb db, $TodosTableTable table)
       : super(TableManagerState(
           db: db,
           table: table,
@@ -3959,7 +3959,7 @@ class $$TodosTableTableTableManager extends RootTableManager<
 }
 
 typedef $$TodosTableTableProcessedTableManager = ProcessedTableManager<
-    _$TodoDb,
+    TodoDb,
     $TodosTableTable,
     TodoEntry,
     $$TodosTableTableFilterComposer,
@@ -3985,7 +3985,7 @@ typedef $$UsersTableUpdateCompanionBuilder = UsersCompanion Function({
   Value<DateTime> creationTime,
 });
 
-class $$UsersTableFilterComposer extends Composer<_$TodoDb, $UsersTable> {
+class $$UsersTableFilterComposer extends Composer<TodoDb, $UsersTable> {
   $$UsersTableFilterComposer({
     required super.$db,
     required super.$table,
@@ -4012,7 +4012,7 @@ class $$UsersTableFilterComposer extends Composer<_$TodoDb, $UsersTable> {
       column: $table.creationTime, builder: (column) => ColumnFilters(column));
 }
 
-class $$UsersTableOrderingComposer extends Composer<_$TodoDb, $UsersTable> {
+class $$UsersTableOrderingComposer extends Composer<TodoDb, $UsersTable> {
   $$UsersTableOrderingComposer({
     required super.$db,
     required super.$table,
@@ -4038,7 +4038,7 @@ class $$UsersTableOrderingComposer extends Composer<_$TodoDb, $UsersTable> {
       builder: (column) => ColumnOrderings(column));
 }
 
-class $$UsersTableAnnotationComposer extends Composer<_$TodoDb, $UsersTable> {
+class $$UsersTableAnnotationComposer extends Composer<TodoDb, $UsersTable> {
   $$UsersTableAnnotationComposer({
     required super.$db,
     required super.$table,
@@ -4063,7 +4063,7 @@ class $$UsersTableAnnotationComposer extends Composer<_$TodoDb, $UsersTable> {
 }
 
 class $$UsersTableTableManager extends RootTableManager<
-    _$TodoDb,
+    TodoDb,
     $UsersTable,
     User,
     $$UsersTableFilterComposer,
@@ -4071,10 +4071,10 @@ class $$UsersTableTableManager extends RootTableManager<
     $$UsersTableAnnotationComposer,
     $$UsersTableCreateCompanionBuilder,
     $$UsersTableUpdateCompanionBuilder,
-    (User, BaseReferences<_$TodoDb, $UsersTable, User>),
+    (User, BaseReferences<TodoDb, $UsersTable, User>),
     User,
     PrefetchHooks Function()> {
-  $$UsersTableTableManager(_$TodoDb db, $UsersTable table)
+  $$UsersTableTableManager(TodoDb db, $UsersTable table)
       : super(TableManagerState(
           db: db,
           table: table,
@@ -4120,7 +4120,7 @@ class $$UsersTableTableManager extends RootTableManager<
 }
 
 typedef $$UsersTableProcessedTableManager = ProcessedTableManager<
-    _$TodoDb,
+    TodoDb,
     $UsersTable,
     User,
     $$UsersTableFilterComposer,
@@ -4128,7 +4128,7 @@ typedef $$UsersTableProcessedTableManager = ProcessedTableManager<
     $$UsersTableAnnotationComposer,
     $$UsersTableCreateCompanionBuilder,
     $$UsersTableUpdateCompanionBuilder,
-    (User, BaseReferences<_$TodoDb, $UsersTable, User>),
+    (User, BaseReferences<TodoDb, $UsersTable, User>),
     User,
     PrefetchHooks Function()>;
 typedef $$SharedTodosTableCreateCompanionBuilder = SharedTodosCompanion
@@ -4145,7 +4145,7 @@ typedef $$SharedTodosTableUpdateCompanionBuilder = SharedTodosCompanion
 });
 
 class $$SharedTodosTableFilterComposer
-    extends Composer<_$TodoDb, $SharedTodosTable> {
+    extends Composer<TodoDb, $SharedTodosTable> {
   $$SharedTodosTableFilterComposer({
     required super.$db,
     required super.$table,
@@ -4161,7 +4161,7 @@ class $$SharedTodosTableFilterComposer
 }
 
 class $$SharedTodosTableOrderingComposer
-    extends Composer<_$TodoDb, $SharedTodosTable> {
+    extends Composer<TodoDb, $SharedTodosTable> {
   $$SharedTodosTableOrderingComposer({
     required super.$db,
     required super.$table,
@@ -4177,7 +4177,7 @@ class $$SharedTodosTableOrderingComposer
 }
 
 class $$SharedTodosTableAnnotationComposer
-    extends Composer<_$TodoDb, $SharedTodosTable> {
+    extends Composer<TodoDb, $SharedTodosTable> {
   $$SharedTodosTableAnnotationComposer({
     required super.$db,
     required super.$table,
@@ -4193,7 +4193,7 @@ class $$SharedTodosTableAnnotationComposer
 }
 
 class $$SharedTodosTableTableManager extends RootTableManager<
-    _$TodoDb,
+    TodoDb,
     $SharedTodosTable,
     SharedTodo,
     $$SharedTodosTableFilterComposer,
@@ -4201,10 +4201,10 @@ class $$SharedTodosTableTableManager extends RootTableManager<
     $$SharedTodosTableAnnotationComposer,
     $$SharedTodosTableCreateCompanionBuilder,
     $$SharedTodosTableUpdateCompanionBuilder,
-    (SharedTodo, BaseReferences<_$TodoDb, $SharedTodosTable, SharedTodo>),
+    (SharedTodo, BaseReferences<TodoDb, $SharedTodosTable, SharedTodo>),
     SharedTodo,
     PrefetchHooks Function()> {
-  $$SharedTodosTableTableManager(_$TodoDb db, $SharedTodosTable table)
+  $$SharedTodosTableTableManager(TodoDb db, $SharedTodosTable table)
       : super(TableManagerState(
           db: db,
           table: table,
@@ -4242,7 +4242,7 @@ class $$SharedTodosTableTableManager extends RootTableManager<
 }
 
 typedef $$SharedTodosTableProcessedTableManager = ProcessedTableManager<
-    _$TodoDb,
+    TodoDb,
     $SharedTodosTable,
     SharedTodo,
     $$SharedTodosTableFilterComposer,
@@ -4250,7 +4250,7 @@ typedef $$SharedTodosTableProcessedTableManager = ProcessedTableManager<
     $$SharedTodosTableAnnotationComposer,
     $$SharedTodosTableCreateCompanionBuilder,
     $$SharedTodosTableUpdateCompanionBuilder,
-    (SharedTodo, BaseReferences<_$TodoDb, $SharedTodosTable, SharedTodo>),
+    (SharedTodo, BaseReferences<TodoDb, $SharedTodosTable, SharedTodo>),
     SharedTodo,
     PrefetchHooks Function()>;
 typedef $$TableWithoutPKTableCreateCompanionBuilder = TableWithoutPKCompanion
@@ -4271,7 +4271,7 @@ typedef $$TableWithoutPKTableUpdateCompanionBuilder = TableWithoutPKCompanion
 });
 
 class $$TableWithoutPKTableFilterComposer
-    extends Composer<_$TodoDb, $TableWithoutPKTable> {
+    extends Composer<TodoDb, $TableWithoutPKTable> {
   $$TableWithoutPKTableFilterComposer({
     required super.$db,
     required super.$table,
@@ -4295,7 +4295,7 @@ class $$TableWithoutPKTableFilterComposer
 }
 
 class $$TableWithoutPKTableOrderingComposer
-    extends Composer<_$TodoDb, $TableWithoutPKTable> {
+    extends Composer<TodoDb, $TableWithoutPKTable> {
   $$TableWithoutPKTableOrderingComposer({
     required super.$db,
     required super.$table,
@@ -4318,7 +4318,7 @@ class $$TableWithoutPKTableOrderingComposer
 }
 
 class $$TableWithoutPKTableAnnotationComposer
-    extends Composer<_$TodoDb, $TableWithoutPKTable> {
+    extends Composer<TodoDb, $TableWithoutPKTable> {
   $$TableWithoutPKTableAnnotationComposer({
     required super.$db,
     required super.$table,
@@ -4340,7 +4340,7 @@ class $$TableWithoutPKTableAnnotationComposer
 }
 
 class $$TableWithoutPKTableTableManager extends RootTableManager<
-    _$TodoDb,
+    TodoDb,
     $TableWithoutPKTable,
     CustomRowClass,
     $$TableWithoutPKTableFilterComposer,
@@ -4350,11 +4350,11 @@ class $$TableWithoutPKTableTableManager extends RootTableManager<
     $$TableWithoutPKTableUpdateCompanionBuilder,
     (
       CustomRowClass,
-      BaseReferences<_$TodoDb, $TableWithoutPKTable, CustomRowClass>
+      BaseReferences<TodoDb, $TableWithoutPKTable, CustomRowClass>
     ),
     CustomRowClass,
     PrefetchHooks Function()> {
-  $$TableWithoutPKTableTableManager(_$TodoDb db, $TableWithoutPKTable table)
+  $$TableWithoutPKTableTableManager(TodoDb db, $TableWithoutPKTable table)
       : super(TableManagerState(
           db: db,
           table: table,
@@ -4400,7 +4400,7 @@ class $$TableWithoutPKTableTableManager extends RootTableManager<
 }
 
 typedef $$TableWithoutPKTableProcessedTableManager = ProcessedTableManager<
-    _$TodoDb,
+    TodoDb,
     $TableWithoutPKTable,
     CustomRowClass,
     $$TableWithoutPKTableFilterComposer,
@@ -4410,7 +4410,7 @@ typedef $$TableWithoutPKTableProcessedTableManager = ProcessedTableManager<
     $$TableWithoutPKTableUpdateCompanionBuilder,
     (
       CustomRowClass,
-      BaseReferences<_$TodoDb, $TableWithoutPKTable, CustomRowClass>
+      BaseReferences<TodoDb, $TableWithoutPKTable, CustomRowClass>
     ),
     CustomRowClass,
     PrefetchHooks Function()>;
@@ -4426,7 +4426,7 @@ typedef $$PureDefaultsTableUpdateCompanionBuilder = PureDefaultsCompanion
 });
 
 class $$PureDefaultsTableFilterComposer
-    extends Composer<_$TodoDb, $PureDefaultsTable> {
+    extends Composer<TodoDb, $PureDefaultsTable> {
   $$PureDefaultsTableFilterComposer({
     required super.$db,
     required super.$table,
@@ -4441,7 +4441,7 @@ class $$PureDefaultsTableFilterComposer
 }
 
 class $$PureDefaultsTableOrderingComposer
-    extends Composer<_$TodoDb, $PureDefaultsTable> {
+    extends Composer<TodoDb, $PureDefaultsTable> {
   $$PureDefaultsTableOrderingComposer({
     required super.$db,
     required super.$table,
@@ -4454,7 +4454,7 @@ class $$PureDefaultsTableOrderingComposer
 }
 
 class $$PureDefaultsTableAnnotationComposer
-    extends Composer<_$TodoDb, $PureDefaultsTable> {
+    extends Composer<TodoDb, $PureDefaultsTable> {
   $$PureDefaultsTableAnnotationComposer({
     required super.$db,
     required super.$table,
@@ -4467,7 +4467,7 @@ class $$PureDefaultsTableAnnotationComposer
 }
 
 class $$PureDefaultsTableTableManager extends RootTableManager<
-    _$TodoDb,
+    TodoDb,
     $PureDefaultsTable,
     PureDefault,
     $$PureDefaultsTableFilterComposer,
@@ -4475,10 +4475,10 @@ class $$PureDefaultsTableTableManager extends RootTableManager<
     $$PureDefaultsTableAnnotationComposer,
     $$PureDefaultsTableCreateCompanionBuilder,
     $$PureDefaultsTableUpdateCompanionBuilder,
-    (PureDefault, BaseReferences<_$TodoDb, $PureDefaultsTable, PureDefault>),
+    (PureDefault, BaseReferences<TodoDb, $PureDefaultsTable, PureDefault>),
     PureDefault,
     PrefetchHooks Function()> {
-  $$PureDefaultsTableTableManager(_$TodoDb db, $PureDefaultsTable table)
+  $$PureDefaultsTableTableManager(TodoDb db, $PureDefaultsTable table)
       : super(TableManagerState(
           db: db,
           table: table,
@@ -4512,7 +4512,7 @@ class $$PureDefaultsTableTableManager extends RootTableManager<
 }
 
 typedef $$PureDefaultsTableProcessedTableManager = ProcessedTableManager<
-    _$TodoDb,
+    TodoDb,
     $PureDefaultsTable,
     PureDefault,
     $$PureDefaultsTableFilterComposer,
@@ -4520,7 +4520,7 @@ typedef $$PureDefaultsTableProcessedTableManager = ProcessedTableManager<
     $$PureDefaultsTableAnnotationComposer,
     $$PureDefaultsTableCreateCompanionBuilder,
     $$PureDefaultsTableUpdateCompanionBuilder,
-    (PureDefault, BaseReferences<_$TodoDb, $PureDefaultsTable, PureDefault>),
+    (PureDefault, BaseReferences<TodoDb, $PureDefaultsTable, PureDefault>),
     PureDefault,
     PrefetchHooks Function()>;
 typedef $$WithCustomTypeTableCreateCompanionBuilder = WithCustomTypeCompanion
@@ -4535,7 +4535,7 @@ typedef $$WithCustomTypeTableUpdateCompanionBuilder = WithCustomTypeCompanion
 });
 
 class $$WithCustomTypeTableFilterComposer
-    extends Composer<_$TodoDb, $WithCustomTypeTable> {
+    extends Composer<TodoDb, $WithCustomTypeTable> {
   $$WithCustomTypeTableFilterComposer({
     required super.$db,
     required super.$table,
@@ -4548,7 +4548,7 @@ class $$WithCustomTypeTableFilterComposer
 }
 
 class $$WithCustomTypeTableOrderingComposer
-    extends Composer<_$TodoDb, $WithCustomTypeTable> {
+    extends Composer<TodoDb, $WithCustomTypeTable> {
   $$WithCustomTypeTableOrderingComposer({
     required super.$db,
     required super.$table,
@@ -4561,7 +4561,7 @@ class $$WithCustomTypeTableOrderingComposer
 }
 
 class $$WithCustomTypeTableAnnotationComposer
-    extends Composer<_$TodoDb, $WithCustomTypeTable> {
+    extends Composer<TodoDb, $WithCustomTypeTable> {
   $$WithCustomTypeTableAnnotationComposer({
     required super.$db,
     required super.$table,
@@ -4574,7 +4574,7 @@ class $$WithCustomTypeTableAnnotationComposer
 }
 
 class $$WithCustomTypeTableTableManager extends RootTableManager<
-    _$TodoDb,
+    TodoDb,
     $WithCustomTypeTable,
     WithCustomTypeData,
     $$WithCustomTypeTableFilterComposer,
@@ -4584,11 +4584,11 @@ class $$WithCustomTypeTableTableManager extends RootTableManager<
     $$WithCustomTypeTableUpdateCompanionBuilder,
     (
       WithCustomTypeData,
-      BaseReferences<_$TodoDb, $WithCustomTypeTable, WithCustomTypeData>
+      BaseReferences<TodoDb, $WithCustomTypeTable, WithCustomTypeData>
     ),
     WithCustomTypeData,
     PrefetchHooks Function()> {
-  $$WithCustomTypeTableTableManager(_$TodoDb db, $WithCustomTypeTable table)
+  $$WithCustomTypeTableTableManager(TodoDb db, $WithCustomTypeTable table)
       : super(TableManagerState(
           db: db,
           table: table,
@@ -4622,7 +4622,7 @@ class $$WithCustomTypeTableTableManager extends RootTableManager<
 }
 
 typedef $$WithCustomTypeTableProcessedTableManager = ProcessedTableManager<
-    _$TodoDb,
+    TodoDb,
     $WithCustomTypeTable,
     WithCustomTypeData,
     $$WithCustomTypeTableFilterComposer,
@@ -4632,7 +4632,7 @@ typedef $$WithCustomTypeTableProcessedTableManager = ProcessedTableManager<
     $$WithCustomTypeTableUpdateCompanionBuilder,
     (
       WithCustomTypeData,
-      BaseReferences<_$TodoDb, $WithCustomTypeTable, WithCustomTypeData>
+      BaseReferences<TodoDb, $WithCustomTypeTable, WithCustomTypeData>
     ),
     WithCustomTypeData,
     PrefetchHooks Function()>;
@@ -4664,7 +4664,7 @@ typedef $$TableWithEveryColumnTypeTableUpdateCompanionBuilder
 });
 
 class $$TableWithEveryColumnTypeTableFilterComposer
-    extends Composer<_$TodoDb, $TableWithEveryColumnTypeTable> {
+    extends Composer<TodoDb, $TableWithEveryColumnTypeTable> {
   $$TableWithEveryColumnTypeTableFilterComposer({
     required super.$db,
     required super.$table,
@@ -4710,7 +4710,7 @@ class $$TableWithEveryColumnTypeTableFilterComposer
 }
 
 class $$TableWithEveryColumnTypeTableOrderingComposer
-    extends Composer<_$TodoDb, $TableWithEveryColumnTypeTable> {
+    extends Composer<TodoDb, $TableWithEveryColumnTypeTable> {
   $$TableWithEveryColumnTypeTableOrderingComposer({
     required super.$db,
     required super.$table,
@@ -4751,7 +4751,7 @@ class $$TableWithEveryColumnTypeTableOrderingComposer
 }
 
 class $$TableWithEveryColumnTypeTableAnnotationComposer
-    extends Composer<_$TodoDb, $TableWithEveryColumnTypeTable> {
+    extends Composer<TodoDb, $TableWithEveryColumnTypeTable> {
   $$TableWithEveryColumnTypeTableAnnotationComposer({
     required super.$db,
     required super.$table,
@@ -4792,7 +4792,7 @@ class $$TableWithEveryColumnTypeTableAnnotationComposer
 }
 
 class $$TableWithEveryColumnTypeTableTableManager extends RootTableManager<
-    _$TodoDb,
+    TodoDb,
     $TableWithEveryColumnTypeTable,
     TableWithEveryColumnTypeData,
     $$TableWithEveryColumnTypeTableFilterComposer,
@@ -4802,13 +4802,13 @@ class $$TableWithEveryColumnTypeTableTableManager extends RootTableManager<
     $$TableWithEveryColumnTypeTableUpdateCompanionBuilder,
     (
       TableWithEveryColumnTypeData,
-      BaseReferences<_$TodoDb, $TableWithEveryColumnTypeTable,
+      BaseReferences<TodoDb, $TableWithEveryColumnTypeTable,
           TableWithEveryColumnTypeData>
     ),
     TableWithEveryColumnTypeData,
     PrefetchHooks Function()> {
   $$TableWithEveryColumnTypeTableTableManager(
-      _$TodoDb db, $TableWithEveryColumnTypeTable table)
+      TodoDb db, $TableWithEveryColumnTypeTable table)
       : super(TableManagerState(
           db: db,
           table: table,
@@ -4878,7 +4878,7 @@ class $$TableWithEveryColumnTypeTableTableManager extends RootTableManager<
 
 typedef $$TableWithEveryColumnTypeTableProcessedTableManager
     = ProcessedTableManager<
-        _$TodoDb,
+        TodoDb,
         $TableWithEveryColumnTypeTable,
         TableWithEveryColumnTypeData,
         $$TableWithEveryColumnTypeTableFilterComposer,
@@ -4888,7 +4888,7 @@ typedef $$TableWithEveryColumnTypeTableProcessedTableManager
         $$TableWithEveryColumnTypeTableUpdateCompanionBuilder,
         (
           TableWithEveryColumnTypeData,
-          BaseReferences<_$TodoDb, $TableWithEveryColumnTypeTable,
+          BaseReferences<TodoDb, $TableWithEveryColumnTypeTable,
               TableWithEveryColumnTypeData>
         ),
         TableWithEveryColumnTypeData,
@@ -4903,12 +4903,11 @@ typedef $$DepartmentTableUpdateCompanionBuilder = DepartmentCompanion Function({
 });
 
 final class $$DepartmentTableReferences
-    extends BaseReferences<_$TodoDb, $DepartmentTable, DepartmentData> {
+    extends BaseReferences<TodoDb, $DepartmentTable, DepartmentData> {
   $$DepartmentTableReferences(super.$_db, super.$_table, super.$_typedResult);
 
   static MultiTypedResultKey<$ProductTable, List<ProductData>>
-      _productRefsTable(_$TodoDb db) => MultiTypedResultKey.fromTable(
-          db.product,
+      _productRefsTable(TodoDb db) => MultiTypedResultKey.fromTable(db.product,
           aliasName:
               $_aliasNameGenerator(db.department.id, db.product.department));
 
@@ -4923,7 +4922,7 @@ final class $$DepartmentTableReferences
 }
 
 class $$DepartmentTableFilterComposer
-    extends Composer<_$TodoDb, $DepartmentTable> {
+    extends Composer<TodoDb, $DepartmentTable> {
   $$DepartmentTableFilterComposer({
     required super.$db,
     required super.$table,
@@ -4960,7 +4959,7 @@ class $$DepartmentTableFilterComposer
 }
 
 class $$DepartmentTableOrderingComposer
-    extends Composer<_$TodoDb, $DepartmentTable> {
+    extends Composer<TodoDb, $DepartmentTable> {
   $$DepartmentTableOrderingComposer({
     required super.$db,
     required super.$table,
@@ -4976,7 +4975,7 @@ class $$DepartmentTableOrderingComposer
 }
 
 class $$DepartmentTableAnnotationComposer
-    extends Composer<_$TodoDb, $DepartmentTable> {
+    extends Composer<TodoDb, $DepartmentTable> {
   $$DepartmentTableAnnotationComposer({
     required super.$db,
     required super.$table,
@@ -5013,7 +5012,7 @@ class $$DepartmentTableAnnotationComposer
 }
 
 class $$DepartmentTableTableManager extends RootTableManager<
-    _$TodoDb,
+    TodoDb,
     $DepartmentTable,
     DepartmentData,
     $$DepartmentTableFilterComposer,
@@ -5024,7 +5023,7 @@ class $$DepartmentTableTableManager extends RootTableManager<
     (DepartmentData, $$DepartmentTableReferences),
     DepartmentData,
     PrefetchHooks Function({bool productRefs})> {
-  $$DepartmentTableTableManager(_$TodoDb db, $DepartmentTable table)
+  $$DepartmentTableTableManager(TodoDb db, $DepartmentTable table)
       : super(TableManagerState(
           db: db,
           table: table,
@@ -5083,7 +5082,7 @@ class $$DepartmentTableTableManager extends RootTableManager<
 }
 
 typedef $$DepartmentTableProcessedTableManager = ProcessedTableManager<
-    _$TodoDb,
+    TodoDb,
     $DepartmentTable,
     DepartmentData,
     $$DepartmentTableFilterComposer,
@@ -5108,10 +5107,10 @@ typedef $$ProductTableUpdateCompanionBuilder = ProductCompanion Function({
 });
 
 final class $$ProductTableReferences
-    extends BaseReferences<_$TodoDb, $ProductTable, ProductData> {
+    extends BaseReferences<TodoDb, $ProductTable, ProductData> {
   $$ProductTableReferences(super.$_db, super.$_table, super.$_typedResult);
 
-  static $DepartmentTable _departmentTable(_$TodoDb db) =>
+  static $DepartmentTable _departmentTable(TodoDb db) =>
       db.department.createAlias(
           $_aliasNameGenerator(db.product.department, db.department.id));
 
@@ -5126,7 +5125,7 @@ final class $$ProductTableReferences
   }
 
   static MultiTypedResultKey<$ListingTable, List<ListingData>> _listingsTable(
-          _$TodoDb db) =>
+          TodoDb db) =>
       MultiTypedResultKey.fromTable(db.listing,
           aliasName: $_aliasNameGenerator(db.product.sku, db.listing.product));
 
@@ -5140,7 +5139,7 @@ final class $$ProductTableReferences
   }
 }
 
-class $$ProductTableFilterComposer extends Composer<_$TodoDb, $ProductTable> {
+class $$ProductTableFilterComposer extends Composer<TodoDb, $ProductTable> {
   $$ProductTableFilterComposer({
     required super.$db,
     required super.$table,
@@ -5196,7 +5195,7 @@ class $$ProductTableFilterComposer extends Composer<_$TodoDb, $ProductTable> {
   }
 }
 
-class $$ProductTableOrderingComposer extends Composer<_$TodoDb, $ProductTable> {
+class $$ProductTableOrderingComposer extends Composer<TodoDb, $ProductTable> {
   $$ProductTableOrderingComposer({
     required super.$db,
     required super.$table,
@@ -5231,8 +5230,7 @@ class $$ProductTableOrderingComposer extends Composer<_$TodoDb, $ProductTable> {
   }
 }
 
-class $$ProductTableAnnotationComposer
-    extends Composer<_$TodoDb, $ProductTable> {
+class $$ProductTableAnnotationComposer extends Composer<TodoDb, $ProductTable> {
   $$ProductTableAnnotationComposer({
     required super.$db,
     required super.$table,
@@ -5289,7 +5287,7 @@ class $$ProductTableAnnotationComposer
 }
 
 class $$ProductTableTableManager extends RootTableManager<
-    _$TodoDb,
+    TodoDb,
     $ProductTable,
     ProductData,
     $$ProductTableFilterComposer,
@@ -5300,7 +5298,7 @@ class $$ProductTableTableManager extends RootTableManager<
     (ProductData, $$ProductTableReferences),
     ProductData,
     PrefetchHooks Function({bool department, bool listings})> {
-  $$ProductTableTableManager(_$TodoDb db, $ProductTable table)
+  $$ProductTableTableManager(TodoDb db, $ProductTable table)
       : super(TableManagerState(
           db: db,
           table: table,
@@ -5389,7 +5387,7 @@ class $$ProductTableTableManager extends RootTableManager<
 }
 
 typedef $$ProductTableProcessedTableManager = ProcessedTableManager<
-    _$TodoDb,
+    TodoDb,
     $ProductTable,
     ProductData,
     $$ProductTableFilterComposer,
@@ -5410,11 +5408,11 @@ typedef $$StoreTableUpdateCompanionBuilder = StoreCompanion Function({
 });
 
 final class $$StoreTableReferences
-    extends BaseReferences<_$TodoDb, $StoreTable, StoreData> {
+    extends BaseReferences<TodoDb, $StoreTable, StoreData> {
   $$StoreTableReferences(super.$_db, super.$_table, super.$_typedResult);
 
   static MultiTypedResultKey<$ListingTable, List<ListingData>> _listingsTable(
-          _$TodoDb db) =>
+          TodoDb db) =>
       MultiTypedResultKey.fromTable(db.listing,
           aliasName: $_aliasNameGenerator(db.store.id, db.listing.store));
 
@@ -5428,7 +5426,7 @@ final class $$StoreTableReferences
   }
 }
 
-class $$StoreTableFilterComposer extends Composer<_$TodoDb, $StoreTable> {
+class $$StoreTableFilterComposer extends Composer<TodoDb, $StoreTable> {
   $$StoreTableFilterComposer({
     required super.$db,
     required super.$table,
@@ -5464,7 +5462,7 @@ class $$StoreTableFilterComposer extends Composer<_$TodoDb, $StoreTable> {
   }
 }
 
-class $$StoreTableOrderingComposer extends Composer<_$TodoDb, $StoreTable> {
+class $$StoreTableOrderingComposer extends Composer<TodoDb, $StoreTable> {
   $$StoreTableOrderingComposer({
     required super.$db,
     required super.$table,
@@ -5479,7 +5477,7 @@ class $$StoreTableOrderingComposer extends Composer<_$TodoDb, $StoreTable> {
       column: $table.name, builder: (column) => ColumnOrderings(column));
 }
 
-class $$StoreTableAnnotationComposer extends Composer<_$TodoDb, $StoreTable> {
+class $$StoreTableAnnotationComposer extends Composer<TodoDb, $StoreTable> {
   $$StoreTableAnnotationComposer({
     required super.$db,
     required super.$table,
@@ -5516,7 +5514,7 @@ class $$StoreTableAnnotationComposer extends Composer<_$TodoDb, $StoreTable> {
 }
 
 class $$StoreTableTableManager extends RootTableManager<
-    _$TodoDb,
+    TodoDb,
     $StoreTable,
     StoreData,
     $$StoreTableFilterComposer,
@@ -5527,7 +5525,7 @@ class $$StoreTableTableManager extends RootTableManager<
     (StoreData, $$StoreTableReferences),
     StoreData,
     PrefetchHooks Function({bool listings})> {
-  $$StoreTableTableManager(_$TodoDb db, $StoreTable table)
+  $$StoreTableTableManager(TodoDb db, $StoreTable table)
       : super(TableManagerState(
           db: db,
           table: table,
@@ -5583,7 +5581,7 @@ class $$StoreTableTableManager extends RootTableManager<
 }
 
 typedef $$StoreTableProcessedTableManager = ProcessedTableManager<
-    _$TodoDb,
+    TodoDb,
     $StoreTable,
     StoreData,
     $$StoreTableFilterComposer,
@@ -5608,10 +5606,10 @@ typedef $$ListingTableUpdateCompanionBuilder = ListingCompanion Function({
 });
 
 final class $$ListingTableReferences
-    extends BaseReferences<_$TodoDb, $ListingTable, ListingData> {
+    extends BaseReferences<TodoDb, $ListingTable, ListingData> {
   $$ListingTableReferences(super.$_db, super.$_table, super.$_typedResult);
 
-  static $ProductTable _productTable(_$TodoDb db) => db.product
+  static $ProductTable _productTable(TodoDb db) => db.product
       .createAlias($_aliasNameGenerator(db.listing.product, db.product.sku));
 
   $$ProductTableProcessedTableManager? get product {
@@ -5624,7 +5622,7 @@ final class $$ListingTableReferences
         manager.$state.copyWith(prefetchedData: [item]));
   }
 
-  static $StoreTable _storeTable(_$TodoDb db) =>
+  static $StoreTable _storeTable(TodoDb db) =>
       db.store.createAlias($_aliasNameGenerator(db.listing.store, db.store.id));
 
   $$StoreTableProcessedTableManager? get store {
@@ -5638,7 +5636,7 @@ final class $$ListingTableReferences
   }
 }
 
-class $$ListingTableFilterComposer extends Composer<_$TodoDb, $ListingTable> {
+class $$ListingTableFilterComposer extends Composer<TodoDb, $ListingTable> {
   $$ListingTableFilterComposer({
     required super.$db,
     required super.$table,
@@ -5693,7 +5691,7 @@ class $$ListingTableFilterComposer extends Composer<_$TodoDb, $ListingTable> {
   }
 }
 
-class $$ListingTableOrderingComposer extends Composer<_$TodoDb, $ListingTable> {
+class $$ListingTableOrderingComposer extends Composer<TodoDb, $ListingTable> {
   $$ListingTableOrderingComposer({
     required super.$db,
     required super.$table,
@@ -5748,8 +5746,7 @@ class $$ListingTableOrderingComposer extends Composer<_$TodoDb, $ListingTable> {
   }
 }
 
-class $$ListingTableAnnotationComposer
-    extends Composer<_$TodoDb, $ListingTable> {
+class $$ListingTableAnnotationComposer extends Composer<TodoDb, $ListingTable> {
   $$ListingTableAnnotationComposer({
     required super.$db,
     required super.$table,
@@ -5805,7 +5802,7 @@ class $$ListingTableAnnotationComposer
 }
 
 class $$ListingTableTableManager extends RootTableManager<
-    _$TodoDb,
+    TodoDb,
     $ListingTable,
     ListingData,
     $$ListingTableFilterComposer,
@@ -5816,7 +5813,7 @@ class $$ListingTableTableManager extends RootTableManager<
     (ListingData, $$ListingTableReferences),
     ListingData,
     PrefetchHooks Function({bool product, bool store})> {
-  $$ListingTableTableManager(_$TodoDb db, $ListingTable table)
+  $$ListingTableTableManager(TodoDb db, $ListingTable table)
       : super(TableManagerState(
           db: db,
           table: table,
@@ -5901,7 +5898,7 @@ class $$ListingTableTableManager extends RootTableManager<
 }
 
 typedef $$ListingTableProcessedTableManager = ProcessedTableManager<
-    _$TodoDb,
+    TodoDb,
     $ListingTable,
     ListingData,
     $$ListingTableFilterComposer,
@@ -5913,9 +5910,9 @@ typedef $$ListingTableProcessedTableManager = ProcessedTableManager<
     ListingData,
     PrefetchHooks Function({bool product, bool store})>;
 
-class $TodoDbManager {
-  final _$TodoDb _db;
-  $TodoDbManager(this._db);
+class TodoDbManager {
+  final TodoDb _db;
+  TodoDbManager(this._db);
   $$CategoriesTableTableManager get categories =>
       $$CategoriesTableTableManager(_db, _db.categories);
   $$TodosTableTableTableManager get todosTable =>
@@ -5943,8 +5940,8 @@ class $TodoDbManager {
       $$ListingTableTableManager(_db, _db.listing);
 }
 
-extension $TodoDbManagerExt on _$TodoDb {
-  $TodoDbManager get managers => $TodoDbManager(this);
+extension TodoDbManagerExt on TodoDb {
+  TodoDbManager get managers => TodoDbManager(this);
 }
 
 class AllTodosWithCategoryResult extends CustomResultSet {

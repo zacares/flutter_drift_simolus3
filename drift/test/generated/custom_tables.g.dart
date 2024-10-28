@@ -2030,7 +2030,7 @@ typedef $NoIdsUpdateCompanionBuilder = NoIdsCompanion Function({
   Value<Uint8List> payload,
 });
 
-class $NoIdsFilterComposer extends Composer<_$CustomTablesDb, NoIds> {
+class $NoIdsFilterComposer extends Composer<CustomTablesDb, NoIds> {
   $NoIdsFilterComposer({
     required super.$db,
     required super.$table,
@@ -2042,7 +2042,7 @@ class $NoIdsFilterComposer extends Composer<_$CustomTablesDb, NoIds> {
       column: $table.payload, builder: (column) => ColumnFilters(column));
 }
 
-class $NoIdsOrderingComposer extends Composer<_$CustomTablesDb, NoIds> {
+class $NoIdsOrderingComposer extends Composer<CustomTablesDb, NoIds> {
   $NoIdsOrderingComposer({
     required super.$db,
     required super.$table,
@@ -2054,7 +2054,7 @@ class $NoIdsOrderingComposer extends Composer<_$CustomTablesDb, NoIds> {
       column: $table.payload, builder: (column) => ColumnOrderings(column));
 }
 
-class $NoIdsAnnotationComposer extends Composer<_$CustomTablesDb, NoIds> {
+class $NoIdsAnnotationComposer extends Composer<CustomTablesDb, NoIds> {
   $NoIdsAnnotationComposer({
     required super.$db,
     required super.$table,
@@ -2067,7 +2067,7 @@ class $NoIdsAnnotationComposer extends Composer<_$CustomTablesDb, NoIds> {
 }
 
 class $NoIdsTableManager extends RootTableManager<
-    _$CustomTablesDb,
+    CustomTablesDb,
     NoIds,
     NoIdRow,
     $NoIdsFilterComposer,
@@ -2075,10 +2075,10 @@ class $NoIdsTableManager extends RootTableManager<
     $NoIdsAnnotationComposer,
     $NoIdsCreateCompanionBuilder,
     $NoIdsUpdateCompanionBuilder,
-    (NoIdRow, BaseReferences<_$CustomTablesDb, NoIds, NoIdRow>),
+    (NoIdRow, BaseReferences<CustomTablesDb, NoIds, NoIdRow>),
     NoIdRow,
     PrefetchHooks Function()> {
-  $NoIdsTableManager(_$CustomTablesDb db, NoIds table)
+  $NoIdsTableManager(CustomTablesDb db, NoIds table)
       : super(TableManagerState(
           db: db,
           table: table,
@@ -2108,7 +2108,7 @@ class $NoIdsTableManager extends RootTableManager<
 }
 
 typedef $NoIdsProcessedTableManager = ProcessedTableManager<
-    _$CustomTablesDb,
+    CustomTablesDb,
     NoIds,
     NoIdRow,
     $NoIdsFilterComposer,
@@ -2116,7 +2116,7 @@ typedef $NoIdsProcessedTableManager = ProcessedTableManager<
     $NoIdsAnnotationComposer,
     $NoIdsCreateCompanionBuilder,
     $NoIdsUpdateCompanionBuilder,
-    (NoIdRow, BaseReferences<_$CustomTablesDb, NoIds, NoIdRow>),
+    (NoIdRow, BaseReferences<CustomTablesDb, NoIds, NoIdRow>),
     NoIdRow,
     PrefetchHooks Function()>;
 typedef $WithDefaultsCreateCompanionBuilder = WithDefaultsCompanion Function({
@@ -2131,7 +2131,7 @@ typedef $WithDefaultsUpdateCompanionBuilder = WithDefaultsCompanion Function({
 });
 
 class $WithDefaultsFilterComposer
-    extends Composer<_$CustomTablesDb, WithDefaults> {
+    extends Composer<CustomTablesDb, WithDefaults> {
   $WithDefaultsFilterComposer({
     required super.$db,
     required super.$table,
@@ -2147,7 +2147,7 @@ class $WithDefaultsFilterComposer
 }
 
 class $WithDefaultsOrderingComposer
-    extends Composer<_$CustomTablesDb, WithDefaults> {
+    extends Composer<CustomTablesDb, WithDefaults> {
   $WithDefaultsOrderingComposer({
     required super.$db,
     required super.$table,
@@ -2163,7 +2163,7 @@ class $WithDefaultsOrderingComposer
 }
 
 class $WithDefaultsAnnotationComposer
-    extends Composer<_$CustomTablesDb, WithDefaults> {
+    extends Composer<CustomTablesDb, WithDefaults> {
   $WithDefaultsAnnotationComposer({
     required super.$db,
     required super.$table,
@@ -2179,7 +2179,7 @@ class $WithDefaultsAnnotationComposer
 }
 
 class $WithDefaultsTableManager extends RootTableManager<
-    _$CustomTablesDb,
+    CustomTablesDb,
     WithDefaults,
     WithDefault,
     $WithDefaultsFilterComposer,
@@ -2187,10 +2187,10 @@ class $WithDefaultsTableManager extends RootTableManager<
     $WithDefaultsAnnotationComposer,
     $WithDefaultsCreateCompanionBuilder,
     $WithDefaultsUpdateCompanionBuilder,
-    (WithDefault, BaseReferences<_$CustomTablesDb, WithDefaults, WithDefault>),
+    (WithDefault, BaseReferences<CustomTablesDb, WithDefaults, WithDefault>),
     WithDefault,
     PrefetchHooks Function()> {
-  $WithDefaultsTableManager(_$CustomTablesDb db, WithDefaults table)
+  $WithDefaultsTableManager(CustomTablesDb db, WithDefaults table)
       : super(TableManagerState(
           db: db,
           table: table,
@@ -2228,7 +2228,7 @@ class $WithDefaultsTableManager extends RootTableManager<
 }
 
 typedef $WithDefaultsProcessedTableManager = ProcessedTableManager<
-    _$CustomTablesDb,
+    CustomTablesDb,
     WithDefaults,
     WithDefault,
     $WithDefaultsFilterComposer,
@@ -2236,7 +2236,7 @@ typedef $WithDefaultsProcessedTableManager = ProcessedTableManager<
     $WithDefaultsAnnotationComposer,
     $WithDefaultsCreateCompanionBuilder,
     $WithDefaultsUpdateCompanionBuilder,
-    (WithDefault, BaseReferences<_$CustomTablesDb, WithDefaults, WithDefault>),
+    (WithDefault, BaseReferences<CustomTablesDb, WithDefaults, WithDefault>),
     WithDefault,
     PrefetchHooks Function()>;
 typedef $WithConstraintsCreateCompanionBuilder = WithConstraintsCompanion
@@ -2255,7 +2255,7 @@ typedef $WithConstraintsUpdateCompanionBuilder = WithConstraintsCompanion
 });
 
 class $WithConstraintsFilterComposer
-    extends Composer<_$CustomTablesDb, WithConstraints> {
+    extends Composer<CustomTablesDb, WithConstraints> {
   $WithConstraintsFilterComposer({
     required super.$db,
     required super.$table,
@@ -2274,7 +2274,7 @@ class $WithConstraintsFilterComposer
 }
 
 class $WithConstraintsOrderingComposer
-    extends Composer<_$CustomTablesDb, WithConstraints> {
+    extends Composer<CustomTablesDb, WithConstraints> {
   $WithConstraintsOrderingComposer({
     required super.$db,
     required super.$table,
@@ -2293,7 +2293,7 @@ class $WithConstraintsOrderingComposer
 }
 
 class $WithConstraintsAnnotationComposer
-    extends Composer<_$CustomTablesDb, WithConstraints> {
+    extends Composer<CustomTablesDb, WithConstraints> {
   $WithConstraintsAnnotationComposer({
     required super.$db,
     required super.$table,
@@ -2312,7 +2312,7 @@ class $WithConstraintsAnnotationComposer
 }
 
 class $WithConstraintsTableManager extends RootTableManager<
-    _$CustomTablesDb,
+    CustomTablesDb,
     WithConstraints,
     WithConstraint,
     $WithConstraintsFilterComposer,
@@ -2322,11 +2322,11 @@ class $WithConstraintsTableManager extends RootTableManager<
     $WithConstraintsUpdateCompanionBuilder,
     (
       WithConstraint,
-      BaseReferences<_$CustomTablesDb, WithConstraints, WithConstraint>
+      BaseReferences<CustomTablesDb, WithConstraints, WithConstraint>
     ),
     WithConstraint,
     PrefetchHooks Function()> {
-  $WithConstraintsTableManager(_$CustomTablesDb db, WithConstraints table)
+  $WithConstraintsTableManager(CustomTablesDb db, WithConstraints table)
       : super(TableManagerState(
           db: db,
           table: table,
@@ -2368,7 +2368,7 @@ class $WithConstraintsTableManager extends RootTableManager<
 }
 
 typedef $WithConstraintsProcessedTableManager = ProcessedTableManager<
-    _$CustomTablesDb,
+    CustomTablesDb,
     WithConstraints,
     WithConstraint,
     $WithConstraintsFilterComposer,
@@ -2378,7 +2378,7 @@ typedef $WithConstraintsProcessedTableManager = ProcessedTableManager<
     $WithConstraintsUpdateCompanionBuilder,
     (
       WithConstraint,
-      BaseReferences<_$CustomTablesDb, WithConstraints, WithConstraint>
+      BaseReferences<CustomTablesDb, WithConstraints, WithConstraint>
     ),
     WithConstraint,
     PrefetchHooks Function()>;
@@ -2397,8 +2397,7 @@ typedef $ConfigTableUpdateCompanionBuilder = ConfigCompanion Function({
   Value<int> rowid,
 });
 
-class $ConfigTableFilterComposer
-    extends Composer<_$CustomTablesDb, ConfigTable> {
+class $ConfigTableFilterComposer extends Composer<CustomTablesDb, ConfigTable> {
   $ConfigTableFilterComposer({
     required super.$db,
     required super.$table,
@@ -2424,7 +2423,7 @@ class $ConfigTableFilterComposer
 }
 
 class $ConfigTableOrderingComposer
-    extends Composer<_$CustomTablesDb, ConfigTable> {
+    extends Composer<CustomTablesDb, ConfigTable> {
   $ConfigTableOrderingComposer({
     required super.$db,
     required super.$table,
@@ -2447,7 +2446,7 @@ class $ConfigTableOrderingComposer
 }
 
 class $ConfigTableAnnotationComposer
-    extends Composer<_$CustomTablesDb, ConfigTable> {
+    extends Composer<CustomTablesDb, ConfigTable> {
   $ConfigTableAnnotationComposer({
     required super.$db,
     required super.$table,
@@ -2470,7 +2469,7 @@ class $ConfigTableAnnotationComposer
 }
 
 class $ConfigTableTableManager extends RootTableManager<
-    _$CustomTablesDb,
+    CustomTablesDb,
     ConfigTable,
     Config,
     $ConfigTableFilterComposer,
@@ -2478,10 +2477,10 @@ class $ConfigTableTableManager extends RootTableManager<
     $ConfigTableAnnotationComposer,
     $ConfigTableCreateCompanionBuilder,
     $ConfigTableUpdateCompanionBuilder,
-    (Config, BaseReferences<_$CustomTablesDb, ConfigTable, Config>),
+    (Config, BaseReferences<CustomTablesDb, ConfigTable, Config>),
     Config,
     PrefetchHooks Function()> {
-  $ConfigTableTableManager(_$CustomTablesDb db, ConfigTable table)
+  $ConfigTableTableManager(CustomTablesDb db, ConfigTable table)
       : super(TableManagerState(
           db: db,
           table: table,
@@ -2527,7 +2526,7 @@ class $ConfigTableTableManager extends RootTableManager<
 }
 
 typedef $ConfigTableProcessedTableManager = ProcessedTableManager<
-    _$CustomTablesDb,
+    CustomTablesDb,
     ConfigTable,
     Config,
     $ConfigTableFilterComposer,
@@ -2535,7 +2534,7 @@ typedef $ConfigTableProcessedTableManager = ProcessedTableManager<
     $ConfigTableAnnotationComposer,
     $ConfigTableCreateCompanionBuilder,
     $ConfigTableUpdateCompanionBuilder,
-    (Config, BaseReferences<_$CustomTablesDb, ConfigTable, Config>),
+    (Config, BaseReferences<CustomTablesDb, ConfigTable, Config>),
     Config,
     PrefetchHooks Function()>;
 typedef $MytableCreateCompanionBuilder = MytableCompanion Function({
@@ -2551,7 +2550,7 @@ typedef $MytableUpdateCompanionBuilder = MytableCompanion Function({
   Value<DateTime?> somedate,
 });
 
-class $MytableFilterComposer extends Composer<_$CustomTablesDb, Mytable> {
+class $MytableFilterComposer extends Composer<CustomTablesDb, Mytable> {
   $MytableFilterComposer({
     required super.$db,
     required super.$table,
@@ -2572,7 +2571,7 @@ class $MytableFilterComposer extends Composer<_$CustomTablesDb, Mytable> {
       column: $table.somedate, builder: (column) => ColumnFilters(column));
 }
 
-class $MytableOrderingComposer extends Composer<_$CustomTablesDb, Mytable> {
+class $MytableOrderingComposer extends Composer<CustomTablesDb, Mytable> {
   $MytableOrderingComposer({
     required super.$db,
     required super.$table,
@@ -2593,7 +2592,7 @@ class $MytableOrderingComposer extends Composer<_$CustomTablesDb, Mytable> {
       column: $table.somedate, builder: (column) => ColumnOrderings(column));
 }
 
-class $MytableAnnotationComposer extends Composer<_$CustomTablesDb, Mytable> {
+class $MytableAnnotationComposer extends Composer<CustomTablesDb, Mytable> {
   $MytableAnnotationComposer({
     required super.$db,
     required super.$table,
@@ -2615,7 +2614,7 @@ class $MytableAnnotationComposer extends Composer<_$CustomTablesDb, Mytable> {
 }
 
 class $MytableTableManager extends RootTableManager<
-    _$CustomTablesDb,
+    CustomTablesDb,
     Mytable,
     MytableData,
     $MytableFilterComposer,
@@ -2623,10 +2622,10 @@ class $MytableTableManager extends RootTableManager<
     $MytableAnnotationComposer,
     $MytableCreateCompanionBuilder,
     $MytableUpdateCompanionBuilder,
-    (MytableData, BaseReferences<_$CustomTablesDb, Mytable, MytableData>),
+    (MytableData, BaseReferences<CustomTablesDb, Mytable, MytableData>),
     MytableData,
     PrefetchHooks Function()> {
-  $MytableTableManager(_$CustomTablesDb db, Mytable table)
+  $MytableTableManager(CustomTablesDb db, Mytable table)
       : super(TableManagerState(
           db: db,
           table: table,
@@ -2668,7 +2667,7 @@ class $MytableTableManager extends RootTableManager<
 }
 
 typedef $MytableProcessedTableManager = ProcessedTableManager<
-    _$CustomTablesDb,
+    CustomTablesDb,
     Mytable,
     MytableData,
     $MytableFilterComposer,
@@ -2676,7 +2675,7 @@ typedef $MytableProcessedTableManager = ProcessedTableManager<
     $MytableAnnotationComposer,
     $MytableCreateCompanionBuilder,
     $MytableUpdateCompanionBuilder,
-    (MytableData, BaseReferences<_$CustomTablesDb, Mytable, MytableData>),
+    (MytableData, BaseReferences<CustomTablesDb, Mytable, MytableData>),
     MytableData,
     PrefetchHooks Function()>;
 typedef $EmailCreateCompanionBuilder = EmailCompanion Function({
@@ -2692,7 +2691,7 @@ typedef $EmailUpdateCompanionBuilder = EmailCompanion Function({
   Value<int> rowid,
 });
 
-class $EmailFilterComposer extends Composer<_$CustomTablesDb, Email> {
+class $EmailFilterComposer extends Composer<CustomTablesDb, Email> {
   $EmailFilterComposer({
     required super.$db,
     required super.$table,
@@ -2710,7 +2709,7 @@ class $EmailFilterComposer extends Composer<_$CustomTablesDb, Email> {
       column: $table.body, builder: (column) => ColumnFilters(column));
 }
 
-class $EmailOrderingComposer extends Composer<_$CustomTablesDb, Email> {
+class $EmailOrderingComposer extends Composer<CustomTablesDb, Email> {
   $EmailOrderingComposer({
     required super.$db,
     required super.$table,
@@ -2728,7 +2727,7 @@ class $EmailOrderingComposer extends Composer<_$CustomTablesDb, Email> {
       column: $table.body, builder: (column) => ColumnOrderings(column));
 }
 
-class $EmailAnnotationComposer extends Composer<_$CustomTablesDb, Email> {
+class $EmailAnnotationComposer extends Composer<CustomTablesDb, Email> {
   $EmailAnnotationComposer({
     required super.$db,
     required super.$table,
@@ -2747,7 +2746,7 @@ class $EmailAnnotationComposer extends Composer<_$CustomTablesDb, Email> {
 }
 
 class $EmailTableManager extends RootTableManager<
-    _$CustomTablesDb,
+    CustomTablesDb,
     Email,
     EMail,
     $EmailFilterComposer,
@@ -2755,10 +2754,10 @@ class $EmailTableManager extends RootTableManager<
     $EmailAnnotationComposer,
     $EmailCreateCompanionBuilder,
     $EmailUpdateCompanionBuilder,
-    (EMail, BaseReferences<_$CustomTablesDb, Email, EMail>),
+    (EMail, BaseReferences<CustomTablesDb, Email, EMail>),
     EMail,
     PrefetchHooks Function()> {
-  $EmailTableManager(_$CustomTablesDb db, Email table)
+  $EmailTableManager(CustomTablesDb db, Email table)
       : super(TableManagerState(
           db: db,
           table: table,
@@ -2800,7 +2799,7 @@ class $EmailTableManager extends RootTableManager<
 }
 
 typedef $EmailProcessedTableManager = ProcessedTableManager<
-    _$CustomTablesDb,
+    CustomTablesDb,
     Email,
     EMail,
     $EmailFilterComposer,
@@ -2808,7 +2807,7 @@ typedef $EmailProcessedTableManager = ProcessedTableManager<
     $EmailAnnotationComposer,
     $EmailCreateCompanionBuilder,
     $EmailUpdateCompanionBuilder,
-    (EMail, BaseReferences<_$CustomTablesDb, Email, EMail>),
+    (EMail, BaseReferences<CustomTablesDb, Email, EMail>),
     EMail,
     PrefetchHooks Function()>;
 typedef $WeirdTableCreateCompanionBuilder = WeirdTableCompanion Function({
@@ -2822,7 +2821,7 @@ typedef $WeirdTableUpdateCompanionBuilder = WeirdTableCompanion Function({
   Value<int> rowid,
 });
 
-class $WeirdTableFilterComposer extends Composer<_$CustomTablesDb, WeirdTable> {
+class $WeirdTableFilterComposer extends Composer<CustomTablesDb, WeirdTable> {
   $WeirdTableFilterComposer({
     required super.$db,
     required super.$table,
@@ -2837,8 +2836,7 @@ class $WeirdTableFilterComposer extends Composer<_$CustomTablesDb, WeirdTable> {
       column: $table.textColumn, builder: (column) => ColumnFilters(column));
 }
 
-class $WeirdTableOrderingComposer
-    extends Composer<_$CustomTablesDb, WeirdTable> {
+class $WeirdTableOrderingComposer extends Composer<CustomTablesDb, WeirdTable> {
   $WeirdTableOrderingComposer({
     required super.$db,
     required super.$table,
@@ -2854,7 +2852,7 @@ class $WeirdTableOrderingComposer
 }
 
 class $WeirdTableAnnotationComposer
-    extends Composer<_$CustomTablesDb, WeirdTable> {
+    extends Composer<CustomTablesDb, WeirdTable> {
   $WeirdTableAnnotationComposer({
     required super.$db,
     required super.$table,
@@ -2870,7 +2868,7 @@ class $WeirdTableAnnotationComposer
 }
 
 class $WeirdTableTableManager extends RootTableManager<
-    _$CustomTablesDb,
+    CustomTablesDb,
     WeirdTable,
     WeirdData,
     $WeirdTableFilterComposer,
@@ -2878,10 +2876,10 @@ class $WeirdTableTableManager extends RootTableManager<
     $WeirdTableAnnotationComposer,
     $WeirdTableCreateCompanionBuilder,
     $WeirdTableUpdateCompanionBuilder,
-    (WeirdData, BaseReferences<_$CustomTablesDb, WeirdTable, WeirdData>),
+    (WeirdData, BaseReferences<CustomTablesDb, WeirdTable, WeirdData>),
     WeirdData,
     PrefetchHooks Function()> {
-  $WeirdTableTableManager(_$CustomTablesDb db, WeirdTable table)
+  $WeirdTableTableManager(CustomTablesDb db, WeirdTable table)
       : super(TableManagerState(
           db: db,
           table: table,
@@ -2919,7 +2917,7 @@ class $WeirdTableTableManager extends RootTableManager<
 }
 
 typedef $WeirdTableProcessedTableManager = ProcessedTableManager<
-    _$CustomTablesDb,
+    CustomTablesDb,
     WeirdTable,
     WeirdData,
     $WeirdTableFilterComposer,
@@ -2927,13 +2925,13 @@ typedef $WeirdTableProcessedTableManager = ProcessedTableManager<
     $WeirdTableAnnotationComposer,
     $WeirdTableCreateCompanionBuilder,
     $WeirdTableUpdateCompanionBuilder,
-    (WeirdData, BaseReferences<_$CustomTablesDb, WeirdTable, WeirdData>),
+    (WeirdData, BaseReferences<CustomTablesDb, WeirdTable, WeirdData>),
     WeirdData,
     PrefetchHooks Function()>;
 
-class $CustomTablesDbManager {
-  final _$CustomTablesDb _db;
-  $CustomTablesDbManager(this._db);
+class CustomTablesDbManager {
+  final CustomTablesDb _db;
+  CustomTablesDbManager(this._db);
   $NoIdsTableManager get noIds => $NoIdsTableManager(_db, _db.noIds);
   $WithDefaultsTableManager get withDefaults =>
       $WithDefaultsTableManager(_db, _db.withDefaults);
@@ -2947,8 +2945,8 @@ class $CustomTablesDbManager {
       $WeirdTableTableManager(_db, _db.weirdTable);
 }
 
-extension $CustomTablesDbManagerExt on _$CustomTablesDb {
-  $CustomTablesDbManager get managers => $CustomTablesDbManager(this);
+extension CustomTablesDbManagerExt on CustomTablesDb {
+  CustomTablesDbManager get managers => CustomTablesDbManager(this);
 }
 
 typedef ReadMultiple$clause = OrderBy Function(ConfigTable config);

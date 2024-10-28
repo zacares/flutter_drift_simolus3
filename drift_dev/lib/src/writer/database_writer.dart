@@ -154,7 +154,8 @@ class DatabaseWriter {
       // Managers try to use the public database class. If we're generating a
       // public class (e.g. not for schema generation), we use the users class
       // in the manager. Otherwise, we use the generated class.
-      final managerDbClassName = isAbstract ? className : db.id.name;
+      final managerDbClassName =
+          className.startsWith("_") ? db.id.name : className;
       final managerWriter =
           DatabaseManagerWriter(scope.child(), managerDbClassName);
       for (var table in elements.whereType<DriftTable>()) {

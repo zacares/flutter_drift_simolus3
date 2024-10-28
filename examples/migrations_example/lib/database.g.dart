@@ -945,10 +945,10 @@ typedef $$UsersTableUpdateCompanionBuilder = UsersCompanion Function({
 });
 
 final class $$UsersTableReferences
-    extends BaseReferences<_$Database, $UsersTable, User> {
+    extends BaseReferences<Database, $UsersTable, User> {
   $$UsersTableReferences(super.$_db, super.$_table, super.$_typedResult);
 
-  static $UsersTable _nextUserTable(_$Database db) => db.users
+  static $UsersTable _nextUserTable(Database db) => db.users
       .createAlias($_aliasNameGenerator(db.users.nextUser, db.users.id));
 
   $$UsersTableProcessedTableManager? get nextUser {
@@ -962,7 +962,7 @@ final class $$UsersTableReferences
   }
 
   static MultiTypedResultKey<Groups, List<Group>> _groupsRefsTable(
-          _$Database db) =>
+          Database db) =>
       MultiTypedResultKey.fromTable(db.groups,
           aliasName: $_aliasNameGenerator(db.users.id, db.groups.owner));
 
@@ -976,7 +976,7 @@ final class $$UsersTableReferences
   }
 }
 
-class $$UsersTableFilterComposer extends Composer<_$Database, $UsersTable> {
+class $$UsersTableFilterComposer extends Composer<Database, $UsersTable> {
   $$UsersTableFilterComposer({
     required super.$db,
     required super.$table,
@@ -1035,7 +1035,7 @@ class $$UsersTableFilterComposer extends Composer<_$Database, $UsersTable> {
   }
 }
 
-class $$UsersTableOrderingComposer extends Composer<_$Database, $UsersTable> {
+class $$UsersTableOrderingComposer extends Composer<Database, $UsersTable> {
   $$UsersTableOrderingComposer({
     required super.$db,
     required super.$table,
@@ -1073,7 +1073,7 @@ class $$UsersTableOrderingComposer extends Composer<_$Database, $UsersTable> {
   }
 }
 
-class $$UsersTableAnnotationComposer extends Composer<_$Database, $UsersTable> {
+class $$UsersTableAnnotationComposer extends Composer<Database, $UsersTable> {
   $$UsersTableAnnotationComposer({
     required super.$db,
     required super.$table,
@@ -1133,7 +1133,7 @@ class $$UsersTableAnnotationComposer extends Composer<_$Database, $UsersTable> {
 }
 
 class $$UsersTableTableManager extends RootTableManager<
-    _$Database,
+    Database,
     $UsersTable,
     User,
     $$UsersTableFilterComposer,
@@ -1144,7 +1144,7 @@ class $$UsersTableTableManager extends RootTableManager<
     (User, $$UsersTableReferences),
     User,
     PrefetchHooks Function({bool nextUser, bool groupsRefs})> {
-  $$UsersTableTableManager(_$Database db, $UsersTable table)
+  $$UsersTableTableManager(Database db, $UsersTable table)
       : super(TableManagerState(
           db: db,
           table: table,
@@ -1232,7 +1232,7 @@ class $$UsersTableTableManager extends RootTableManager<
 }
 
 typedef $$UsersTableProcessedTableManager = ProcessedTableManager<
-    _$Database,
+    Database,
     $UsersTable,
     User,
     $$UsersTableFilterComposer,
@@ -1256,11 +1256,10 @@ typedef $GroupsUpdateCompanionBuilder = GroupsCompanion Function({
   Value<int> owner,
 });
 
-final class $GroupsReferences
-    extends BaseReferences<_$Database, Groups, Group> {
+final class $GroupsReferences extends BaseReferences<Database, Groups, Group> {
   $GroupsReferences(super.$_db, super.$_table, super.$_typedResult);
 
-  static $UsersTable _ownerTable(_$Database db) =>
+  static $UsersTable _ownerTable(Database db) =>
       db.users.createAlias($_aliasNameGenerator(db.groups.owner, db.users.id));
 
   $$UsersTableProcessedTableManager? get owner {
@@ -1274,7 +1273,7 @@ final class $GroupsReferences
   }
 }
 
-class $GroupsFilterComposer extends Composer<_$Database, Groups> {
+class $GroupsFilterComposer extends Composer<Database, Groups> {
   $GroupsFilterComposer({
     required super.$db,
     required super.$table,
@@ -1312,7 +1311,7 @@ class $GroupsFilterComposer extends Composer<_$Database, Groups> {
   }
 }
 
-class $GroupsOrderingComposer extends Composer<_$Database, Groups> {
+class $GroupsOrderingComposer extends Composer<Database, Groups> {
   $GroupsOrderingComposer({
     required super.$db,
     required super.$table,
@@ -1350,7 +1349,7 @@ class $GroupsOrderingComposer extends Composer<_$Database, Groups> {
   }
 }
 
-class $GroupsAnnotationComposer extends Composer<_$Database, Groups> {
+class $GroupsAnnotationComposer extends Composer<Database, Groups> {
   $GroupsAnnotationComposer({
     required super.$db,
     required super.$table,
@@ -1389,7 +1388,7 @@ class $GroupsAnnotationComposer extends Composer<_$Database, Groups> {
 }
 
 class $GroupsTableManager extends RootTableManager<
-    _$Database,
+    Database,
     Groups,
     Group,
     $GroupsFilterComposer,
@@ -1400,7 +1399,7 @@ class $GroupsTableManager extends RootTableManager<
     (Group, $GroupsReferences),
     Group,
     PrefetchHooks Function({bool owner})> {
-  $GroupsTableManager(_$Database db, Groups table)
+  $GroupsTableManager(Database db, Groups table)
       : super(TableManagerState(
           db: db,
           table: table,
@@ -1474,7 +1473,7 @@ class $GroupsTableManager extends RootTableManager<
 }
 
 typedef $GroupsProcessedTableManager = ProcessedTableManager<
-    _$Database,
+    Database,
     Groups,
     Group,
     $GroupsFilterComposer,
@@ -1498,7 +1497,7 @@ typedef $NotesUpdateCompanionBuilder = NotesCompanion Function({
   Value<int> rowid,
 });
 
-class $NotesFilterComposer extends Composer<_$Database, Notes> {
+class $NotesFilterComposer extends Composer<Database, Notes> {
   $NotesFilterComposer({
     required super.$db,
     required super.$table,
@@ -1516,7 +1515,7 @@ class $NotesFilterComposer extends Composer<_$Database, Notes> {
       column: $table.searchTerms, builder: (column) => ColumnFilters(column));
 }
 
-class $NotesOrderingComposer extends Composer<_$Database, Notes> {
+class $NotesOrderingComposer extends Composer<Database, Notes> {
   $NotesOrderingComposer({
     required super.$db,
     required super.$table,
@@ -1534,7 +1533,7 @@ class $NotesOrderingComposer extends Composer<_$Database, Notes> {
       column: $table.searchTerms, builder: (column) => ColumnOrderings(column));
 }
 
-class $NotesAnnotationComposer extends Composer<_$Database, Notes> {
+class $NotesAnnotationComposer extends Composer<Database, Notes> {
   $NotesAnnotationComposer({
     required super.$db,
     required super.$table,
@@ -1553,7 +1552,7 @@ class $NotesAnnotationComposer extends Composer<_$Database, Notes> {
 }
 
 class $NotesTableManager extends RootTableManager<
-    _$Database,
+    Database,
     Notes,
     Note,
     $NotesFilterComposer,
@@ -1561,10 +1560,10 @@ class $NotesTableManager extends RootTableManager<
     $NotesAnnotationComposer,
     $NotesCreateCompanionBuilder,
     $NotesUpdateCompanionBuilder,
-    (Note, BaseReferences<_$Database, Notes, Note>),
+    (Note, BaseReferences<Database, Notes, Note>),
     Note,
     PrefetchHooks Function()> {
-  $NotesTableManager(_$Database db, Notes table)
+  $NotesTableManager(Database db, Notes table)
       : super(TableManagerState(
           db: db,
           table: table,
@@ -1606,7 +1605,7 @@ class $NotesTableManager extends RootTableManager<
 }
 
 typedef $NotesProcessedTableManager = ProcessedTableManager<
-    _$Database,
+    Database,
     Notes,
     Note,
     $NotesFilterComposer,
@@ -1614,19 +1613,19 @@ typedef $NotesProcessedTableManager = ProcessedTableManager<
     $NotesAnnotationComposer,
     $NotesCreateCompanionBuilder,
     $NotesUpdateCompanionBuilder,
-    (Note, BaseReferences<_$Database, Notes, Note>),
+    (Note, BaseReferences<Database, Notes, Note>),
     Note,
     PrefetchHooks Function()>;
 
-class $DatabaseManager {
-  final _$Database _db;
-  $DatabaseManager(this._db);
+class DatabaseManager {
+  final Database _db;
+  DatabaseManager(this._db);
   $$UsersTableTableManager get users =>
       $$UsersTableTableManager(_db, _db.users);
   $GroupsTableManager get groups => $GroupsTableManager(_db, _db.groups);
   $NotesTableManager get notes => $NotesTableManager(_db, _db.notes);
 }
 
-extension $DatabaseManagerExt on _$Database {
-  $DatabaseManager get managers => $DatabaseManager(this);
+extension DatabaseManagerExt on Database {
+  DatabaseManager get managers => DatabaseManager(this);
 }

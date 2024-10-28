@@ -222,7 +222,7 @@ typedef $EntriesUpdateCompanionBuilder = EntriesCompanion Function({
   Value<String> value,
 });
 
-class $EntriesFilterComposer extends Composer<_$MyDatabase, Entries> {
+class $EntriesFilterComposer extends Composer<MyDatabase, Entries> {
   $EntriesFilterComposer({
     required super.$db,
     required super.$table,
@@ -237,7 +237,7 @@ class $EntriesFilterComposer extends Composer<_$MyDatabase, Entries> {
       column: $table.value, builder: (column) => ColumnFilters(column));
 }
 
-class $EntriesOrderingComposer extends Composer<_$MyDatabase, Entries> {
+class $EntriesOrderingComposer extends Composer<MyDatabase, Entries> {
   $EntriesOrderingComposer({
     required super.$db,
     required super.$table,
@@ -252,7 +252,7 @@ class $EntriesOrderingComposer extends Composer<_$MyDatabase, Entries> {
       column: $table.value, builder: (column) => ColumnOrderings(column));
 }
 
-class $EntriesAnnotationComposer extends Composer<_$MyDatabase, Entries> {
+class $EntriesAnnotationComposer extends Composer<MyDatabase, Entries> {
   $EntriesAnnotationComposer({
     required super.$db,
     required super.$table,
@@ -268,7 +268,7 @@ class $EntriesAnnotationComposer extends Composer<_$MyDatabase, Entries> {
 }
 
 class $EntriesTableManager extends RootTableManager<
-    _$MyDatabase,
+    MyDatabase,
     Entries,
     Entry,
     $EntriesFilterComposer,
@@ -276,10 +276,10 @@ class $EntriesTableManager extends RootTableManager<
     $EntriesAnnotationComposer,
     $EntriesCreateCompanionBuilder,
     $EntriesUpdateCompanionBuilder,
-    (Entry, BaseReferences<_$MyDatabase, Entries, Entry>),
+    (Entry, BaseReferences<MyDatabase, Entries, Entry>),
     Entry,
     PrefetchHooks Function()> {
-  $EntriesTableManager(_$MyDatabase db, Entries table)
+  $EntriesTableManager(MyDatabase db, Entries table)
       : super(TableManagerState(
           db: db,
           table: table,
@@ -313,7 +313,7 @@ class $EntriesTableManager extends RootTableManager<
 }
 
 typedef $EntriesProcessedTableManager = ProcessedTableManager<
-    _$MyDatabase,
+    MyDatabase,
     Entries,
     Entry,
     $EntriesFilterComposer,
@@ -321,16 +321,16 @@ typedef $EntriesProcessedTableManager = ProcessedTableManager<
     $EntriesAnnotationComposer,
     $EntriesCreateCompanionBuilder,
     $EntriesUpdateCompanionBuilder,
-    (Entry, BaseReferences<_$MyDatabase, Entries, Entry>),
+    (Entry, BaseReferences<MyDatabase, Entries, Entry>),
     Entry,
     PrefetchHooks Function()>;
 
-class $MyDatabaseManager {
-  final _$MyDatabase _db;
-  $MyDatabaseManager(this._db);
+class MyDatabaseManager {
+  final MyDatabase _db;
+  MyDatabaseManager(this._db);
   $EntriesTableManager get entries => $EntriesTableManager(_db, _db.entries);
 }
 
-extension $MyDatabaseManagerExt on _$MyDatabase {
-  $MyDatabaseManager get managers => $MyDatabaseManager(this);
+extension MyDatabaseManagerExt on MyDatabase {
+  MyDatabaseManager get managers => MyDatabaseManager(this);
 }

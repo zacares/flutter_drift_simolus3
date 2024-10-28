@@ -209,7 +209,7 @@ typedef $$_SomeTableTableUpdateCompanionBuilder = _SomeTableCompanion Function({
 });
 
 class $$_SomeTableTableFilterComposer
-    extends Composer<_$_SomeDb, $_SomeTableTable> {
+    extends Composer<_SomeDb, $_SomeTableTable> {
   $$_SomeTableTableFilterComposer({
     required super.$db,
     required super.$table,
@@ -225,7 +225,7 @@ class $$_SomeTableTableFilterComposer
 }
 
 class $$_SomeTableTableOrderingComposer
-    extends Composer<_$_SomeDb, $_SomeTableTable> {
+    extends Composer<_SomeDb, $_SomeTableTable> {
   $$_SomeTableTableOrderingComposer({
     required super.$db,
     required super.$table,
@@ -241,7 +241,7 @@ class $$_SomeTableTableOrderingComposer
 }
 
 class $$_SomeTableTableAnnotationComposer
-    extends Composer<_$_SomeDb, $_SomeTableTable> {
+    extends Composer<_SomeDb, $_SomeTableTable> {
   $$_SomeTableTableAnnotationComposer({
     required super.$db,
     required super.$table,
@@ -257,7 +257,7 @@ class $$_SomeTableTableAnnotationComposer
 }
 
 class $$_SomeTableTableTableManager extends RootTableManager<
-    _$_SomeDb,
+    _SomeDb,
     $_SomeTableTable,
     _SomeTableData,
     $$_SomeTableTableFilterComposer,
@@ -265,13 +265,10 @@ class $$_SomeTableTableTableManager extends RootTableManager<
     $$_SomeTableTableAnnotationComposer,
     $$_SomeTableTableCreateCompanionBuilder,
     $$_SomeTableTableUpdateCompanionBuilder,
-    (
-      _SomeTableData,
-      BaseReferences<_$_SomeDb, $_SomeTableTable, _SomeTableData>
-    ),
+    (_SomeTableData, BaseReferences<_SomeDb, $_SomeTableTable, _SomeTableData>),
     _SomeTableData,
     PrefetchHooks Function()> {
-  $$_SomeTableTableTableManager(_$_SomeDb db, $_SomeTableTable table)
+  $$_SomeTableTableTableManager(_SomeDb db, $_SomeTableTable table)
       : super(TableManagerState(
           db: db,
           table: table,
@@ -305,7 +302,7 @@ class $$_SomeTableTableTableManager extends RootTableManager<
 }
 
 typedef $$_SomeTableTableProcessedTableManager = ProcessedTableManager<
-    _$_SomeDb,
+    _SomeDb,
     $_SomeTableTable,
     _SomeTableData,
     $$_SomeTableTableFilterComposer,
@@ -313,20 +310,17 @@ typedef $$_SomeTableTableProcessedTableManager = ProcessedTableManager<
     $$_SomeTableTableAnnotationComposer,
     $$_SomeTableTableCreateCompanionBuilder,
     $$_SomeTableTableUpdateCompanionBuilder,
-    (
-      _SomeTableData,
-      BaseReferences<_$_SomeDb, $_SomeTableTable, _SomeTableData>
-    ),
+    (_SomeTableData, BaseReferences<_SomeDb, $_SomeTableTable, _SomeTableData>),
     _SomeTableData,
     PrefetchHooks Function()>;
 
-class $_SomeDbManager {
-  final _$_SomeDb _db;
-  $_SomeDbManager(this._db);
+class SomeDbManager {
+  final _SomeDb _db;
+  SomeDbManager(this._db);
   $$_SomeTableTableTableManager get someTable =>
       $$_SomeTableTableTableManager(_db, _db.someTable);
 }
 
-extension $_SomeDbManagerExt on _$_SomeDb {
-  $_SomeDbManager get managers => $_SomeDbManager(this);
+extension SomeDbManagerExt on _SomeDb {
+  SomeDbManager get managers => SomeDbManager(this);
 }

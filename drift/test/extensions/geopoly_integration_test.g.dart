@@ -244,7 +244,7 @@ typedef $GeopolyTestUpdateCompanionBuilder = GeopolyTestCompanion Function({
 });
 
 class $GeopolyTestFilterComposer
-    extends Composer<_$_GeopolyTestDatabase, GeopolyTest> {
+    extends Composer<_GeopolyTestDatabase, GeopolyTest> {
   $GeopolyTestFilterComposer({
     required super.$db,
     required super.$table,
@@ -260,7 +260,7 @@ class $GeopolyTestFilterComposer
 }
 
 class $GeopolyTestOrderingComposer
-    extends Composer<_$_GeopolyTestDatabase, GeopolyTest> {
+    extends Composer<_GeopolyTestDatabase, GeopolyTest> {
   $GeopolyTestOrderingComposer({
     required super.$db,
     required super.$table,
@@ -276,7 +276,7 @@ class $GeopolyTestOrderingComposer
 }
 
 class $GeopolyTestAnnotationComposer
-    extends Composer<_$_GeopolyTestDatabase, GeopolyTest> {
+    extends Composer<_GeopolyTestDatabase, GeopolyTest> {
   $GeopolyTestAnnotationComposer({
     required super.$db,
     required super.$table,
@@ -292,7 +292,7 @@ class $GeopolyTestAnnotationComposer
 }
 
 class $GeopolyTestTableManager extends RootTableManager<
-    _$_GeopolyTestDatabase,
+    _GeopolyTestDatabase,
     GeopolyTest,
     GeopolyTestData,
     $GeopolyTestFilterComposer,
@@ -302,11 +302,11 @@ class $GeopolyTestTableManager extends RootTableManager<
     $GeopolyTestUpdateCompanionBuilder,
     (
       GeopolyTestData,
-      BaseReferences<_$_GeopolyTestDatabase, GeopolyTest, GeopolyTestData>
+      BaseReferences<_GeopolyTestDatabase, GeopolyTest, GeopolyTestData>
     ),
     GeopolyTestData,
     PrefetchHooks Function()> {
-  $GeopolyTestTableManager(_$_GeopolyTestDatabase db, GeopolyTest table)
+  $GeopolyTestTableManager(_GeopolyTestDatabase db, GeopolyTest table)
       : super(TableManagerState(
           db: db,
           table: table,
@@ -344,7 +344,7 @@ class $GeopolyTestTableManager extends RootTableManager<
 }
 
 typedef $GeopolyTestProcessedTableManager = ProcessedTableManager<
-    _$_GeopolyTestDatabase,
+    _GeopolyTestDatabase,
     GeopolyTest,
     GeopolyTestData,
     $GeopolyTestFilterComposer,
@@ -354,19 +354,18 @@ typedef $GeopolyTestProcessedTableManager = ProcessedTableManager<
     $GeopolyTestUpdateCompanionBuilder,
     (
       GeopolyTestData,
-      BaseReferences<_$_GeopolyTestDatabase, GeopolyTest, GeopolyTestData>
+      BaseReferences<_GeopolyTestDatabase, GeopolyTest, GeopolyTestData>
     ),
     GeopolyTestData,
     PrefetchHooks Function()>;
 
-class $_GeopolyTestDatabaseManager {
-  final _$_GeopolyTestDatabase _db;
-  $_GeopolyTestDatabaseManager(this._db);
+class GeopolyTestDatabaseManager {
+  final _GeopolyTestDatabase _db;
+  GeopolyTestDatabaseManager(this._db);
   $GeopolyTestTableManager get geopolyTest =>
       $GeopolyTestTableManager(_db, _db.geopolyTest);
 }
 
-extension $_GeopolyTestDatabaseManagerExt on _$_GeopolyTestDatabase {
-  $_GeopolyTestDatabaseManager get managers =>
-      $_GeopolyTestDatabaseManager(this);
+extension GeopolyTestDatabaseManagerExt on _GeopolyTestDatabase {
+  GeopolyTestDatabaseManager get managers => GeopolyTestDatabaseManager(this);
 }

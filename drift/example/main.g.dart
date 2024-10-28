@@ -725,12 +725,12 @@ typedef $$TodoCategoriesTableUpdateCompanionBuilder = TodoCategoriesCompanion
 });
 
 final class $$TodoCategoriesTableReferences
-    extends BaseReferences<_$Database, $TodoCategoriesTable, TodoCategory> {
+    extends BaseReferences<Database, $TodoCategoriesTable, TodoCategory> {
   $$TodoCategoriesTableReferences(
       super.$_db, super.$_table, super.$_typedResult);
 
   static MultiTypedResultKey<$TodoItemsTable, List<TodoItem>>
-      _todoItemsRefsTable(_$Database db) =>
+      _todoItemsRefsTable(Database db) =>
           MultiTypedResultKey.fromTable(db.todoItems,
               aliasName: $_aliasNameGenerator(
                   db.todoCategories.id, db.todoItems.categoryId));
@@ -746,7 +746,7 @@ final class $$TodoCategoriesTableReferences
 }
 
 class $$TodoCategoriesTableFilterComposer
-    extends Composer<_$Database, $TodoCategoriesTable> {
+    extends Composer<Database, $TodoCategoriesTable> {
   $$TodoCategoriesTableFilterComposer({
     required super.$db,
     required super.$table,
@@ -783,7 +783,7 @@ class $$TodoCategoriesTableFilterComposer
 }
 
 class $$TodoCategoriesTableOrderingComposer
-    extends Composer<_$Database, $TodoCategoriesTable> {
+    extends Composer<Database, $TodoCategoriesTable> {
   $$TodoCategoriesTableOrderingComposer({
     required super.$db,
     required super.$table,
@@ -799,7 +799,7 @@ class $$TodoCategoriesTableOrderingComposer
 }
 
 class $$TodoCategoriesTableAnnotationComposer
-    extends Composer<_$Database, $TodoCategoriesTable> {
+    extends Composer<Database, $TodoCategoriesTable> {
   $$TodoCategoriesTableAnnotationComposer({
     required super.$db,
     required super.$table,
@@ -836,7 +836,7 @@ class $$TodoCategoriesTableAnnotationComposer
 }
 
 class $$TodoCategoriesTableTableManager extends RootTableManager<
-    _$Database,
+    Database,
     $TodoCategoriesTable,
     TodoCategory,
     $$TodoCategoriesTableFilterComposer,
@@ -847,7 +847,7 @@ class $$TodoCategoriesTableTableManager extends RootTableManager<
     (TodoCategory, $$TodoCategoriesTableReferences),
     TodoCategory,
     PrefetchHooks Function({bool todoItemsRefs})> {
-  $$TodoCategoriesTableTableManager(_$Database db, $TodoCategoriesTable table)
+  $$TodoCategoriesTableTableManager(Database db, $TodoCategoriesTable table)
       : super(TableManagerState(
           db: db,
           table: table,
@@ -906,7 +906,7 @@ class $$TodoCategoriesTableTableManager extends RootTableManager<
 }
 
 typedef $$TodoCategoriesTableProcessedTableManager = ProcessedTableManager<
-    _$Database,
+    Database,
     $TodoCategoriesTable,
     TodoCategory,
     $$TodoCategoriesTableFilterComposer,
@@ -931,10 +931,10 @@ typedef $$TodoItemsTableUpdateCompanionBuilder = TodoItemsCompanion Function({
 });
 
 final class $$TodoItemsTableReferences
-    extends BaseReferences<_$Database, $TodoItemsTable, TodoItem> {
+    extends BaseReferences<Database, $TodoItemsTable, TodoItem> {
   $$TodoItemsTableReferences(super.$_db, super.$_table, super.$_typedResult);
 
-  static $TodoCategoriesTable _categoryIdTable(_$Database db) =>
+  static $TodoCategoriesTable _categoryIdTable(Database db) =>
       db.todoCategories.createAlias(
           $_aliasNameGenerator(db.todoItems.categoryId, db.todoCategories.id));
 
@@ -950,7 +950,7 @@ final class $$TodoItemsTableReferences
 }
 
 class $$TodoItemsTableFilterComposer
-    extends Composer<_$Database, $TodoItemsTable> {
+    extends Composer<Database, $TodoItemsTable> {
   $$TodoItemsTableFilterComposer({
     required super.$db,
     required super.$table,
@@ -992,7 +992,7 @@ class $$TodoItemsTableFilterComposer
 }
 
 class $$TodoItemsTableOrderingComposer
-    extends Composer<_$Database, $TodoItemsTable> {
+    extends Composer<Database, $TodoItemsTable> {
   $$TodoItemsTableOrderingComposer({
     required super.$db,
     required super.$table,
@@ -1035,7 +1035,7 @@ class $$TodoItemsTableOrderingComposer
 }
 
 class $$TodoItemsTableAnnotationComposer
-    extends Composer<_$Database, $TodoItemsTable> {
+    extends Composer<Database, $TodoItemsTable> {
   $$TodoItemsTableAnnotationComposer({
     required super.$db,
     required super.$table,
@@ -1077,7 +1077,7 @@ class $$TodoItemsTableAnnotationComposer
 }
 
 class $$TodoItemsTableTableManager extends RootTableManager<
-    _$Database,
+    Database,
     $TodoItemsTable,
     TodoItem,
     $$TodoItemsTableFilterComposer,
@@ -1088,7 +1088,7 @@ class $$TodoItemsTableTableManager extends RootTableManager<
     (TodoItem, $$TodoItemsTableReferences),
     TodoItem,
     PrefetchHooks Function({bool categoryId})> {
-  $$TodoItemsTableTableManager(_$Database db, $TodoItemsTable table)
+  $$TodoItemsTableTableManager(Database db, $TodoItemsTable table)
       : super(TableManagerState(
           db: db,
           table: table,
@@ -1167,7 +1167,7 @@ class $$TodoItemsTableTableManager extends RootTableManager<
 }
 
 typedef $$TodoItemsTableProcessedTableManager = ProcessedTableManager<
-    _$Database,
+    Database,
     $TodoItemsTable,
     TodoItem,
     $$TodoItemsTableFilterComposer,
@@ -1179,15 +1179,15 @@ typedef $$TodoItemsTableProcessedTableManager = ProcessedTableManager<
     TodoItem,
     PrefetchHooks Function({bool categoryId})>;
 
-class $DatabaseManager {
-  final _$Database _db;
-  $DatabaseManager(this._db);
+class DatabaseManager {
+  final Database _db;
+  DatabaseManager(this._db);
   $$TodoCategoriesTableTableManager get todoCategories =>
       $$TodoCategoriesTableTableManager(_db, _db.todoCategories);
   $$TodoItemsTableTableManager get todoItems =>
       $$TodoItemsTableTableManager(_db, _db.todoItems);
 }
 
-extension $DatabaseManagerExt on _$Database {
-  $DatabaseManager get managers => $DatabaseManager(this);
+extension DatabaseManagerExt on Database {
+  DatabaseManager get managers => DatabaseManager(this);
 }

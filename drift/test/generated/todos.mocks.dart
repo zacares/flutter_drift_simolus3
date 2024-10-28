@@ -1689,10 +1689,10 @@ class MockTodoDb extends _i1.Mock implements _i3.TodoDb {
       ) as String);
 }
 
-/// A class which mocks [$TodoDbManager].
+/// A class which mocks [TodoDbManager].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class Mock$TodoDbManager extends _i1.Mock implements _i3.$TodoDbManager {
+class MockTodoDbManager extends _i1.Mock implements _i3.TodoDbManager {
   @override
   _i3.$$CategoriesTableTableManager get categories => (super.noSuchMethod(
         Invocation.getter(#categories),

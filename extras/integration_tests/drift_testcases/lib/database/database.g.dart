@@ -732,7 +732,7 @@ typedef $$UsersTableUpdateCompanionBuilder = UsersCompanion Function({
   Value<Preferences?> preferences,
 });
 
-class $$UsersTableFilterComposer extends Composer<_$Database, $UsersTable> {
+class $$UsersTableFilterComposer extends Composer<Database, $UsersTable> {
   $$UsersTableFilterComposer({
     required super.$db,
     required super.$table,
@@ -759,7 +759,7 @@ class $$UsersTableFilterComposer extends Composer<_$Database, $UsersTable> {
           builder: (column) => ColumnWithTypeConverterFilters(column));
 }
 
-class $$UsersTableOrderingComposer extends Composer<_$Database, $UsersTable> {
+class $$UsersTableOrderingComposer extends Composer<Database, $UsersTable> {
   $$UsersTableOrderingComposer({
     required super.$db,
     required super.$table,
@@ -784,7 +784,7 @@ class $$UsersTableOrderingComposer extends Composer<_$Database, $UsersTable> {
       column: $table.preferences, builder: (column) => ColumnOrderings(column));
 }
 
-class $$UsersTableAnnotationComposer extends Composer<_$Database, $UsersTable> {
+class $$UsersTableAnnotationComposer extends Composer<Database, $UsersTable> {
   $$UsersTableAnnotationComposer({
     required super.$db,
     required super.$table,
@@ -810,7 +810,7 @@ class $$UsersTableAnnotationComposer extends Composer<_$Database, $UsersTable> {
 }
 
 class $$UsersTableTableManager extends RootTableManager<
-    _$Database,
+    Database,
     $UsersTable,
     User,
     $$UsersTableFilterComposer,
@@ -818,10 +818,10 @@ class $$UsersTableTableManager extends RootTableManager<
     $$UsersTableAnnotationComposer,
     $$UsersTableCreateCompanionBuilder,
     $$UsersTableUpdateCompanionBuilder,
-    (User, BaseReferences<_$Database, $UsersTable, User>),
+    (User, BaseReferences<Database, $UsersTable, User>),
     User,
     PrefetchHooks Function()> {
-  $$UsersTableTableManager(_$Database db, $UsersTable table)
+  $$UsersTableTableManager(Database db, $UsersTable table)
       : super(TableManagerState(
           db: db,
           table: table,
@@ -867,7 +867,7 @@ class $$UsersTableTableManager extends RootTableManager<
 }
 
 typedef $$UsersTableProcessedTableManager = ProcessedTableManager<
-    _$Database,
+    Database,
     $UsersTable,
     User,
     $$UsersTableFilterComposer,
@@ -875,7 +875,7 @@ typedef $$UsersTableProcessedTableManager = ProcessedTableManager<
     $$UsersTableAnnotationComposer,
     $$UsersTableCreateCompanionBuilder,
     $$UsersTableUpdateCompanionBuilder,
-    (User, BaseReferences<_$Database, $UsersTable, User>),
+    (User, BaseReferences<Database, $UsersTable, User>),
     User,
     PrefetchHooks Function()>;
 typedef $$FriendshipsTableCreateCompanionBuilder = FriendshipsCompanion
@@ -894,7 +894,7 @@ typedef $$FriendshipsTableUpdateCompanionBuilder = FriendshipsCompanion
 });
 
 class $$FriendshipsTableFilterComposer
-    extends Composer<_$Database, $FriendshipsTable> {
+    extends Composer<Database, $FriendshipsTable> {
   $$FriendshipsTableFilterComposer({
     required super.$db,
     required super.$table,
@@ -914,7 +914,7 @@ class $$FriendshipsTableFilterComposer
 }
 
 class $$FriendshipsTableOrderingComposer
-    extends Composer<_$Database, $FriendshipsTable> {
+    extends Composer<Database, $FriendshipsTable> {
   $$FriendshipsTableOrderingComposer({
     required super.$db,
     required super.$table,
@@ -934,7 +934,7 @@ class $$FriendshipsTableOrderingComposer
 }
 
 class $$FriendshipsTableAnnotationComposer
-    extends Composer<_$Database, $FriendshipsTable> {
+    extends Composer<Database, $FriendshipsTable> {
   $$FriendshipsTableAnnotationComposer({
     required super.$db,
     required super.$table,
@@ -953,7 +953,7 @@ class $$FriendshipsTableAnnotationComposer
 }
 
 class $$FriendshipsTableTableManager extends RootTableManager<
-    _$Database,
+    Database,
     $FriendshipsTable,
     Friendship,
     $$FriendshipsTableFilterComposer,
@@ -961,10 +961,10 @@ class $$FriendshipsTableTableManager extends RootTableManager<
     $$FriendshipsTableAnnotationComposer,
     $$FriendshipsTableCreateCompanionBuilder,
     $$FriendshipsTableUpdateCompanionBuilder,
-    (Friendship, BaseReferences<_$Database, $FriendshipsTable, Friendship>),
+    (Friendship, BaseReferences<Database, $FriendshipsTable, Friendship>),
     Friendship,
     PrefetchHooks Function()> {
-  $$FriendshipsTableTableManager(_$Database db, $FriendshipsTable table)
+  $$FriendshipsTableTableManager(Database db, $FriendshipsTable table)
       : super(TableManagerState(
           db: db,
           table: table,
@@ -1006,7 +1006,7 @@ class $$FriendshipsTableTableManager extends RootTableManager<
 }
 
 typedef $$FriendshipsTableProcessedTableManager = ProcessedTableManager<
-    _$Database,
+    Database,
     $FriendshipsTable,
     Friendship,
     $$FriendshipsTableFilterComposer,
@@ -1014,21 +1014,21 @@ typedef $$FriendshipsTableProcessedTableManager = ProcessedTableManager<
     $$FriendshipsTableAnnotationComposer,
     $$FriendshipsTableCreateCompanionBuilder,
     $$FriendshipsTableUpdateCompanionBuilder,
-    (Friendship, BaseReferences<_$Database, $FriendshipsTable, Friendship>),
+    (Friendship, BaseReferences<Database, $FriendshipsTable, Friendship>),
     Friendship,
     PrefetchHooks Function()>;
 
-class $DatabaseManager {
-  final _$Database _db;
-  $DatabaseManager(this._db);
+class DatabaseManager {
+  final Database _db;
+  DatabaseManager(this._db);
   $$UsersTableTableManager get users =>
       $$UsersTableTableManager(_db, _db.users);
   $$FriendshipsTableTableManager get friendships =>
       $$FriendshipsTableTableManager(_db, _db.friendships);
 }
 
-extension $DatabaseManagerExt on _$Database {
-  $DatabaseManager get managers => $DatabaseManager(this);
+extension DatabaseManagerExt on Database {
+  DatabaseManager get managers => DatabaseManager(this);
 }
 
 class FriendshipsOfResult {

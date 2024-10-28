@@ -200,7 +200,7 @@ typedef $$NotesTableUpdateCompanionBuilder = NotesCompanion Function({
 });
 
 class $$NotesTableFilterComposer
-    extends Composer<_$MyEncryptedDatabase, $NotesTable> {
+    extends Composer<MyEncryptedDatabase, $NotesTable> {
   $$NotesTableFilterComposer({
     required super.$db,
     required super.$table,
@@ -216,7 +216,7 @@ class $$NotesTableFilterComposer
 }
 
 class $$NotesTableOrderingComposer
-    extends Composer<_$MyEncryptedDatabase, $NotesTable> {
+    extends Composer<MyEncryptedDatabase, $NotesTable> {
   $$NotesTableOrderingComposer({
     required super.$db,
     required super.$table,
@@ -232,7 +232,7 @@ class $$NotesTableOrderingComposer
 }
 
 class $$NotesTableAnnotationComposer
-    extends Composer<_$MyEncryptedDatabase, $NotesTable> {
+    extends Composer<MyEncryptedDatabase, $NotesTable> {
   $$NotesTableAnnotationComposer({
     required super.$db,
     required super.$table,
@@ -248,7 +248,7 @@ class $$NotesTableAnnotationComposer
 }
 
 class $$NotesTableTableManager extends RootTableManager<
-    _$MyEncryptedDatabase,
+    MyEncryptedDatabase,
     $NotesTable,
     Note,
     $$NotesTableFilterComposer,
@@ -256,10 +256,10 @@ class $$NotesTableTableManager extends RootTableManager<
     $$NotesTableAnnotationComposer,
     $$NotesTableCreateCompanionBuilder,
     $$NotesTableUpdateCompanionBuilder,
-    (Note, BaseReferences<_$MyEncryptedDatabase, $NotesTable, Note>),
+    (Note, BaseReferences<MyEncryptedDatabase, $NotesTable, Note>),
     Note,
     PrefetchHooks Function()> {
-  $$NotesTableTableManager(_$MyEncryptedDatabase db, $NotesTable table)
+  $$NotesTableTableManager(MyEncryptedDatabase db, $NotesTable table)
       : super(TableManagerState(
           db: db,
           table: table,
@@ -293,7 +293,7 @@ class $$NotesTableTableManager extends RootTableManager<
 }
 
 typedef $$NotesTableProcessedTableManager = ProcessedTableManager<
-    _$MyEncryptedDatabase,
+    MyEncryptedDatabase,
     $NotesTable,
     Note,
     $$NotesTableFilterComposer,
@@ -301,17 +301,17 @@ typedef $$NotesTableProcessedTableManager = ProcessedTableManager<
     $$NotesTableAnnotationComposer,
     $$NotesTableCreateCompanionBuilder,
     $$NotesTableUpdateCompanionBuilder,
-    (Note, BaseReferences<_$MyEncryptedDatabase, $NotesTable, Note>),
+    (Note, BaseReferences<MyEncryptedDatabase, $NotesTable, Note>),
     Note,
     PrefetchHooks Function()>;
 
-class $MyEncryptedDatabaseManager {
-  final _$MyEncryptedDatabase _db;
-  $MyEncryptedDatabaseManager(this._db);
+class MyEncryptedDatabaseManager {
+  final MyEncryptedDatabase _db;
+  MyEncryptedDatabaseManager(this._db);
   $$NotesTableTableManager get notes =>
       $$NotesTableTableManager(_db, _db.notes);
 }
 
-extension $MyEncryptedDatabaseManagerExt on _$MyEncryptedDatabase {
-  $MyEncryptedDatabaseManager get managers => $MyEncryptedDatabaseManager(this);
+extension MyEncryptedDatabaseManagerExt on MyEncryptedDatabase {
+  MyEncryptedDatabaseManager get managers => MyEncryptedDatabaseManager(this);
 }

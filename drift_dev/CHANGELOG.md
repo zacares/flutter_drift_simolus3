@@ -2,6 +2,7 @@
 
 - Pass language version to dart formatter when generating code.
 - Fix generated code missing question marks for nullable types in some instances.
+- Add (opt-in) `row_class_constructor_all_required` builder option.
 
 ## 2.21.2
 

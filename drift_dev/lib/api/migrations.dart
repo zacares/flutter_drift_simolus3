@@ -111,6 +111,9 @@ extension VerifySelf on GeneratedDatabase {
   /// When [validateDropped] is enabled (it is by default), this method also
   /// verifies that all schema elements that you've deleted at some point are no
   /// longer present in your runtime schema.
+  /// 
+  /// [validateDatabaseSchema] is only supported on native platforms (Android,
+  /// iOS, macOS, Linux and Windows).
   Future<void> validateDatabaseSchema({bool validateDropped = true}) async {
     final virtualTables = allTables
         .whereType<VirtualTableInfo>()

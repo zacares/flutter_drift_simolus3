@@ -110,3 +110,10 @@ When you use `validateDatabaseSchema`, drift will transparently:
 When a mismatch is found, an exception with a message explaining exactly where another value was expected will
 be thrown.
 This allows you to find issues with your schema migrations quickly.
+
+!!! note "Web support"
+
+    
+   `validateDatabaseSchema` is only supported on native platforms (Android, iOS, macOS, Linux and Windows).
+    
+

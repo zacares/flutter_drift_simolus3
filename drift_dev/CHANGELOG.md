@@ -1,6 +1,9 @@
 ## 2.22.0-dev
 
 - Pass language version to dart formatter when generating code.
+- Deprecate `package:drift_dev/api/migrations.dart` in favor of `package:drift_dev/api/migrations_native.dart`.
+- Support [runtime schema verification](https://drift.simonbinder.eu/migrations/tests/#verifying-a-database-schema-at-runtime)
+  on the web.
 - Fix generated code missing question marks for nullable types in some instances.
 - Add (opt-in) `row_class_constructor_all_required` builder option.
 

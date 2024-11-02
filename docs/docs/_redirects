@@ -53,4 +53,4 @@
 /docs/platforms/postgres/ /Platforms/postgres/
 /docs/advanced-features/daos/ /dart_api/daos/
 /api/* https://pub.dev/documentation/drift/latest/index.html
-
+custom_row_classes/ /dart_api/dataclass/#custom-dataclass

@@ -170,6 +170,7 @@ targets:
                 - json1
                 - fts5
                 - math
+                - dbstat
 ```
 
 We currently support the following extensions:
@@ -183,6 +184,9 @@ We currently support the following extensions:
 - [geopoly](https://www.sqlite.org/geopoly.html), a generalization of the R*Tree module supporting more complex
   polygons. Note that this is not the case for most sqlite3 builds,
   including the ones shipping with `sqlite3_flutter_libs`.
+- [dbstat](https://www.sqlite.org/dbstat.html), a module reporting information about the amount of disk space used by
+  different tables. This requires a build flag when compiling SQLite. `sqlite3_flutter_libs` sets that flag,
+  but other SQLite distributions might not.
 - `moor_ffi`: Enables support for functions that are only available when using a `NativeDatabase`. This contains `pow`, `sqrt` and a variety
   of trigonometric functions. Details on those functions are available [here](../Platforms/vm.md#drift-only-functions).
 - `math`: Assumes that sqlite3 was compiled with [math functions](https://www.sqlite.org/lang_mathfunc.html).

@@ -1,3 +1,7 @@
+## 0.40.0-dev
+
+- Add support for the `dbstat` module.
+
 ## 0.39.2
 
 - Fix false-positive lint for a parameter count mismatch on `bm25()`.

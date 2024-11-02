@@ -210,6 +210,7 @@ const _$SqlModuleEnumMap = {
   SqlModule.rtree: 'rtree',
   SqlModule.spellfix1: 'spellfix1',
   SqlModule.geopoly: 'geopoly',
+  SqlModule.dbstat: 'dbstat',
 };
 
 const _$CaseFromDartToSqlEnumMap = {

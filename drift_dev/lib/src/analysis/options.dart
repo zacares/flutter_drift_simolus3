@@ -447,6 +447,10 @@ enum SqlModule {
   ///
   /// See more: https://www.sqlite.org/geopoly.html
   geopoly,
+
+  /// Enables the dbstat table providing insights into the disk state occupied
+  /// by certain tables.
+  dbstat,
 }
 
 /// The possible values for the case of the table and column names.

@@ -1,5 +1,6 @@
 ## 2.22.0-dev
 
+- CLI options dealing with schemas now support views defined in Dart ([#3285](https://github.com/simolus3/drift/issues/3285)).
 - Pass language version to dart formatter when generating code.
 - Deprecate `package:drift_dev/api/migrations.dart` in favor of `package:drift_dev/api/migrations_native.dart`.
 - Support [runtime schema verification](https://drift.simonbinder.eu/migrations/tests/#verifying-a-database-schema-at-runtime)

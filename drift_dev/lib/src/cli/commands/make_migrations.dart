@@ -273,7 +273,7 @@ class _MigrationTestEmitter {
 
     final writer = SchemaWriter(driftElements, options: cli.project.options);
     final schemaFile = driftSchemaFile(schemaVersion);
-    final content = json.encode(writer.createSchemaJson());
+    final content = json.encode(await writer.createSchemaJson());
     if (!schemaFile.existsSync()) {
       cli.logger
           .info('$dbName: Creating schema file for version $schemaVersion');

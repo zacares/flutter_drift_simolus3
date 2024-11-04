@@ -157,6 +157,6 @@ extra_javascript:
   - path: compatibility.dart.js
     defer: true
 extra_css:
-  - css/syntax_highlight.css
+  - /drift.css
 watch:
   - "../lib"

@@ -4,6 +4,8 @@
 - Add missing parentheses around adjacent expressions of the same precedence.
 - Fix creating tables that are both `STRICT` and `WITHOUT ROWID`.
 - WASM: Report worker failures to make them easier to diagnose.
+- Allow closing stream queries synchronously, making drift easier to use in
+  widget tests.
 
 ## 2.21.0
 

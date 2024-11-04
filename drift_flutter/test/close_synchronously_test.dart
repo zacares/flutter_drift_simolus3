@@ -23,7 +23,7 @@ void main() {
 }
 
 class _MyApp extends StatefulWidget {
-  const _MyApp(this.db, {super.key});
+  const _MyApp(this.db);
   final _EmptyDatabase db;
 
   @override

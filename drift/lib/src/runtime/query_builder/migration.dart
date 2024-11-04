@@ -346,12 +346,15 @@ class Migrator {
 
     context.buffer.write(')');
 
-    // == true because of nullability
-    if (dslTable.withoutRowId) {
-      context.buffer.write(' WITHOUT ROWID');
-    }
-    if (dslTable.isStrict) {
-      context.buffer.write(' STRICT');
+    final options = [
+      if (dslTable.withoutRowId) 'WITHOUT ROWID',
+      if (dslTable.isStrict) 'STRICT'
+    ].join(', ');
+
+    if (options.isNotEmpty) {
+      context.buffer
+        ..write(' ')
+        ..write(options);
     }
 
     context.buffer.write(';');

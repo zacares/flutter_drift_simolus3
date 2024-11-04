@@ -1,7 +1,8 @@
-## 2.22.0
+## 2.22.0-dev
 
 - Add `sqliteAny()` method to tables to declare `ANY` columns.
 - Add missing parentheses around adjacent expressions of the same precedence.
+- Fix creating tables that are both `STRICT` and `WITHOUT ROWID`.
 - WASM: Report worker failures to make them easier to diagnose.
 
 ## 2.21.0

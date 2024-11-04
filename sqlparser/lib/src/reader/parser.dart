@@ -2216,16 +2216,6 @@ class Parser {
       }
     }
 
-    while (_check(TokenType.without) || _check(TokenType.strict)) {
-      if (_matchOne(TokenType.without)) {
-      } else {
-        // Matched a strict keyword
-        isStrict = true;
-        _advance();
-        assert(_previous.type == TokenType.strict);
-      }
-    }
-
     final overriddenName = _driftTableName();
 
     return CreateTableStatement(

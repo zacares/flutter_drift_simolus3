@@ -94,8 +94,9 @@ Drift offers a variety of built-in column types to suit most database needs.
 | `Uint8List`                                                    | `late final image = blob()()`                     | `BLOB`                      |
 | `DriftAny`                                                     | `late final value = sqliteAny()()`                | `ANY` (for `STRICT` tables) |
 | `DateTime` (see [options](#datetime-options))                  | `late final createdAt = dateTime()()`             | `INTEGER`or `TEXT`          |
-| Your own :exploding_head:                                      | See [type converter docs](../type_converters.md). | Depending on type.          |
-| Postgres Types                                                 | See [postgres docs](../Platforms/postgres.md).    | Depending on type.          |
+| Your own                                                       | See [type converter docs](../type_converters.md). | Depending on type           |
+| Enums                                                          | [`intEnum` or `textEnum`](../type_converters.md#implicit-enum-converters). | `INTEGER` or `TEXT`         |
+| Postgres Types                                                 | See [postgres docs](../Platforms/postgres.md).    | Depending on type           |
 
 In addition to these basic types, columns can be configured to store any type which can be converted to a built-in type. See [type converters](../type_converters.md) for more information.
 

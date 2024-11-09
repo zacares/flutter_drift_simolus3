@@ -7,7 +7,7 @@ description: Generate test code to write unit tests for your migrations.
 
 !!! warning "Important Note"
 
-      If you are using the `make-migrations` command, tests are already generated for you.  
+      If you are using the `make-migrations` command, tests are already generated for you.
 
 
 
@@ -125,5 +125,5 @@ This allows you to find issues with your schema migrations quickly.
 !!! tip "Also available in DevTools"
 
     Ensuring that the current schema matches the expected state is also a feature available in Drift's
-    [DevTools extension]({ '../Tools/devtools.md' }).
+    [DevTools extension]('../Tools/devtools.md').
     The extensions also allow resetting a database, which might be useful when working on or debugging migrations.

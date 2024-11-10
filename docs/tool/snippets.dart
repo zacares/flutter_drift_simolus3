@@ -9,6 +9,7 @@ class SnippetsBuilder extends CodeExcerptBuilder {
   SnippetsBuilder([BuilderOptions? options])
       : super(
           dropIndendation: true,
+          styles: const PygmentStyles(),
         );
 
   @override

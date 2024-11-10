@@ -5,7 +5,7 @@ builders:
     builder_factories: ["writeVersions"]
     build_extensions: { "$package$": ["lib/versions.json"] }
   code_snippets:
-    import: "tool/snippets2.dart"
+    import: "tool/snippets.dart"
     build_to: source
     builder_factories: ["SnippetsBuilder.new"]
     build_extensions: { "": [".excerpt.json"] }

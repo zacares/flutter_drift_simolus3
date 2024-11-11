@@ -5,8 +5,6 @@ description: All you need to know about adding drift to your project.
 
 ---
 
-
-
 Drift is a powerful database library for Dart and Flutter applications. To
 support its advanced capabilities like type-safe SQL queries, verification of
 your database and migrations, it uses a builder and command-line tooling that

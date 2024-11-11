@@ -74,9 +74,12 @@ def markdown_codeblock(content: str, lang: str = "") -> str:
 
 
 def html_codeblock(content: str) -> str:
-    """
-    Create the html for this code block.
-    """
     random_id = "".join(random.choices(string.ascii_lowercase + string.digits, k=8))
-    result = f"""<div class="highlight"><pre id="{random_id}"><code>{content}</code></pre></div>"""
+
+    result = f"""
+/// html | div[class="highlight"]
+    markdown: html
+<pre id="{random_id}"><code>{content}</code></pre>
+///
+    """
     return result

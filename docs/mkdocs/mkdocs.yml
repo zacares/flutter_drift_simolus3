@@ -88,6 +88,7 @@ markdown_extensions:
       options:
         custom_icons:
           - overrides/.icons
+  - pymdownx.blocks.html
 
 nav:
   - index.md

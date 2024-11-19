@@ -72,7 +72,7 @@ targets:
             ${blue.wrap("another_db")}: ${lightRed.wrap("lib/database2.dart")}
 
 
-          ${green.wrap("# Optional: The directory where the test files are stored")}: 
+          ${green.wrap("# Optional: The directory where the test files are stored")}:
           ${blue.wrap("test_dir")}: ${lightRed.wrap("test/drift/")} ${green.wrap("# (default)")}
 
           ${green.wrap("# Optional: The directory where the schema files are stored")}:
@@ -344,7 +344,7 @@ ${blue.wrap("class")} ${green.wrap(dbClassName)} ${blue.wrap("extends")} ${green
         migrations.sorted((a, b) => a.from.compareTo(b.from)).first;
 
     final packageName = cli.project.buildConfig.packageName;
-    final relativeDbPath = p.relative(dbClassFile.path,
+    final relativeDbPath = p.posix.relative(dbClassFile.path,
         from: p.join(cli.project.directory.path, 'lib'));
 
     final code = """
@@ -472,8 +472,8 @@ final expectedNew${table.dbGetterName.pascalCase}Data = <v$to.${table.nameOfRowC
     await verifier.testWithDataIntegrity(
       oldVersion: $from,
       newVersion: $to,
-      createOld: v1.DatabaseAtV$from.new,
-      createNew: v2.DatabaseAtV$to.new,
+      createOld: v$from.DatabaseAtV$from.new,
+      createNew: v$to.DatabaseAtV$to.new,
       openTestedDatabase: $dbClassName.new,
       createItems: (batch, oldDb) {
         ${tables.map(

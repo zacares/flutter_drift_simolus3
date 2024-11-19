@@ -14,11 +14,6 @@ void main() {
   group(
     'make-migrations',
     () {
-      tearDown(() async {
-        try {
-          await project.root.delete(recursive: true);
-        } catch (_) {}
-      });
       test('default', () async {
         project = await TestDriftProject.create([
           d.dir('lib', [d.file('db.dart', _dbContent)]),
@@ -127,6 +122,40 @@ targets:
       });
     },
   );
+
+  test('supports migrations from higher starting numbers', () async {
+    project = await TestDriftProject.create([
+      d.dir('lib', [
+        d.file('db.dart',
+            _dbContent.replaceAll('schemaVersion => 1', 'schemaVersion => 3'))
+      ]),
+      d.file('build.yaml', """
+targets:
+  \$default:
+    builders:
+      drift_dev:
+        options:
+          databases:
+            my_database: lib/db.dart""")
+    ]);
+    await project.runDriftCli(['make-migrations']);
+    File(p.join(project.root.path, 'lib/db.dart')).writeAsStringSync(
+        _dbWithNewColumnBump.replaceAll(
+            'schemaVersion => 2', 'schemaVersion => 4'));
+    await project.runDriftCli(['make-migrations']);
+    await d
+        .file(
+            'app/test/drift/my_database/migration_test.dart',
+            allOf([
+              IsValidDartFile(anything),
+              // Make sure the generated example test works.
+              contains('oldVersion: 3,'),
+              contains('newVersion: 4,'),
+              contains('createOld: v3.DatabaseAtV3.new,'),
+              contains('createNew: v4.DatabaseAtV4.new'),
+            ]))
+        .validate();
+  });
 }
 
 const _dbContent = '''

@@ -8,6 +8,7 @@
 - Fix generated code missing question marks for nullable types in some instances.
 - Add (opt-in) `row_class_constructor_all_required` builder option.
 - Support the `dbstat` table in drift-file queries when enabling the `dbstat` module.
+- Fix `make-migrations` using invalid import URIs in generated test on Windows.
 
 ## 2.21.2
 

@@ -190,7 +190,8 @@ class _MigrationTestEmitter {
   Map<int, ExportedSchema> schemas;
 
   /// Migration writer for each migration
-  List<_MigrationWriter> get migrations => _MigrationWriter.fromSchema(schemas);
+  List<_MigrationTestWriter> get migrations =>
+      _MigrationTestWriter.fromSchema(schemas);
 
   _MigrationTestEmitter({
     required this.cli,
@@ -384,13 +385,15 @@ void main() {
     }
   });
 
-  // Simple tests ensure the schema is transformed correctly, but some
-  // migrations benefit from a test verifying that data is transformed correctly
-  // too. This is particularly true for migrations that change existing columns
-  // (e.g. altering their type or constraints). Migrations that only add tables
-  // or columns typically don't need these advanced tests.
-  // TODO: Check whether you have migrations that could benefit from these tests
-  // and adapt this example to your database if necessary:
+
+  // The following template shows how to write tests ensuring your migrations
+  // preserve existing data.
+  // Testing this can be useful for migrations that change existing columns
+  // (e.g. by alterating their type or constraints). Migrations that only add
+  // tables or columns typically don't need these advanced tests. For more
+  // information, see https://drift.simonbinder.eu/migrations/tests/#verifying-data-integrity
+  // TODO: This generated template shows how these tests could be written. Adopt
+  // it to your own needs when testing migrations with data integrity.
   ${firstMigration.testStepByStepMigrationCode(dbName, dbClassName)}
 }
 """;
@@ -417,19 +420,21 @@ void main() {
   }
 }
 
-/// A writer that generates the code for a migration from one schema version to another
-class _MigrationWriter {
+/// A writer that generates example code for a migration test with data
+/// integrity.
+class _MigrationTestWriter {
   final List<DriftTable> tables;
   final int from;
   final int to;
 
-  _MigrationWriter(this.tables, {required this.from, required this.to});
+  _MigrationTestWriter(this.tables, {required this.from, required this.to});
 
   /// Create  list of migration writers from a map of schema versions
   /// A migration writer is created for each pair of schema versions
   /// e.g (1,2), (2,3), (3,4) etc
-  static List<_MigrationWriter> fromSchema(Map<int, ExportedSchema> schemas) {
-    final result = <_MigrationWriter>[];
+  static List<_MigrationTestWriter> fromSchema(
+      Map<int, ExportedSchema> schemas) {
+    final result = <_MigrationTestWriter>[];
     if (schemas.length < 2) {
       return result;
     }
@@ -441,7 +446,8 @@ class _MigrationWriter {
       final toTables = toSchema.schema.whereType<DriftTable>();
       final commonTables = fromTables.where(
           (table) => toTables.any((t) => t.schemaName == table.schemaName));
-      result.add(_MigrationWriter(commonTables.toList(), from: from, to: to));
+      result
+          .add(_MigrationTestWriter(commonTables.toList(), from: from, to: to));
     }
     return result;
   }
@@ -462,6 +468,7 @@ test("migration from v$from to v$to does not corrupt data",
       () async {
   // Add data to insert into the old database, and the expected rows after the
   // migration.
+  // TODO: Fill these lists
     ${tables.map((table) {
       return """
 final old${table.dbGetterName.pascalCase}Data = <v$from.${table.nameOfRowClass}>[];

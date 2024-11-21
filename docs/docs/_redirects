@@ -23,6 +23,7 @@
 /docs/getting-started/writing_queries/ /dart_api/select/
 /docs/examples/existing_databases/ /Examples/existing_databases/
 /docs/getting-started/ /setup/
+/getting-started/ /setup/
 /docs/sql-api/drift_files/ /sql_api/drift_files/
 /docs/sql-api/custom_queries/ /sql_api/custom_queries/
 /docs/sql-api/ /sql_api/

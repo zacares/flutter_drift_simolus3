@@ -1,6 +1,8 @@
 ## 0.40.0-dev
 
 - Add support for the `dbstat` module.
+- Prioritize null propagation in type resolver, leading to more accurate
+  analysis on which columns are nullable.
 
 ## 0.39.2
 

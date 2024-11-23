@@ -143,7 +143,7 @@ elif [ $arg1 == "serve" ]; then
 
     if [ $arg2 == "--with-build-runner" ]; then
         echo "Running build_runner watch..."
-        dart run build_runner watch
+        dart run build_runner watch -d
     fi
 
     wait

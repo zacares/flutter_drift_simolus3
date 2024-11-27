@@ -130,7 +130,6 @@ This class is introduced for two reasons:
 To solve this problem, companions represent partial rows by using Drift's `Value` class.
 `Value`s store a value (which can be nullable) or explicitly indicate that a value is _absent_:
 
-
 {{ load_snippet('generated-value','lib/snippets/dart_api/dataclass.dart.excerpt.json') }}
 
 1. Since the `id` is `autoIncrement()`, the database will pick a value for us and no value
@@ -138,6 +137,15 @@ To solve this problem, companions represent partial rows by using Drift's `Value
 2. To simplify the common scenarios of inserts, drift generates a `.insert()` constructor
    on companions that avoids `Value` wrappers where they are not required.
    This insert could be written as `UsersCompanion.insert(username: 'user')`
+
+### Updating with SQL expressions
+
+Companions also provide a `.custom` method used when mixing values and SQL expressions for
+updates or deletes.
+For instance, this update statement changes all the names of all rows in the `users` table
+to be lower-case:
+
+{{ load_snippet('companion-custom','lib/snippets/dart_api/dataclass.dart.excerpt.json') }}
 
 ## Custom dataclass
 

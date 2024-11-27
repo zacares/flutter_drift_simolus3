@@ -69,6 +69,12 @@ void _queryManager(Database db) async {
   await (db.update(db.users)..where((tbl) => tbl.id.equals(1)))
       .write(UsersCompanion(username: Value("Updated name")));
   // #enddocregion generated-value
+
+  // #docregion companion-custom
+  await db
+      .update(db.users)
+      .write(UsersCompanion.custom(username: db.users.username.lower()));
+  // #enddocregion companion-custom
 }
 
 void _queryCore(Database db) async {

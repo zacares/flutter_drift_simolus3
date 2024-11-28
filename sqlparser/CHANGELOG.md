@@ -1,4 +1,4 @@
-## 0.40.0-dev
+## 0.40.0
 
 - Add support for the `dbstat` module.
 - Prioritize null propagation in type resolver, leading to more accurate

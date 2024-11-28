@@ -1,4 +1,4 @@
-## 2.22.0-dev
+## 2.22.0
 
 - Add `sqliteAny()` method to tables to declare `ANY` columns.
 - Add missing parentheses around adjacent expressions of the same precedence.

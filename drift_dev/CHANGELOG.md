@@ -1,4 +1,4 @@
-## 2.22.0-dev
+## 2.22.0
 
 - CLI options dealing with schemas now support views defined in Dart ([#3285](https://github.com/simolus3/drift/issues/3285)).
 - Pass language version to dart formatter when generating code.

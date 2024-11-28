@@ -110,6 +110,9 @@ Instead (or in addition to) [writing tests](#verifying-a-database-schema-at-runt
 
     {{ load_snippet('web','lib/snippets/migrations/runtime_verification_web.dart.excerpt.json', indent=4) }}
 
+    It's also possible to re-use code between your native and web checks with conditional imports.
+    You can check the [example app](https://github.com/simolus3/drift/tree/develop/examples/app/lib/database/connection) for
+    inspiration.
 
 When you use `validateDatabaseSchema`, drift will transparently:
 

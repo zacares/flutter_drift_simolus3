@@ -2,6 +2,8 @@
 
 - Fix generated SQL for `insertFromSelect` statements with upserts.
 - Fix `alterTable` for databases where `legacy_alter_table` is not writable.
+- Allow `package:drift/web.dart` to be imported into Dart apps compiled with
+  dart2wasm.
 
 ## 2.22.0
 

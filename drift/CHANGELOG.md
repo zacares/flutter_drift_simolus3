@@ -1,3 +1,7 @@
+## 2.22.1
+
+- Fix generated SQL for `insertFromSelect` statements with upserts.
+
 ## 2.22.0
 
 - Add `sqliteAny()` method to tables to declare `ANY` columns.

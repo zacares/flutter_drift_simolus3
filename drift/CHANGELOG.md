@@ -1,6 +1,7 @@
 ## 2.22.1
 
 - Fix generated SQL for `insertFromSelect` statements with upserts.
+- Fix `alterTable` for databases where `legacy_alter_table` is not writable.
 
 ## 2.22.0
 

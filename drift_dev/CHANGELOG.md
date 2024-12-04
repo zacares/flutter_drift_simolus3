@@ -1,3 +1,7 @@
+## 2.22.1-dev
+
+- Fix generating Dart expressions without an inferred type.
+
 ## 2.22.0
 
 - CLI options dealing with schemas now support views defined in Dart ([#3285](https://github.com/simolus3/drift/issues/3285)).

@@ -1,4 +1,4 @@
-## 2.22.1-dev
+## 2.22.1
 
 - Fix generating Dart expressions without an inferred type.
 

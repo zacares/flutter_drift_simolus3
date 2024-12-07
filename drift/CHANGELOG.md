@@ -1,3 +1,7 @@
+## 2.23.0-dev
+
+- Allow building compound select statements in Dart.
+
 ## 2.22.1
 
 - Fix generated SQL for `insertFromSelect` statements with upserts.

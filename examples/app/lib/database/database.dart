@@ -44,7 +44,6 @@ class AppDatabase extends _$AppDatabase {
     return MigrationStrategy(
       onUpgrade: stepByStep(
         from1To2: (m, schema) async {
-          print("Go");
           // The todoEntries.dueDate column was added in version 2.
           await m.addColumn(schema.todoEntries, schema.todoEntries.dueDate);
         },

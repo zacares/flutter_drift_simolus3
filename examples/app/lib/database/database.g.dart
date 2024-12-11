@@ -295,13 +295,11 @@ class $TodoEntriesTable extends TodoEntries
   TodoEntry map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
     return TodoEntry(
-      id: attachedDatabase.typeMapping
-          .read(DriftSqlType.int, data['${effectivePrefix}id'])!,
-      description: attachedDatabase.typeMapping
+      attachedDatabase.typeMapping
           .read(DriftSqlType.string, data['${effectivePrefix}description'])!,
-      category: attachedDatabase.typeMapping
+      attachedDatabase.typeMapping
           .read(DriftSqlType.int, data['${effectivePrefix}category']),
-      dueDate: attachedDatabase.typeMapping
+      attachedDatabase.typeMapping
           .read(DriftSqlType.dateTime, data['${effectivePrefix}due_date']),
     );
   }
@@ -310,108 +308,6 @@ class $TodoEntriesTable extends TodoEntries
   $TodoEntriesTable createAlias(String alias) {
     return $TodoEntriesTable(attachedDatabase, alias);
   }
-}
-
-class TodoEntry extends DataClass implements Insertable<TodoEntry> {
-  final int id;
-  final String description;
-  final int? category;
-  final DateTime? dueDate;
-  const TodoEntry(
-      {required this.id,
-      required this.description,
-      this.category,
-      this.dueDate});
-  @override
-  Map<String, Expression> toColumns(bool nullToAbsent) {
-    final map = <String, Expression>{};
-    map['id'] = Variable<int>(id);
-    map['description'] = Variable<String>(description);
-    if (!nullToAbsent || category != null) {
-      map['category'] = Variable<int>(category);
-    }
-    if (!nullToAbsent || dueDate != null) {
-      map['due_date'] = Variable<DateTime>(dueDate);
-    }
-    return map;
-  }
-
-  TodoEntriesCompanion toCompanion(bool nullToAbsent) {
-    return TodoEntriesCompanion(
-      id: Value(id),
-      description: Value(description),
-      category: category == null && nullToAbsent
-          ? const Value.absent()
-          : Value(category),
-      dueDate: dueDate == null && nullToAbsent
-          ? const Value.absent()
-          : Value(dueDate),
-    );
-  }
-
-  factory TodoEntry.fromJson(Map<String, dynamic> json,
-      {ValueSerializer? serializer}) {
-    serializer ??= driftRuntimeOptions.defaultSerializer;
-    return TodoEntry(
-      id: serializer.fromJson<int>(json['id']),
-      description: serializer.fromJson<String>(json['description']),
-      category: serializer.fromJson<int?>(json['category']),
-      dueDate: serializer.fromJson<DateTime?>(json['dueDate']),
-    );
-  }
-  @override
-  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
-    serializer ??= driftRuntimeOptions.defaultSerializer;
-    return <String, dynamic>{
-      'id': serializer.toJson<int>(id),
-      'description': serializer.toJson<String>(description),
-      'category': serializer.toJson<int?>(category),
-      'dueDate': serializer.toJson<DateTime?>(dueDate),
-    };
-  }
-
-  TodoEntry copyWith(
-          {int? id,
-          String? description,
-          Value<int?> category = const Value.absent(),
-          Value<DateTime?> dueDate = const Value.absent()}) =>
-      TodoEntry(
-        id: id ?? this.id,
-        description: description ?? this.description,
-        category: category.present ? category.value : this.category,
-        dueDate: dueDate.present ? dueDate.value : this.dueDate,
-      );
-  TodoEntry copyWithCompanion(TodoEntriesCompanion data) {
-    return TodoEntry(
-      id: data.id.present ? data.id.value : this.id,
-      description:
-          data.description.present ? data.description.value : this.description,
-      category: data.category.present ? data.category.value : this.category,
-      dueDate: data.dueDate.present ? data.dueDate.value : this.dueDate,
-    );
-  }
-
-  @override
-  String toString() {
-    return (StringBuffer('TodoEntry(')
-          ..write('id: $id, ')
-          ..write('description: $description, ')
-          ..write('category: $category, ')
-          ..write('dueDate: $dueDate')
-          ..write(')'))
-        .toString();
-  }
-
-  @override
-  int get hashCode => Object.hash(id, description, category, dueDate);
-  @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      (other is TodoEntry &&
-          other.id == this.id &&
-          other.description == this.description &&
-          other.category == this.category &&
-          other.dueDate == this.dueDate);
 }
 
 class TodoEntriesCompanion extends UpdateCompanion<TodoEntry> {

@@ -4,7 +4,15 @@ export 'dart:ui' show Color;
 
 import 'package:drift/drift.dart';
 
-@DataClassName('TodoEntry')
+class TodoEntry {
+  final String description;
+  final int? category;
+  final DateTime? dueDate;
+
+  TodoEntry(this.description, this.category, this.dueDate);
+}
+
+@UseRowClass(TodoEntry)
 class TodoEntries extends Table with AutoIncrementingPrimaryKey {
   TextColumn get description => text()();
 

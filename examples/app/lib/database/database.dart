@@ -16,21 +16,22 @@ part 'database.g.dart';
 
 @DriftDatabase(tables: [TodoEntries, Categories], include: {'sql.drift'})
 class AppDatabase extends _$AppDatabase {
-  AppDatabase()
+  AppDatabase([QueryExecutor? e])
       : super(
-          driftDatabase(
-            name: 'todo-app',
-            web: DriftWebOptions(
-                sqlite3Wasm: Uri.parse('sqlite3.wasm'),
-                driftWorker: Uri.parse('drift_worker.js'),
-                onResult: (result) {
-                  if (result.missingFeatures.isNotEmpty) {
-                    debugPrint(
-                        'Using ${result.chosenImplementation} due to unsupported '
-                        'browser features: ${result.missingFeatures}');
-                  }
-                }),
-          ),
+          e ??
+              driftDatabase(
+                name: 'todo-app',
+                web: DriftWebOptions(
+                    sqlite3Wasm: Uri.parse('sqlite3.wasm'),
+                    driftWorker: Uri.parse('drift_worker.js'),
+                    onResult: (result) {
+                      if (result.missingFeatures.isNotEmpty) {
+                        debugPrint(
+                            'Using ${result.chosenImplementation} due to unsupported '
+                            'browser features: ${result.missingFeatures}');
+                      }
+                    }),
+              ),
         );
 
   AppDatabase.forTesting(DatabaseConnection super.connection);

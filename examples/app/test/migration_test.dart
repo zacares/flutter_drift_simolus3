@@ -1,4 +1,5 @@
 import 'package:app/database/database.dart';
+import 'package:app/database/tables.dart';
 import 'package:drift/drift.dart';
 import 'package:drift_dev/api/migrations_native.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -58,12 +59,7 @@ void main() {
     expect(
       db.todoEntries.select().get(),
       completion(
-        [
-          const TodoEntry(
-            id: 1,
-            description: 'My manually added entry',
-          )
-        ],
+        [TodoEntry('My manually added entry', 0, null)],
       ),
     );
   });

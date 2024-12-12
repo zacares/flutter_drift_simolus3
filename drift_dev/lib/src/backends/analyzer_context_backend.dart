@@ -179,6 +179,7 @@ class AnalysisContextBackend extends DriftBackend {
           await this.context.currentSession.getResolvedLibrary(pathForTemp);
 
       if (result is ResolvedLibraryResult) {
+        // ignore: deprecated_member_use
         return result.element.scope.lookup(reference).getter;
       }
     } finally {

@@ -51,8 +51,14 @@ void main() {
     final oldCategoriesData = <v1.CategoriesData>[];
     final expectedNewCategoriesData = <v2.CategoriesData>[];
 
-    final oldTodoEntriesData = <v1.TodoEntriesData>[];
-    final expectedNewTodoEntriesData = <v2.TodoEntriesData>[];
+    final oldTodoEntriesData = <v1.TodoEntriesData>[
+      const v1.TodoEntriesData(
+          description: 'My manually added entry', id: 1, category: null)
+    ];
+    final expectedNewTodoEntriesData = <v2.TodoEntriesData>[
+      const v2.TodoEntriesData(
+          description: 'My manually added entry', id: 1, category: null)
+    ];
 
     final oldTextEntriesData = <v1.TextEntriesData>[];
     final expectedNewTextEntriesData = <v2.TextEntriesData>[];

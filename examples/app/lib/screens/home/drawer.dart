@@ -148,7 +148,8 @@ class _CategoryDrawerEntry extends ConsumerWidget {
       padding: const EdgeInsets.symmetric(horizontal: 8),
       child: Material(
         color: isActive
-            ? Colors.orangeAccent.withValues(alpha: 0.3)
+            // ignore: deprecated_member_use
+            ? Colors.orangeAccent.withOpacity(0.3)
             : Colors.transparent,
         borderRadius: BorderRadius.circular(8),
         child: InkWell(

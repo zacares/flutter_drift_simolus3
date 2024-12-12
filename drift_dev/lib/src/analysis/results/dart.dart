@@ -588,6 +588,7 @@ class _AddFromAst extends GeneralizingAstVisitor<void> {
     }
 
     final element = node.methodName.staticElement;
+    // ignore: deprecated_member_use
     final enclosing = element?.enclosingElement;
     if (enclosing is! ExtensionElement || enclosing.name == null) {
       return super.visitMethodInvocation(node);

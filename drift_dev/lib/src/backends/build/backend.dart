@@ -110,7 +110,7 @@ class DriftBuildBackend extends DriftBackend {
 
     if (await _buildStep.canRead(tempDart)) {
       final library = await _buildStep.resolver.libraryFor(tempDart);
-
+      // ignore: deprecated_member_use
       return library.scope.lookup(reference).getter;
     } else {
       // If there's no temporary file whose imports we can use, then that means

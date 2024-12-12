@@ -7,7 +7,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'generated/schema.dart';
 
 import 'generated/schema_v1.dart' as v1;
-import 'generated/schema_v2.dart' as v2;
+import 'generated/schema_v3.dart' as v3;
 
 void main() {
   driftRuntimeOptions.dontWarnAboutMultipleDatabases = true;
@@ -36,51 +36,38 @@ void main() {
     }
   });
 
-  // The following template shows how to write tests ensuring your migrations
-  // preserve existing data.
-  // Testing this can be useful for migrations that change existing columns
-  // (e.g. by alterating their type or constraints). Migrations that only add
-  // tables or columns typically don't need these advanced tests. For more
-  // information, see https://drift.simonbinder.eu/migrations/tests/#verifying-data-integrity
-  // TODO: This generated template shows how these tests could be written. Adopt
-  // it to your own needs when testing migrations with data integrity.
-  test("migration from v1 to v2 does not corrupt data", () async {
-    // Add data to insert into the old database, and the expected rows after the
-    // migration.
-    // TODO: Fill these lists
+  test("migration from v1 to v3 does not corrupt data", () async {
     final oldCategoriesData = <v1.CategoriesData>[];
-    final expectedNewCategoriesData = <v2.CategoriesData>[];
+    final expectedNewCategoriesData = <v3.CategoriesData>[];
 
     final oldTodoEntriesData = <v1.TodoEntriesData>[
-      const v1.TodoEntriesData(
-          description: 'My manually added entry', id: 1, category: null)
+      const v1.TodoEntriesData(description: 'My manually added entry', id: 1)
     ];
-    final expectedNewTodoEntriesData = <v2.TodoEntriesData>[
-      const v2.TodoEntriesData(
-          description: 'My manually added entry', id: 1, category: null)
+    final expectedNewTodoEntriesData = <v3.TodoEntriesData>[
+      const v3.TodoEntriesData(
+        description: 'My manually added entry',
+        id: 1,
+      )
     ];
 
     final oldTextEntriesData = <v1.TextEntriesData>[];
-    final expectedNewTextEntriesData = <v2.TextEntriesData>[];
+    final expectedNewTextEntriesData = <v3.TextEntriesData>[];
 
     await verifier.testWithDataIntegrity(
       oldVersion: 1,
-      newVersion: 2,
+      newVersion: 3,
       createOld: v1.DatabaseAtV1.new,
-      createNew: v2.DatabaseAtV2.new,
+      createNew: v3.DatabaseAtV3.new,
       openTestedDatabase: AppDatabase.new,
       createItems: (batch, oldDb) {
         batch.insertAll(oldDb.categories, oldCategoriesData);
         batch.insertAll(oldDb.todoEntries, oldTodoEntriesData);
-        batch.insertAll(oldDb.textEntries, oldTextEntriesData);
       },
       validateItems: (newDb) async {
         expect(expectedNewCategoriesData,
             await newDb.select(newDb.categories).get());
         expect(expectedNewTodoEntriesData,
             await newDb.select(newDb.todoEntries).get());
-        expect(expectedNewTextEntriesData,
-            await newDb.select(newDb.textEntries).get());
       },
     );
   });

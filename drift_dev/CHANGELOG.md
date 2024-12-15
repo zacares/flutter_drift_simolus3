@@ -1,3 +1,7 @@
+## 2.23.0-dev
+
+- Fix custom companion names on `@DataClassName` not being recognized.
+
 ## 2.22.1
 
 - Fix generating Dart expressions without an inferred type.

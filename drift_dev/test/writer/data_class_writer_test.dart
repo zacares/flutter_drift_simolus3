@@ -383,19 +383,19 @@ class Database extends _$Database {}
             'class FirstDataClass extends DataClass implements Insertable<FirstDataClass> {',
           ),
           contains(
-            'class FirstTableCompanion extends UpdateCompanion<FirstDataClass> {',
+            'class FirstCompanionClass extends UpdateCompanion<FirstDataClass> {',
           ),
           contains(
             'class SecondDataClass extends DataClass implements Insertable<SecondDataClass> {',
           ),
           contains(
-            'class SecondTableCompanion extends UpdateCompanion<SecondDataClass> {',
+            'class SecondCompanionClass extends UpdateCompanion<SecondDataClass> {',
           ),
           contains(
             'class ThirdTableData extends DataClass implements Insertable<ThirdTableData> {',
           ),
           contains(
-            'class ThirdTableCompanion extends UpdateCompanion<ThirdTableData> {',
+            'class ThirdCompanionClass extends UpdateCompanion<ThirdTableData> {',
           ),
         ])),
       }, writer.dartOutputs, writer.writer);

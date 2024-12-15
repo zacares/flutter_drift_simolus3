@@ -268,8 +268,7 @@ class DataClassInformation {
     }
 
     var name = dataClassName?.getField('name')!.toStringValue();
-    final companionName =
-        dataClassName?.getField('companionName')?.toStringValue();
+    final companionName = dataClassName?.getField('companion')?.toStringValue();
     CustomParentClass? customParentClass;
     ExistingRowClass? existingClass;
     List<AnnotatedDartCode> implementedInterfaces = const [];

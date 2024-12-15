@@ -86,11 +86,13 @@ abstract class _NodeOrWriter {
   }
 
   AnnotatedDartCode companionType(DriftTable table) {
-    final baseName = table.nameOfCompanionClass ??
-        (writer.options.useDataClassNameForCompanions
-            ? table.nameOfRowClass
-            : table.baseDartName);
+    if (table.nameOfCompanionClass case final customName?) {
+      return generatedElement(table, customName);
+    }
 
+    final baseName = writer.options.useDataClassNameForCompanions
+        ? table.nameOfRowClass
+        : table.baseDartName;
     return generatedElement(table, '${baseName}Companion');
   }
 

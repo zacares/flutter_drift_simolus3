@@ -1,3 +1,7 @@
+## 0.2.3
+
+- Fix compiling to WebAssembly with Dart 3.6.0.
+
 ## 0.2.2
 
 - Fix infinite loop in isolate server lookups when using `shareAcrossIsolates`

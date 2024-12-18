@@ -223,7 +223,7 @@ Now, we can use conditional imports in a `shared.dart` file to export the correc
 // shared.dart
 export 'unsupported.dart'
   if (dart.library.ffi) 'native.dart'
-  if (dart.library.html) 'web.dart';
+  if (dart.library.js_interop) 'web.dart';
 ```
 
 A ready example of this construct can also be found [here](https://github.com/simolus3/drift/blob/develop/examples/app/lib/database/connection/connection.dart).

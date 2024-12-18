@@ -106,6 +106,7 @@ nav:
           - dart_api/schema_inspection.md
           - dart_api/views.md
           - dart_api/daos.md
+          - dart_api/streams.md
       - SQL API:
           - Getting Started: sql_api/index.md
           - sql_api/drift_files.md

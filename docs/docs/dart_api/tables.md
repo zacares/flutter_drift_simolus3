@@ -35,7 +35,7 @@ example:
     ```
 2. Columns are non-nullable by default. Using `nullable()` allows storing `null` values.
 
-This defines two tables: `todo_items` with columns `id`, `title`, `category`, and `created_at`; and `todo_category` with columns `id` and `description`. 
+This defines two tables: `todo_items` with columns `id`, `title`, `category`, and `created_at`; and `todo_category` with columns `id` and `description`.
 
 The SQL equivalent of this table would be:
 

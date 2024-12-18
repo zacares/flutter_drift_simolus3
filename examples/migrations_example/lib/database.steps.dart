@@ -686,8 +686,8 @@ final class Schema11 extends i0.VersionedSchema {
         ],
         columns: [
           _column_0,
-          _column_6,
           _column_18,
+          _column_19,
           _column_7,
         ],
         attachedDatabase: database,
@@ -704,7 +704,7 @@ final class Schema11 extends i0.VersionedSchema {
         columns: [
           _column_2,
           _column_3,
-          _column_19,
+          _column_20,
           _column_17,
         ],
         attachedDatabase: database,
@@ -742,13 +742,17 @@ final class Schema11 extends i0.VersionedSchema {
       i1.Index('user_name', 'CREATE INDEX user_name ON users (name)');
 }
 
-i1.GeneratedColumn<DateTime> _column_18(String aliasedName) =>
+i1.GeneratedColumn<String> _column_18(String aliasedName) =>
+    i1.GeneratedColumn<String>('name', aliasedName, false,
+        type: i1.DriftSqlType.string,
+        defaultValue: const CustomExpression('\'name\''));
+i1.GeneratedColumn<DateTime> _column_19(String aliasedName) =>
     i1.GeneratedColumn<DateTime>('birthday', aliasedName, true,
         check: () =>
             i2.ComparableExpr((i0.VersionedTable.col<DateTime>('birthday')))
                 .isBiggerThan(i2.Constant(DateTime(1900))),
         type: i1.DriftSqlType.dateTime);
-i1.GeneratedColumn<bool> _column_19(String aliasedName) =>
+i1.GeneratedColumn<bool> _column_20(String aliasedName) =>
     i1.GeneratedColumn<bool>('deleted', aliasedName, true,
         type: i1.DriftSqlType.bool,
         $customConstraints: 'NULL DEFAULT FALSE',

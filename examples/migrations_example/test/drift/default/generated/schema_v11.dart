@@ -19,7 +19,7 @@ class Users extends Table with TableInfo<Users, UsersData> {
       'name', aliasedName, false,
       type: DriftSqlType.string,
       requiredDuringInsert: false,
-      defaultValue: const Constant('name'));
+      defaultValue: const CustomExpression('\'name\''));
   late final GeneratedColumn<DateTime> birthday = GeneratedColumn<DateTime>(
       'birthday', aliasedName, true,
       check: () =>

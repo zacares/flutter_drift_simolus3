@@ -70,8 +70,9 @@ class Users extends Table {
   IntColumn get id => integer().autoIncrement()();
   TextColumn get name => text()();
   TextColumn get settings => text()
-    .check(settings.length() > 10)
+    .check(settings.length.isBiggerThanValue(10))
     .named('setting')
+    .withDefault(Constant('foo' + 'bar'))
     .map(const SettingsConverter())();
 
   @override
@@ -100,6 +101,7 @@ class Database {}
     );
 
     final file = await state.analyze('package:a/main.dart');
+    await state.analyze('package:a/a.drift');
     state.expectNoErrors();
 
     final db = file.fileAnalysis!.resolvedDatabases.values.single;
@@ -150,7 +152,8 @@ class Database {}
 
     DatabaseWriter(input, writer.child()).write();
     final generated = writer.writeGenerated();
-    expect(generated, contains('settings.length() > 10'));
+    expect(generated,
+        contains('ComparableExpr(settings.length).isBiggerThanValue(10)'));
   });
 
   test('can export Dart-defined views', () async {
@@ -341,15 +344,20 @@ const expected = r'''
                         "moor_type": "string",
                         "nullable": false,
                         "customConstraints": null,
-                        "default_dart": null,
+                        "default_dart": "const CustomExpression('\\'foobar\\'')",
                         "default_client_dart": null,
                         "dsl_features": [
                           {
                             "check": {
                               "dart_expression": {
                                 "elements": [
+                                  {
+                                    "lexeme": "ComparableExpr",
+                                    "import_uri": "package:drift/src/runtime/query_builder/query_builder.dart"
+                                  },
+                                  "(",
                                   {"lexeme": "settings", "tag": "settings"},
-                                  ".length() > 10"
+                                  ".length).isBiggerThanValue(10)"
                                 ]
                               }
                             }

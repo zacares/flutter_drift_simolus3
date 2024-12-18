@@ -1,5 +1,6 @@
 import 'package:collection/collection.dart';
 import 'package:drift/drift.dart' show DriftSqlType, SqlDialect, UpdateKind;
+import 'package:drift_dev/src/analysis/resolver/drift/sqlparser/mapping.dart';
 import 'package:pub_semver/pub_semver.dart';
 import 'package:recase/recase.dart';
 import 'package:sqlparser/sqlparser.dart' hide PrimaryKeyColumn;
@@ -47,10 +48,27 @@ class SchemaWriter {
   Future<Map<String, Object?>> createSchemaJson() async {
     final requiresRuntimeInformation = <DriftSchemaElement>[];
     for (final element in elements) {
-      if (element is DriftView) {
-        if (element.source is! SqlViewSource) {
-          requiresRuntimeInformation.add(element);
-        }
+      switch (element) {
+        case DriftTable():
+          for (final column in element.columns) {
+            if (column.sqlType is ColumnCustomType) {
+              requiresRuntimeInformation.add(element);
+              continue;
+            }
+
+            if (column.defaultArgument != null) {
+              // This is an arbitrary Dart expression allowed to contain user
+              // code. To make sure the schema file stays valid, evaluate it
+              // once now and replace the expression with the result as a
+              // constant when serializing.
+              requiresRuntimeInformation.add(element);
+              continue;
+            }
+          }
+        case DriftView():
+          if (element.source is! SqlViewSource) {
+            requiresRuntimeInformation.add(element);
+          }
       }
     }
 
@@ -97,7 +115,25 @@ class SchemaWriter {
 
     if (entity is DriftTable) {
       type = 'table';
-      data = _tableData(entity);
+
+      // For some table definitions, we need to augment the static analysis
+      // results with runtime-evaluated results to get a sound schema. This is
+      // relevant when using defaults with Dart expressions or custom types. We
+      // shouldn't emit the underlying Dart code because it might evaluate to
+      // a different thing when dependencies are changed, while we want an
+      // immutable schema snapshot.
+      CreateTableStatement? actualTable;
+      if (knownStatements[entity.schemaName] case final known?) {
+        final sql = known.firstWhere((e) => e.$1 == SqlDialect.sqlite).$2;
+        final engine = SqlEngine(EngineOptions(version: SqliteVersion.current));
+
+        final result = engine.parse(sql);
+        if (result.rootNode case final CreateTableStatement create) {
+          actualTable = create;
+        }
+      }
+
+      data = _tableData(entity, actualTable);
     } else if (entity is DriftTrigger) {
       type = 'trigger';
       data = {
@@ -140,7 +176,9 @@ class SchemaWriter {
         'name': entity.schemaName,
         'sql': sql,
         'dart_info_name': entity.entityInfoName,
-        'columns': [for (final column in entity.columns) _columnData(column)],
+        'columns': [
+          for (final column in entity.columns) _columnData(column, null)
+        ],
       };
     } else if (entity is DefinedSqlQuery) {
       if (entity.mode == QueryMode.atCreate) {
@@ -167,7 +205,8 @@ class SchemaWriter {
     };
   }
 
-  Map<String, Object?> _tableData(DriftTable table) {
+  Map<String, Object?> _tableData(
+      DriftTable table, CreateTableStatement? create) {
     final primaryKeyFromTableConstraint =
         table.tableConstraints.whereType<PrimaryKeyColumns>().firstOrNull;
     final uniqueKeys = table.tableConstraints.whereType<UniqueColumns>();
@@ -175,7 +214,10 @@ class SchemaWriter {
     return {
       'name': table.schemaName,
       'was_declared_in_moor': table.declaration.isDriftDeclaration,
-      'columns': [for (final column in table.columns) _columnData(column)],
+      'columns': [
+        for (final column in table.columns)
+          _columnData(column, create?.column(column.nameInSql))
+      ],
       'is_virtual': table.isVirtual,
       if (table.isVirtual)
         'create_virtual_stmt': 'CREATE VIRTUAL TABLE "${table.schemaName}" '
@@ -196,7 +238,8 @@ class SchemaWriter {
     };
   }
 
-  Map<String, Object?> _columnData(DriftColumn column) {
+  Map<String, Object?> _columnData(
+      DriftColumn column, ColumnDefinition? resolved) {
     final constraints = defaultConstraints(column);
     final dialectSpecific = {
       for (final dialect in options.supportedDialects)
@@ -204,10 +247,30 @@ class SchemaWriter {
           if (specific.isNotEmpty) dialect: specific,
     };
 
+    final sqlType = column.sqlType;
+    var type = column.sqlType.builtin;
+    if (resolved != null && sqlType is ColumnCustomType) {
+      final sqlType =
+          const SchemaFromCreateTable().resolveColumnType(resolved.typeName);
+      type =
+          TypeMapping.toDefaultType(sqlType, options.storeDateTimeValuesAsText);
+    }
+    var defaultCode = column.defaultArgument;
+    if (defaultCode != null && resolved != null) {
+      // Try to replace the expression computing the default in Dart with the
+      // actual value.
+      for (final constraint in resolved.constraints) {
+        if (constraint case final Default def) {
+          defaultCode = DriftColumn.defaultFromParser(def);
+          break;
+        }
+      }
+    }
+
     return {
       'name': column.nameInSql,
       'getter_name': column.nameInDart,
-      'moor_type': column.sqlType.builtin.toSerializedString(),
+      'moor_type': type.toSerializedString(),
       'nullable': column.nullable,
       'customConstraints': column.customConstraints,
       if (constraints[SqlDialect.sqlite]!.isNotEmpty &&
@@ -218,7 +281,7 @@ class SchemaWriter {
           for (final MapEntry(:key, :value) in dialectSpecific.entries)
             key.name: value,
         },
-      'default_dart': column.defaultArgument?.toString(),
+      'default_dart': defaultCode?.toString(),
       'default_client_dart': column.clientDefaultCode?.toString(),
       'dsl_features': [...column.constraints.map(_dslFeatureData)],
       if (column.typeConverter != null)
@@ -601,5 +664,18 @@ extension _SerializeSqlType on DriftSqlType {
 
   String toSerializedString() {
     return name;
+  }
+}
+
+extension on CreateTableStatement {
+  ColumnDefinition? column(String name) {
+    final lowercaseName = name.toLowerCase();
+
+    for (final column in columns) {
+      if (column.columnName.toLowerCase() == lowercaseName) {
+        return column;
+      }
+    }
+    return null;
   }
 }

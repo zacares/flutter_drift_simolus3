@@ -43,5 +43,5 @@ Run the following command to save the new schema and generate a step-by-step mig
 this schema.
 
 ```
-dart run drift_dev make-migration
+dart run drift_dev make-migrations
 ```

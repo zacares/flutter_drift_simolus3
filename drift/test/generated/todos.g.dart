@@ -1385,15 +1385,6 @@ class $PureDefaultsTable extends PureDefaults
   String get actualTableName => $name;
   static const String $name = 'pure_defaults';
   @override
-  VerificationContext validateIntegrity(Insertable<PureDefault> instance,
-      {bool isInserting = false}) {
-    final context = VerificationContext();
-    final data = instance.toColumns(true);
-    context.handle(_txtMeta, const VerificationResult.success());
-    return context;
-  }
-
-  @override
   Set<GeneratedColumn> get $primaryKey => {txt};
   @override
   PureDefault map(Map<String, dynamic> data, {String? tablePrefix}) {

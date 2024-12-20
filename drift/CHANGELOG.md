@@ -1,6 +1,7 @@
 ## 2.23.0-dev
 
 - Allow building compound select statements in Dart.
+- Support `NULLS FIRST` and `NULLS LAST` in manager API.
 
 ## 2.22.1
 

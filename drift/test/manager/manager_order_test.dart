@@ -45,6 +45,32 @@ void main() {
         1);
   });
 
+  test('nulls first', () async {
+    await db.managers.todosTable.bulkCreate((o) => [
+          o(content: 'a'),
+          o(title: Value('first title'), content: 'b'),
+          o(title: Value('second title'), content: 'c'),
+        ]);
+
+    final entries = await db.managers.todosTable
+        .orderBy((o) => o.title.asc(nulls: NullsOrder.first))
+        .get();
+    expect(entries.map((e) => e.content), ['a', 'b', 'c']);
+  });
+
+  test('nulls last', () async {
+    await db.managers.todosTable.bulkCreate((o) => [
+          o(title: Value('second title'), content: 'a'),
+          o(title: Value('first title'), content: 'b'),
+          o(content: 'c'),
+        ]);
+
+    final entries = await db.managers.todosTable
+        .orderBy((o) => o.title.desc(nulls: NullsOrder.last))
+        .get();
+    expect(entries.map((e) => e.content), ['a', 'b', 'c']);
+  });
+
   test('manager - order related', () async {
     final schoolCategoryId = await db.managers.categories.create((o) =>
         o(priority: Value(CategoryPriority.high), description: "School"));

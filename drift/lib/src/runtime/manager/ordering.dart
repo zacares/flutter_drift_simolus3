@@ -19,44 +19,49 @@ class ColumnOrderings<T extends Object> {
     return ComposableOrdering._(orderings);
   }
 
-  /// Sort this column in ascending order
+  /// Sort this column in ascending order (1 -> 10 | A -> Z | Jan 1 -> Dec 31).
   ///
-  /// 1 -> 10 | A -> Z | Jan 1 -> Dec 31
-  ComposableOrdering asc() =>
-      $composableOrdering({OrderingBuilder(OrderingMode.asc, column)});
+  /// The optional [nulls] parameter can be used to control whether `NULL`
+  /// values in the column should come for or after non-null values.
+  ComposableOrdering asc({NullsOrder? nulls}) => $composableOrdering(
+      {OrderingBuilder(OrderingMode.asc, column, nulls: nulls)});
 
-  /// Sort this column in descending order
+  /// Sort this column in descending order (10 -> 1 | Z -> A | Dec 31 -> Jan 1).
   ///
-  /// 10 -> 1 | Z -> A | Dec 31 -> Jan 1
-  ComposableOrdering desc() =>
-      $composableOrdering({OrderingBuilder(OrderingMode.desc, column)});
+  /// The optional [nulls] parameter can be used to control whether `NULL`
+  /// values in the column should come for or after non-null values.
+  ComposableOrdering desc({NullsOrder? nulls}) => $composableOrdering(
+      {OrderingBuilder(OrderingMode.desc, column, nulls: nulls)});
 }
 
 /// Defines a class which will hold the information needed to create an ordering
-class OrderingBuilder {
+final class OrderingBuilder {
   /// The mode of the ordering
   final OrderingMode mode;
 
   /// The column that the ordering is applied to
   final Expression<Object> column;
 
+  /// How null values are treated in the ordering.
+  final NullsOrder? nulls;
+
   /// Create a new ordering builder, will be used by the [TableManagerState] to create [OrderingTerm]s
   @internal
-  OrderingBuilder(this.mode, this.column);
+  OrderingBuilder(this.mode, this.column, {this.nulls});
 
   @override
   bool operator ==(covariant OrderingBuilder other) {
     if (identical(this, other)) return true;
 
-    return other.mode == mode && other.column == column;
+    return other.mode == mode && other.column == column && other.nulls == nulls;
   }
 
   @override
-  int get hashCode => mode.hashCode ^ column.hashCode;
+  int get hashCode => Object.hash(mode, column, nulls);
 
   /// Build the ordering term using the expression and direction
   OrderingTerm buildTerm() {
-    return OrderingTerm(mode: mode, expression: column);
+    return OrderingTerm(mode: mode, expression: column, nulls: nulls);
   }
 }
 
@@ -65,7 +70,7 @@ class OrderingBuilder {
 /// Multiple orderings can be composed together using the `&` operator.
 /// The orderings will be executed from left to right.
 
-class ComposableOrdering {
+final class ComposableOrdering {
   /// The orderings that are being composed
   final Set<OrderingBuilder> orderingBuilders;
 

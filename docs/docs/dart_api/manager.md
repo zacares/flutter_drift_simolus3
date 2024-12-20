@@ -44,11 +44,11 @@ This will return a record with the entity and a `refs` object which contains the
 
 {{ load_snippet('manager_references','lib/snippets/dart_api/manager.dart.excerpt.json') }}
 
-The problem with the above approach is that it will issue a separate query for each row in the result set. This can be very inefficient if you have a large number of rows.  
+The problem with the above approach is that it will issue a separate query for each row in the result set. This can be very inefficient if you have a large number of rows.
 If there were 1000 todos, this would issue 1000 queries to fetch the category for each todo.
 
 !!! note "Filter on foreign keys"
-    
+
     When filtering on a reference column, drift will apply the filter to the column itself instead of joining the referenced table.
     For example, `todos.filter((f) => f.category.id(1))` will filter on the `category` column on the `todos` table, instead of joining the two tables and filtering on the `id` column of the `categories` table.
 
@@ -70,7 +70,7 @@ You can filter across references to other tables by using the generated referenc
 
 {{ load_snippet('manager_filter_forward_references','lib/snippets/dart_api/manager.dart.excerpt.json') }}
 
-You can also filter across back references. This is useful when you have a one-to-many relationship and want to filter the parent table based on the child table. 
+You can also filter across back references. This is useful when you have a one-to-many relationship and want to filter the parent table based on the child table.
 
 {{ load_snippet('manager_filter_back_references','lib/snippets/dart_api/manager.dart.excerpt.json') }}
 
@@ -87,8 +87,8 @@ In this example, had we not specified a custom name for the reference, the code 
 
 
 #### Name Clashes
-Drift auto-generates filters and orderings based on the names of your tables and fields. However, many times, there will be duplicates.  
-When this happens, you will see a warning message from the generator.  
+Drift auto-generates filters and orderings based on the names of your tables and fields. However, many times, there will be duplicates.
+When this happens, you will see a warning message from the generator.
 To fix this issue, use the `@ReferenceName()` annotation to specify what we should name the filter/orderings.
 
 
@@ -100,6 +100,11 @@ You can also use ordering across multiple tables just like with filters.
 
 {{ load_snippet('manager_ordering','lib/snippets/dart_api/manager.dart.excerpt.json') }}
 
+When including nullable columns in `orderBy`, you might want to control whether `NULL` values are
+placed at the start or end of the results. This is possible with the `nulls` parameter on `asc()` and
+`desc()`.
+For instance, you could write `o.title.asc(nulls: NullsOrder.first)` to request that todo items without
+a title appear before those that have one.
 
 ### Count and exists
 The manager makes it easy to check if a row exists or to count the number of rows that match a certain condition.
@@ -135,7 +140,7 @@ Any rows that meet the specified condition will be deleted.
 
 ## Computed Fields
 
-Manager queries are great when you need to select entire rows from a database table along with their related data. However, there are situations where you might want to perform more complex operations directly within the database for better efficiency. 
+Manager queries are great when you need to select entire rows from a database table along with their related data. However, there are situations where you might want to perform more complex operations directly within the database for better efficiency.
 
 Drift offers strong support for writing SQL expressions. These expressions can be used to filter data, sort results, and perform various calculations directly within your SQL queries. This means you can leverage the full power of SQL to handle complex logic right in the database, making your queries more efficient and your code cleaner.
 
@@ -152,7 +157,7 @@ You can also use [aggregate](./expressions.md#aggregate-functions-like-count-and
 
 {{ load_snippet('aggregated_annotations','lib/snippets/dart_api/manager.dart.excerpt.json') }}
 
-<!-- 
+<!--
 This documentation should added once the internal manager APIs are more stable
 
 ## Extensions

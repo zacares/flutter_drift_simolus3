@@ -124,6 +124,9 @@ package like `flutter_share` or other backup approaches.
 To import a database file into your app's database at runtime, you can use the
 following approach:
 
-1. use the `sqlite3` package to open the backup database file.
-2. run the `VACUUM INTO ?` statement on the backup database, targetting the
+1. Use the `sqlite3` package to open the backup database file.
+2. Run the `VACUUM INTO ?` statement on the backup database, targeting the
    path of your application's database (the one you pass to `NativeDatabase`).
+
+The [example app](https://github.com/simolus3/drift/blob/96b3947fc16de99ffe25bcabc124e3b3a7c69571/examples/app/lib/screens/backup/supported.dart#L47-L68)
+in the drift repository also has an example for a working backup/restore functionality.

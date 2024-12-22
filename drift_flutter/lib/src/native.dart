@@ -48,10 +48,16 @@ QueryExecutor driftDatabase({
 
       // Make sqlite3 pick a more suitable location for temporary files - the
       // one from the system may be inaccessible due to sandboxing.
-      final cachebase = (await getTemporaryDirectory()).path;
-      // We can't access /tmp on Android, which sqlite3 would try by default.
-      // Explicitly tell it about the correct temporary directory.
-      sqlite3.tempDirectory = cachebase;
+      final cachebase = await (native?.tempDirectoryPath?.call() ??
+          getTemporaryDirectory().then((d) => d.path));
+
+      if (cachebase != null) {
+        // We can't access /tmp on Android, which sqlite3 would try by default.
+        // Explicitly tell it about the correct temporary directory.
+        sqlite3.tempDirectory = cachebase;
+      }
+
+      hasConfiguredSqlite = true;
     }
 
     if (native?.shareAcrossIsolates == true) {

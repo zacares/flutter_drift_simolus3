@@ -67,10 +67,27 @@ final class DriftNativeOptions {
   /// a custom database path in another directory.
   final Future<String> Function()? databasePath;
 
+  /// An optional callback returning a temporary directory.
+  ///
+  /// For larger queries, sqlite3 might store intermediate results in memory.
+  /// By default, sqlite3 will attempt to store these results in `/tmp/`. On
+  /// some platforms, the global `/tmp/` directory is inaccessible to sandboxed
+  /// application, which then causes issues with sqlite3.
+  /// For this reason, `drift_flutter` will configure sqlite3 to store these
+  /// results in an application-defined temporary directory.
+  ///
+  /// When not set, `drift_flutter` defaults to `getTemporaryDirectory()` from
+  /// `package:path_provider`.
+  ///
+  /// If the function returns `null`, the temporary directory for sqlite3 will
+  /// not be changed by `drift_flutter`.
+  final Future<String?> Function()? tempDirectoryPath;
+
   /// Create drift options effective when opening drift databases on native
   /// platforms.
   const DriftNativeOptions({
     this.shareAcrossIsolates = false,
     this.databasePath,
+    this.tempDirectoryPath,
   });
 }

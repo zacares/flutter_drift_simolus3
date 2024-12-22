@@ -6,7 +6,7 @@ import 'dart:isolate';
 import 'dart:ui';
 
 import 'package:async/async.dart';
-import 'package:drift/drift.dart';
+import 'package:drift/drift.dart' hide isNull;
 import 'package:drift/internal/versioned_schema.dart';
 import 'package:drift/native.dart';
 import 'package:drift_flutter/drift_flutter.dart';
@@ -32,8 +32,9 @@ void main() {
     };
   });
 
+  setUp(() => hasConfiguredSqlite = false);
+
   test('sets sqlite cachebase', () async {
-    hasConfiguredSqlite = false;
     final database = SimpleDatabase(driftDatabase(name: 'database'));
     await database.customSelect('SELECT 1').get();
 
@@ -65,6 +66,17 @@ void main() {
     await d.dir('my_dir', [
       d.FileDescriptor.binaryMatcher('custom_file', anything),
     ]).validate();
+    await database.close();
+  });
+
+  test('can use custom temporary directory', () async {
+    final database = SimpleDatabase(driftDatabase(
+      name: 'database',
+      native: DriftNativeOptions(tempDirectoryPath: () async => '/tmp/'),
+    ));
+    await database.customSelect('SELECT 1').get();
+
+    expect(sqlite3.tempDirectory, '/tmp/');
     await database.close();
   });
 

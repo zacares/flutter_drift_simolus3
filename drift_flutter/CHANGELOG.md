@@ -1,3 +1,7 @@
+## 0.2.4-dev
+
+- Allow providing a custom temporary directory.
+
 ## 0.2.3
 
 - Fix compiling to WebAssembly with Dart 3.6.0.

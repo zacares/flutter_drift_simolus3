@@ -1,3 +1,4 @@
+import 'package:build/build.dart';
 import 'package:build_test/build_test.dart';
 import 'package:test/test.dart';
 
@@ -235,5 +236,63 @@ class MyDatabase {}
       result.dartOutputs,
       result.writer,
     );
+  });
+
+  group('generates dialect-specific code for single dialect', () {
+    const inputs = {
+      'a|lib/a.dart': '''
+import 'package:drift/drift.dart';
+
+@TableIndex(name: 'users_name', columns: {#name})
+class Users extends Table {
+  IntColumn get id => integer().autoIncrement()();
+  TextColumn get name => text()();
+}
+
+@DriftDatabase(tables: [Users])
+class Database {}
+'''
+    };
+
+    test('sqlite', () async {
+      final result = await emulateDriftBuild(
+        inputs: inputs,
+        options: BuilderOptions({
+          'sql': {'dialect': 'sqlite'}
+        }),
+        logger: loggerThat(neverEmits(anything)),
+      );
+
+      checkOutputs(
+        {
+          'a|lib/a.drift.dart': decodedMatches(contains('Index(\n'
+              "    'users_name',\n"
+              "    'CREATE INDEX users_name ON users (name)',"))
+        },
+        result.dartOutputs,
+        result.writer,
+      );
+    });
+
+    test('postgres', () async {
+      final result = await emulateDriftBuild(
+        inputs: inputs,
+        options: BuilderOptions({
+          'sql': {'dialect': 'postgres'}
+        }),
+        logger: loggerThat(neverEmits(anything)),
+      );
+
+      checkOutputs(
+        {
+          'a|lib/a.drift.dart': decodedMatches(contains(
+            "Index.byDialect('users_name', {\n"
+            "    SqlDialect.postgres: 'CREATE INDEX users_name ON users (name)',",
+          ))
+        },
+        result.dartOutputs,
+        result.writer,
+      );
+    });
   });
 }

@@ -3,6 +3,7 @@
 - Fix custom companion names on `@DataClassName` not being recognized.
 - Improve schema exports to resolve default values instead of embedding their source.
 - Update dependencies to support latest `dart_style` version.
+- Fix generating dialect-specific code when only a single dialect (that isn't `sqlite3`) is enabled.
 
 ## 2.22.1
 

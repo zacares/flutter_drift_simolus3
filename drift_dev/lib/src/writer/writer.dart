@@ -347,7 +347,10 @@ abstract class _NodeOrWriter {
   (String, bool) sqlByDialect(sql.AstNode node) {
     final dialects = writer.options.supportedDialects;
 
-    if (dialects.length == 1) {
+    if (dialects case [SqlDialect.sqlite]) {
+      // Even if we only have a single dialect enabled, we should generate a
+      // dialect-specific map if that dialect is not sqlite3. The reason is that
+      // APIs in drift that aren't dialect-specific all assume sqlite3.
       return (
         SqlWriter(writer.options, dialect: dialects.single)
             .writeNodeIntoStringLiteral(node),

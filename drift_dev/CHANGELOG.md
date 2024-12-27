@@ -1,4 +1,4 @@
-## 2.23.0-dev
+## 2.23.0
 
 - Fix custom companion names on `@DataClassName` not being recognized.
 - Improve schema exports to resolve default values instead of embedding their source.

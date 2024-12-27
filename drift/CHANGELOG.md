@@ -1,4 +1,4 @@
-## 2.23.0-dev
+## 2.23.0
 
 - Allow building compound select statements in Dart.
 - Support `NULLS FIRST` and `NULLS LAST` in manager API.

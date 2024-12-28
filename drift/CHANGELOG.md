@@ -1,3 +1,8 @@
+## 2.23.1-dev
+
+- Fix `TableStatements.insertAll` to only apply a database-specific pragma for
+  SQLite databases.
+
 ## 2.23.0
 
 - Allow building compound select statements in Dart.

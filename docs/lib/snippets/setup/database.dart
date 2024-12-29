@@ -54,7 +54,7 @@ class OpenFlutter {
   static QueryExecutor _openConnection() {
     return driftDatabase(
       name: 'my_database',
-      native: DriftNativeOptions(
+      native: const DriftNativeOptions(
         // By default, `driftDatabase` from `package:drift_flutter` stores the
         // database files in `getApplicationDocumentsDirectory()`.
         databaseDirectory: getApplicationSupportDirectory,

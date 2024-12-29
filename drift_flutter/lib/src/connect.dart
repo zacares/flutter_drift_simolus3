@@ -65,7 +65,25 @@ final class DriftNativeOptions {
   ///
   /// This function, which can be asynchronous for convenience, allows using
   /// a custom database path in another directory.
+  ///
+  /// At most one of [databasePath] or [databaseDirectory] may be used. Using
+  /// [databasePath] allows more control over the file name, while
+  /// [databaseDirectory] can be used to select another directory from
+  /// `path_provider` more easily.
   final Future<String> Function()? databasePath;
+
+  /// An optional function returning either a string or a `Directory` that will
+  /// be used as a directory to store the database.
+  ///
+  /// By default, drift will use `getApplicationDocumentsDirectory()` function
+  /// from `package:path_provider` as a directory an `$name.sqlite` as a file
+  /// name in that directory.
+  ///
+  /// At most one of [databasePath] or [databaseDirectory] may be used. Using
+  /// [databasePath] allows more control over the file name, while
+  /// [databaseDirectory] can be used to select another directory from
+  /// `path_provider` more easily.
+  final Future<Object> Function()? databaseDirectory;
 
   /// An optional callback returning a temporary directory.
   ///
@@ -88,6 +106,10 @@ final class DriftNativeOptions {
   const DriftNativeOptions({
     this.shareAcrossIsolates = false,
     this.databasePath,
+    this.databaseDirectory,
     this.tempDirectoryPath,
-  });
+  }) : assert(
+          databasePath == null || databaseDirectory == null,
+          'databasePath and databaseDirectory must not both be set.',
+        );
 }

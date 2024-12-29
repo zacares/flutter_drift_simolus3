@@ -12,6 +12,7 @@ import 'package:drift/native.dart';
 // #enddocregion sqlite3
 // #docregion postgres
 import 'package:drift_postgres/drift_postgres.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:postgres/postgres.dart' as pg;
 // #enddocregion postgres
 
@@ -51,9 +52,14 @@ class AppDatabase extends _$AppDatabase {
 class OpenFlutter {
 // #docregion flutter
   static QueryExecutor _openConnection() {
-    // `driftDatabase` from `package:drift_flutter` stores the database in
-    // `getApplicationDocumentsDirectory()`.
-    return driftDatabase(name: 'my_database');
+    return driftDatabase(
+      name: 'my_database',
+      native: DriftNativeOptions(
+        // By default, `driftDatabase` from `package:drift_flutter` stores the
+        // database files in `getApplicationDocumentsDirectory()`.
+        databaseDirectory: getApplicationSupportDirectory,
+      ),
+    );
   }
 }
 // #enddocregion flutter

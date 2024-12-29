@@ -14,6 +14,7 @@ import 'package:drift_flutter/src/native.dart'
     show PingWithTimeout, hasConfiguredSqlite, portName;
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:sqlite3/sqlite3.dart';
 import 'package:test_descriptor/test_descriptor.dart' as d;
 
@@ -28,6 +29,7 @@ void main() {
     return switch (call.method) {
       'getTemporaryDirectory' => d.sandbox,
       'getApplicationDocumentsDirectory' => d.path('applications'),
+      'getApplicationSupportDirectory' => d.path('support'),
       _ => throw UnsupportedError('Unexpected path provider call: $call')
     };
   });
@@ -67,6 +69,35 @@ void main() {
       d.FileDescriptor.binaryMatcher('custom_file', anything),
     ]).validate();
     await database.close();
+  });
+
+  test('can use custom database directory', () async {
+    final database = SimpleDatabase(driftDatabase(
+      name: 'database',
+      native: DriftNativeOptions(
+        databaseDirectory: getApplicationSupportDirectory,
+      ),
+    ));
+    await database.customSelect('SELECT 1').get();
+
+    expect(sqlite3.tempDirectory, d.sandbox);
+    await d.dir('support', [
+      d.FileDescriptor.binaryMatcher('database.sqlite', anything),
+    ]).validate();
+    await database.close();
+  });
+
+  test('forbids passing custom directory and custom path', () async {
+    expect(
+      () => SimpleDatabase(driftDatabase(
+        name: 'database',
+        native: DriftNativeOptions(
+          databasePath: () async => d.path('my_dir/custom_file'),
+          databaseDirectory: getApplicationSupportDirectory,
+        ),
+      )),
+      throwsAssertionError,
+    );
   });
 
   test('can use custom temporary directory', () async {
@@ -147,6 +178,7 @@ void main() {
       final isolate = await Isolate.spawn((_) {}, '');
       isolate.kill();
 
+      await pumpEventQueue(times: 1);
       expect(await isolate.pingWithTimeout(), false);
     });
 

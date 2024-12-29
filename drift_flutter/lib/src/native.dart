@@ -34,8 +34,22 @@ QueryExecutor driftDatabase({
     if (native?.databasePath case final lookupPath?) {
       return File(await lookupPath());
     } else {
-      final dbFolder = await getApplicationDocumentsDirectory();
-      return File(p.join(dbFolder.path, '$name.sqlite'));
+      final resolvedDirectory = await (native?.databaseDirectory ??
+          getApplicationDocumentsDirectory)();
+
+      return File(p.join(
+        switch (resolvedDirectory) {
+          Directory(:final path) => path,
+          final String path => path,
+          final other => throw ArgumentError.value(
+              other,
+              'other',
+              'databaseDirectory on DriftNativeOptions must resolve to a '
+                  'directory or a path as string.',
+            )
+        },
+        '$name.sqlite',
+      ));
     }
   }
 

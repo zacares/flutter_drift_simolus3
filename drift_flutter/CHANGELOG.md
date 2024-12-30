@@ -1,4 +1,4 @@
-## 0.2.4-dev
+## 0.2.4
 
 - Allow providing a custom temporary directory.
 - Allow providing a custom database directory, making it easier to swap out the

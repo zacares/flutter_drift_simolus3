@@ -2,6 +2,8 @@
 
 - Fix `TableStatements.insertAll` to only apply a database-specific pragma for
   SQLite databases.
+- Don't attempt to roll-back transactions that failed to begin.
+- Fix unhandled exception when cancelling transactions.
 
 ## 2.23.0
 

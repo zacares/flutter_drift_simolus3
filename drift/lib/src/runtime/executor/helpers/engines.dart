@@ -50,11 +50,12 @@ without awaiting every statement in it.''');
     return true;
   }
 
-  Future<T> _synchronized<T>(Future<T> Function() action) {
+  Future<T> _synchronized<T>(Future<T> Function() action,
+      {bool abortIfCancelled = true}) {
     if (isSequential || _waitingChildExecutors > 0) {
-      return _lock.synchronized(() {
-        checkIfCancelled();
-        return action();
+      return _lock.synchronized(() async {
+        if (abortIfCancelled) checkIfCancelled();
+        return await action();
       });
     } else {
       // support multiple operations in parallel, so just run right away
@@ -221,13 +222,16 @@ class _StatementBasedTransactionExecutor extends _TransactionExecutor {
       final parent = _parent;
       parent._waitingChildExecutors++;
 
-      unawaited(parent._synchronized(() async {
+      unawaited(parent._synchronized(abortIfCancelled: false, () async {
         try {
+          checkIfCancelled();
           await runCustom(_startCommand);
           _db.delegate.isInTransaction = true;
           _opened!.complete(true);
         } catch (e, s) {
           _opened!.completeError(e, s);
+
+          _release();
         }
 
         // release the database lock after the transaction completes
@@ -256,7 +260,7 @@ class _StatementBasedTransactionExecutor extends _TransactionExecutor {
     if (!_ensureOpenCalled) return;
 
     await runCustom(_commitCommand, const []);
-    _afterCommitOrRollback();
+    _release();
   }
 
   @override
@@ -272,11 +276,11 @@ class _StatementBasedTransactionExecutor extends _TransactionExecutor {
       // When aborting fails too, something is seriously wrong already. Let's
       // at least make sure that we don't block the rest of the db by pretending
       // the transaction is still open.
-      _afterCommitOrRollback();
+      _release();
     }
   }
 
-  void _afterCommitOrRollback() {
+  void _release() {
     if (depth == 0) {
       _db.delegate.isInTransaction = false;
     }

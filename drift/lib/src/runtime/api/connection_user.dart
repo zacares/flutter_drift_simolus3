@@ -494,9 +494,9 @@ abstract class DatabaseConnectionUser {
 
       return _runConnectionZoned(transaction, () async {
         var success = false;
-        try {
-          await transactionExecutor.ensureOpen(attachedDatabase);
 
+        await transactionExecutor.ensureOpen(attachedDatabase);
+        try {
           final result = await action();
           success = true;
           return result;

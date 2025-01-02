@@ -193,7 +193,7 @@ class StreamQueryStore {
 }
 
 class QueryStream<Rows extends Object> {
-  final QueryStreamFetcher _fetcher;
+  final QueryStreamFetcher<Rows> _fetcher;
   final StreamQueryStore _store;
   final DatabaseConnectionUser _database;
 
@@ -337,7 +337,7 @@ class QueryStream<Rows extends Object> {
       }
 
       if (operation.isCancelled) return;
-      runCancellable(_fetcher.fetchData, token: operation);
+      runCancellable<Rows>(_fetcher.fetchData, token: operation);
       final data = await operation.resultOrNullIfCancelled;
       if (data == null) return;
 

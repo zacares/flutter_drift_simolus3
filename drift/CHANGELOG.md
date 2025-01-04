@@ -4,6 +4,8 @@
   SQLite databases.
 - Don't attempt to roll-back transactions that failed to begin.
 - Fix unhandled exception when cancelling transactions.
+- Fix deadlock when drift databases are used in a `fake_async` Zone and then
+  closed outside that zone.
 
 ## 2.23.0
 

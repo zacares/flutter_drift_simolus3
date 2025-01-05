@@ -88,11 +88,14 @@ class _TableManagerWriter {
           .where((fieldName) => fieldName == relation.fieldName)
           .length;
       if (fieldNameCount != 1) {
-        print(
-            "Duplicate orderings/filters detected for field \"${relation.fieldName}\" on table \"${table.entityInfoName}\"."
-            " Filter and orderings for this field wont be generated."
-            " Use the @ReferenceName() annotation to resolve this issue."
-            " See https://drift.simonbinder.eu/docs/manager/#name-clashes for more information");
+        if (table.id.isDefinedInDart) {
+          print(
+              "Duplicate orderings/filters detected for field \"${relation.fieldName}\" on table \"${table.entityInfoName}\"."
+              " Filter and orderings for this field wont be generated."
+              " Use the @ReferenceName() annotation to resolve this issue."
+              " See https://drift.simonbinder.eu/docs/manager/#name-clashes for more information");
+        }
+
         return false;
       }
       return true;
@@ -170,7 +173,7 @@ class _TableManagerWriter {
           .add(_templates.relatedAnnotations(leaf: leaf, relation: relation));
     }
 
-    if (!scope.generationOptions.isModular && relations.isNotEmpty) {
+    if (relations.isNotEmpty) {
       leaf.write(_templates.rowReferencesClass(
           table: table,
           relations: relations,

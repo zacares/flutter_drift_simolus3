@@ -61,3 +61,68 @@ Future<void> openWithPool() async {
   await pool.close();
 }
 // #enddocregion pool
+
+// #docregion time
+// This table uses proper postgres types to store date/time values.
+class TimeStore extends Table {
+  Column<PgDate> get date => customType(PgTypes.date)();
+  Column<PgDateTime> get timestampWithTimezone =>
+      customType(PgTypes.timestampWithTimezone)();
+  Column<PgDateTime> get timestampWithoutTimezone =>
+      customType(PgTypes.timestampNoTimezone)();
+  Column<Interval> get interval => customType(PgTypes.interval)();
+}
+// #enddocregion time
+
+// #docregion time-dialectaware
+class _DialectAwareDateTimeType implements DialectAwareSqlType<PgDateTime> {
+  /// The underlying type used when this dialect-aware type is used on postgres
+  /// databases.
+  static const _postgres = PgTypes.timestampWithTimezone;
+
+  /// The fallback type used when we're not talking to postgres.
+  static const _other = DriftSqlType.dateTime;
+
+  const _DialectAwareDateTimeType();
+
+  @override
+  String mapToSqlLiteral(GenerationContext context, PgDateTime dartValue) {
+    return switch (context.dialect) {
+      SqlDialect.postgres => _postgres.mapToSqlLiteral(dartValue),
+      _ => context.typeMapping.mapToSqlLiteral(dartValue.dateTime),
+    };
+  }
+
+  @override
+  Object mapToSqlParameter(GenerationContext context, PgDateTime dartValue) {
+    return switch (context.dialect) {
+      SqlDialect.postgres => _postgres.mapToSqlParameter(dartValue),
+      _ => context.typeMapping.mapToSqlVariable(dartValue.dateTime)!,
+    };
+  }
+
+  @override
+  PgDateTime read(SqlTypes typeSystem, Object fromSql) {
+    return switch (typeSystem.dialect) {
+      SqlDialect.postgres => _postgres.read(fromSql),
+      _ => PgDateTime(typeSystem.read(_other, fromSql)!),
+    };
+  }
+
+  @override
+  String sqlTypeName(GenerationContext context) {
+    return switch (context.dialect) {
+      SqlDialect.postgres => _postgres.sqlTypeName(context),
+      _ => _other.sqlTypeName(context),
+    };
+  }
+}
+
+const dateTime = _DialectAwareDateTimeType();
+
+class DialectAwareTime extends Table {
+  // This will use `timestamp with timezone` on postgres, and fall back to the
+  // default date type (integer or text) on sqlite databases.
+  Column<PgDateTime> get timeValue => customType(dateTime)();
+}
+// #enddocregion time-dialectaware

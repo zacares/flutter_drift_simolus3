@@ -219,7 +219,39 @@ class $TodosTableManager extends i0.RootTableManager<
               .map((e) =>
                   (e.readTable(table), i1.$TodosReferences(db, table, e)))
               .toList(),
-          prefetchHooksCallback: null,
+          prefetchHooksCallback: ({category = false}) {
+            return i0.PrefetchHooks(
+              db: db,
+              explicitlyWatchedTables: [],
+              addJoins: <
+                  T extends i0.TableManagerState<
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic>>(state) {
+                if (category) {
+                  state = state.withJoin(
+                    currentTable: table,
+                    currentColumn: table.category,
+                    referencedTable: i1.$TodosReferences._categoryTable(db),
+                    referencedColumn: i1.$TodosReferences._categoryTable(db).id,
+                  ) as T;
+                }
+
+                return state;
+              },
+              getPrefetchedDataCallback: (items) async {
+                return [];
+              },
+            );
+          },
         ));
 }
 
@@ -410,7 +442,31 @@ class $CategoriesTableManager extends i0.RootTableManager<
               .map((e) =>
                   (e.readTable(table), i1.$CategoriesReferences(db, table, e)))
               .toList(),
-          prefetchHooksCallback: null,
+          prefetchHooksCallback: ({todosRefs = false}) {
+            return i0.PrefetchHooks(
+              db: db,
+              explicitlyWatchedTables: [
+                if (todosRefs)
+                  i2.ReadDatabaseContainer(db).resultSet<i1.Todos>('todos')
+              ],
+              addJoins: null,
+              getPrefetchedDataCallback: (items) async {
+                return [
+                  if (todosRefs)
+                    await i0.$_getPrefetchedData(
+                        currentTable: table,
+                        referencedTable:
+                            i1.$CategoriesReferences._todosRefsTable(db),
+                        managerFromTypedResult: (p0) =>
+                            i1.$CategoriesReferences(db, table, p0).todosRefs,
+                        referencedItemsForCurrentItem: (item,
+                                referencedItems) =>
+                            referencedItems.where((e) => e.category == item.id),
+                        typedResults: items)
+                ];
+              },
+            );
+          },
         ));
 }
 

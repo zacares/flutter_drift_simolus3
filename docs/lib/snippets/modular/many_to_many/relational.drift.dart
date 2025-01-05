@@ -189,7 +189,34 @@ class $$ShoppingCartsTableTableManager extends i0.RootTableManager<
                     i2.$$ShoppingCartsTableReferences(db, table, e)
                   ))
               .toList(),
-          prefetchHooksCallback: null,
+          prefetchHooksCallback: ({shoppingCartEntriesRefs = false}) {
+            return i0.PrefetchHooks(
+              db: db,
+              explicitlyWatchedTables: [
+                if (shoppingCartEntriesRefs)
+                  i4.ReadDatabaseContainer(db)
+                      .resultSet<i2.$ShoppingCartEntriesTable>(
+                          'shopping_cart_entries')
+              ],
+              addJoins: null,
+              getPrefetchedDataCallback: (items) async {
+                return [
+                  if (shoppingCartEntriesRefs)
+                    await i0.$_getPrefetchedData(
+                        currentTable: table,
+                        referencedTable: i2.$$ShoppingCartsTableReferences
+                            ._shoppingCartEntriesRefsTable(db),
+                        managerFromTypedResult: (p0) => i2
+                            .$$ShoppingCartsTableReferences(db, table, p0)
+                            .shoppingCartEntriesRefs,
+                        referencedItemsForCurrentItem:
+                            (item, referencedItems) => referencedItems
+                                .where((e) => e.shoppingCart == item.id),
+                        typedResults: items)
+                ];
+              },
+            );
+          },
         ));
 }
 
@@ -487,7 +514,53 @@ class $$ShoppingCartEntriesTableTableManager extends i0.RootTableManager<
                     i2.$$ShoppingCartEntriesTableReferences(db, table, e)
                   ))
               .toList(),
-          prefetchHooksCallback: null,
+          prefetchHooksCallback: ({shoppingCart = false, item = false}) {
+            return i0.PrefetchHooks(
+              db: db,
+              explicitlyWatchedTables: [],
+              addJoins: <
+                  T extends i0.TableManagerState<
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic>>(state) {
+                if (shoppingCart) {
+                  state = state.withJoin(
+                    currentTable: table,
+                    currentColumn: table.shoppingCart,
+                    referencedTable: i2.$$ShoppingCartEntriesTableReferences
+                        ._shoppingCartTable(db),
+                    referencedColumn: i2.$$ShoppingCartEntriesTableReferences
+                        ._shoppingCartTable(db)
+                        .id,
+                  ) as T;
+                }
+                if (item) {
+                  state = state.withJoin(
+                    currentTable: table,
+                    currentColumn: table.item,
+                    referencedTable:
+                        i2.$$ShoppingCartEntriesTableReferences._itemTable(db),
+                    referencedColumn: i2.$$ShoppingCartEntriesTableReferences
+                        ._itemTable(db)
+                        .id,
+                  ) as T;
+                }
+
+                return state;
+              },
+              getPrefetchedDataCallback: (items) async {
+                return [];
+              },
+            );
+          },
         ));
 }
 

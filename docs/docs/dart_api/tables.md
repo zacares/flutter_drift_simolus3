@@ -448,4 +448,4 @@ targets:
           # store_date_time_values_as_text: true
 ```
 
-See the [DateTime Guide](../guides/datetime-migrations.md) for more information on how dates are stored and how to switch between storage methods.
+See the [DateTime migration guide](../guides/datetime-migrations.md) for more information on how dates are stored and how to switch between storage methods.

@@ -86,26 +86,34 @@ These will be moved into separate libraries in a future major release to avoid c
 aware of them for the time being.
 This section lists affected APIs and workarounds to make them work PostgreSQL.
 
-1. Most parts of the `Migrator` API are SQLite-specific. You will be able to create tables on PostgreSQL as well,
-   but methods like `alterTable` will only work with SQLite.
-   The [migrations](#migrations) section below describes possible workarounds - the recommended approach is to
-   export your drift schema and then use dedicated migration tools for PostgreSQL.
-2. Drift's datetime columns were designed to work with SQLite, which doesn't have dedicated datetime types.
-   Most of the date time APIs (like `currentDateAndTime`) will not work with PostgreSQL.
-   When using drift databases with PostgreSQL, we suggest avoiding the default `dateTime()` column type and instead
-   use `PgTypes.date` or `PgTypes.datetime`.
-   If you need to support both sqlite3 and Postgres, consider using [dialect-aware types](../sql_api/types.md#dialect-awareness).
-
 ### Migrations
 
+Most parts of the `Migrator` API are SQLite-specific. You will be able to create tables on PostgreSQL as well,
+but methods like `alterTable` will only work with SQLite.
+While it's possible to use drift migrations with PostgreSQL databases, the recommended approach for now is to
+[export your drift schema](../Tools/index.md#exporting) and then use dedicated migration tools for PostgreSQL.
+
 In sqlite3, the current schema version is stored in the database file. To support drift's migration API
-being built ontop of this mechanism in Postgres as well, drift creates a `__schema` table storing
+being built on top of this mechanism in Postgres as well, drift creates a `__schema` table storing
 the current schema version.
 
 This migration mechanism works for simple deployments, but is unsuitable for large database setups
-with many application servers connecting to postgres. For those, an existing migration management
+with many application servers connecting to a postgres serve. For those, an existing migration management
 tool is a more reliable alternative. If you chose to manage migrations with another tool, you can
-disable migrations in postgres by passing `enableMigrations: false` to the `PgDatabase` constructor.
+disable migrations in drift by passing `enableMigrations: false` to the `PgDatabase` constructor.
+
+### DateTime columns
+
+Drift's `datetime()` columns were designed to work with SQLite, which doesn't have dedicated datetime types.
+Most of the date time APIs (like `currentDateAndTime`) will not work with PostgreSQL.
+When using drift databases with PostgreSQL, we suggest avoiding the default `dateTime()` column type and instead
+use `PgTypes.date` or `PgTypes.datetime`:
+
+{{ load_snippet('time','lib/snippets/platforms/postgres.dart.excerpt.json') }}
+
+If you need to support both sqlite3 and Postgres, consider using [dialect-aware types](../sql_api/types.md#dialect-awareness):
+
+{{ load_snippet('time-dialectaware','lib/snippets/platforms/postgres.dart.excerpt.json') }}
 
 ## Current state
 

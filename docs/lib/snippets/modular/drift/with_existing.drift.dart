@@ -381,7 +381,47 @@ class $FriendsTableManager extends i0.RootTableManager<
               .map((e) =>
                   (e.readTable(table), i2.$FriendsReferences(db, table, e)))
               .toList(),
-          prefetchHooksCallback: null,
+          prefetchHooksCallback: ({userA = false, userB = false}) {
+            return i0.PrefetchHooks(
+              db: db,
+              explicitlyWatchedTables: [],
+              addJoins: <
+                  T extends i0.TableManagerState<
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic>>(state) {
+                if (userA) {
+                  state = state.withJoin(
+                    currentTable: table,
+                    currentColumn: table.userA,
+                    referencedTable: i2.$FriendsReferences._userATable(db),
+                    referencedColumn: i2.$FriendsReferences._userATable(db).id,
+                  ) as T;
+                }
+                if (userB) {
+                  state = state.withJoin(
+                    currentTable: table,
+                    currentColumn: table.userB,
+                    referencedTable: i2.$FriendsReferences._userBTable(db),
+                    referencedColumn: i2.$FriendsReferences._userBTable(db).id,
+                  ) as T;
+                }
+
+                return state;
+              },
+              getPrefetchedDataCallback: (items) async {
+                return [];
+              },
+            );
+          },
         ));
 }
 

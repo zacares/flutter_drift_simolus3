@@ -1,4 +1,4 @@
-## 2.23.1-dev
+## 2.23.1
 
 - Generate typed reference-resolving queries through the manager API when
   modular code-generation is enabled. Previously, this feature was only enabled

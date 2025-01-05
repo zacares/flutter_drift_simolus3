@@ -1,4 +1,4 @@
-## 2.23.1-dev
+## 2.23.1
 
 - Fix `TableStatements.insertAll` to only apply a database-specific pragma for
   SQLite databases.

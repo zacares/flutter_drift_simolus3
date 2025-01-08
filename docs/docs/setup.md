@@ -29,7 +29,7 @@ adding a package to open database on the respective platform.
     ```yaml
     dependencies:
       drift: ^{{ versions.drift }}
-      drift_flutter: ^0.1.0
+      drift_flutter: ^{{ versions.drift_flutter }}
 
     dev_dependencies:
       drift_dev: ^{{ versions.drift_dev }}

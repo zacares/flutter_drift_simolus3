@@ -61,6 +61,9 @@ And as `Stream`s are a common building block in Dart, they can be consumed by mo
 - Riverpod can wrap streams with a [`StreamProvider`](https://riverpod.dev/docs/providers/stream_provider).
   This technique is also used in the [example app](https://github.com/simolus3/drift/blob/79e696719aa5d44b5edd30eb886e1fe5443a8b8f/examples/app/lib/screens/home/state.dart#L7-L12).
 
+All drift streams will emit an up-to-date result after listening to them (so you'll receive a snapshot
+even if the tables never change, and don't have to combine `get()` and `watch()`).
+
 ## Advanced uses
 
 In addition to listening on queries, you can also listen for update events on tables directly:

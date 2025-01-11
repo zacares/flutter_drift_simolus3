@@ -20,11 +20,19 @@ class Preferences {
   // #enddocregion start
 
   // #docregion simplified
-  static JsonTypeConverter<Preferences, String> converter = TypeConverter.json(
+  static JsonTypeConverter2<Preferences, String, Object?> converter =
+      TypeConverter.json2(
     fromJson: (json) => Preferences.fromJson(json as Map<String, Object?>),
     toJson: (pref) => pref.toJson(),
   );
   // #enddocregion simplified
+  // #docregion jsonb
+  static JsonTypeConverter2<Preferences, Uint8List, Object?> binaryConverter =
+      TypeConverter.jsonb(
+    fromJson: (json) => Preferences.fromJson(json as Map<String, Object?>),
+    toJson: (pref) => pref.toJson(),
+  );
+  // #enddocregion jsonb
   // #docregion start
 }
 // #enddocregion start
@@ -32,17 +40,29 @@ class Preferences {
 // #docregion converter
 // stores preferences as strings
 class PreferenceConverter extends TypeConverter<Preferences, String>
-    with JsonTypeConverter<Preferences, String> {
+    with
+        // (1)!
+        JsonTypeConverter2<Preferences, String, Map<String, Object?>> {
   const PreferenceConverter();
 
   @override
   Preferences fromSql(String fromDb) {
-    return Preferences.fromJson(json.decode(fromDb) as Map<String, dynamic>);
+    return fromJson(json.decode(fromDb) as Map<String, dynamic>);
   }
 
   @override
   String toSql(Preferences value) {
-    return json.encode(value.toJson());
+    return json.encode(toJson(value));
+  }
+
+  @override
+  Preferences fromJson(Map<String, Object?> json) {
+    return Preferences.fromJson(json);
+  }
+
+  @override
+  Map<String, Object?> toJson(Preferences value) {
+    return value.toJson();
   }
 }
 // #enddocregion converter

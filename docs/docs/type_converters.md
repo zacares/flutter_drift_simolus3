@@ -11,8 +11,6 @@ You can achieve this by using `TypeConverters`. In this example, we'll use the t
 text column. Drift supports any Dart type for which you provide a `TypeConverter`, we're using that
 package here to make the example simpler.
 
-
-
 ## Using converters in Dart
 
 {{ load_snippet('start','lib/snippets/type_converters/converters.dart.excerpt.json') }}
@@ -21,6 +19,9 @@ Next, we have to tell drift how to store a `Preferences` object in the database.
 a `TypeConverter` for that:
 
 {{ load_snippet('converter','lib/snippets/type_converters/converters.dart.excerpt.json') }}
+
+1. The original JSON type converter classes are [deprecated](#type-converters-and-json-serialization),
+   which is why the `v2`-variants should generally be used instead.
 
 Finally, we can use that converter in a table declaration:
 
@@ -33,12 +34,8 @@ also works with [compiled custom queries]("/queries/custom").
 
 !!! warning "Caution with equality"
 
-
     If your converter returns an object that is not comparable by value, the generated dataclass will not
     be comparable by value. Consider implementing `==` and `hashCode` on those classes.
-
-
-
 
 Since applying type converters for JSON conversion is so common, drift provides a helper
 for that. For instance, we could declare the type converter as a field in the
@@ -54,6 +51,44 @@ for that. For instance, we could declare the type converter as a field in the
     By mixing in `JsonTypeConverter`, you tell drift that the converter should also be considered
     for JSON serialization.
 
+### Using JSONB
+
+Since version 3.45.0, SQLite supports its own [JSONB](https://sqlite.org/jsonb.html) representation for
+JSON values. As the linked documentation page mentions:
+
+>  The advantage of JSONB over ordinary text RFC 8259 JSON is that JSONB is both slightly smaller (by between 5% and 10% in most cases) and can be processed in less than half the number of CPU cycles. The built-in JSON SQL functions of SQLite can accept either ordinary text JSON or the binary JSONB encoding for any of their JSON inputs.
+
+When you use drift with SQLite, it may thus be helpful to use this JSONB format. Starting from version 2.24.0, drift
+has built-in support for that. First, use `TypeConverter.jsonb` to create a JSONB-based converter in Dart.
+Re-using the `Preferences` class from above, such a converter may look like this:
+
+{{ load_snippet('jsonb','lib/snippets/type_converters/converters.dart.excerpt.json') }}
+
+It can then be applied to binary columns:
+
+```dart
+class Users extends Table {
+  IntColumn get id => integer().autoIncrement()();
+  TextColumn get name => text()();
+
+  BlobColumn get preferences =>
+      blob().map(Preferences.binaryConverter).nullable()();
+}
+```
+
+To determine whether using JSONB can be an advantage over textual JSON for you, keep the following things in mind:
+
+1. The mentioned "processing in half the number of CPU cycles" aspect refers to processing _within_ SQLite.
+   For typical drift usages, SQLite will not process JSON at all. Only when you are extracting individual paths
+   from JSON objects in SQL (or using other JSON operators) will SQLite actually have to process JSON.
+2. JSONB converters use a Dart implementation of the JSONB format as understood by SQLite.
+   Given that the JSON decoder from `dart:convert` is highly optimized and backed by native code on some platforms,
+   using JSONB will likely not yield significant performance gains when reading columns in Dart.
+3. Using JSONB can make your database code less portable, as SQLite uses its own JSONB format not natively understood
+   by most other tools. You can use the `json()` function in SQL to convert it to regular JSON though.
+
+For these reasons, we recommend sticking with the standard text-based JSON format unless you are directly processing
+these values in SQL queries.
 
 ### Implicit enum converters
 
@@ -173,24 +208,29 @@ CREATE TABLE tasks (
 
 Of course, the warning about automatic enum converters also applies to drift files.
 
-## Type converters and json serialization
+## Type converters and JSON serialization
 
 By default, type converters only apply to the conversion from Dart to the database. They don't impact how
 values are serialized to and from JSON.
 If you want to apply the same conversion to JSON as well, make your type converter mix-in the
-`JsonTypeConverter` class.
+`JsonTypeConverter2` class.
 You can also override the `toJson` and `fromJson` methods to customize serialization as long as the types
 stay the compatible.
-The type converter returned by `TypeConverter.json` already implements `JsonTypeConverter`, so it will
+The type converter returned by `TypeConverter.json2` already implements `JsonTypeConverter2`, so it will
 apply to generated row classes as well.
 
-If the JSON type you want to serialize to is different to the SQL type you're
-mapping to, you can mix-in `JsonTypeConverter2` instead.
-For instance, say you have a type converter mapping to a complex Dart type
-`MyObject`. In SQL, you might want to store this as an `String`. But when
-serializing to JSON, you may want to use a `Map<String, Object?>`. Here, simply
-add the `JsonTypeConverter2<MyObject, String, Map<String, Object?>>` mixin to
-your type converter.
+In addition to `json2` and `JsonTypeConverter2`, where are the legacy `TypeConverter.json`
+and `JsonTypeConverter` classes.
+These differ from the v2 variants in that they must always emit strings when mapping to JSON.
+This is an issue for the common case where you have a complex Dart type (e.g. `MyObject`) that
+can be mapped to a `Map<String, Object?>` in JSON.
+In SQL, you might want to store this object as a `String` by first mapping it to a `Map` and then
+encoding that as JSON.
+But when serializing the whole data class for the table to JSON, it's typically undesirable to have
+`MyObject` serialized as a string (effectively applying JSON serialization twice).
+
+The v2 variants of the JSON type converters have a separate type parameter that can be independent of
+the type in SQL, which fixes this issue.
 
 As an alternative to using JSON type converters, you can use a custom [`ValueSerializer`](https://drift.simonbinder.eu/api/drift/valueserializer-class)
 and pass it to the serialization methods.

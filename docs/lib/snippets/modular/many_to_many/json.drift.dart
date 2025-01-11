@@ -221,7 +221,7 @@ class $ShoppingCartsTable extends i3.ShoppingCarts
     return $ShoppingCartsTable(attachedDatabase, alias);
   }
 
-  static i0.JsonTypeConverter2<i3.ShoppingCartEntries, String, String>
+  static i0.JsonTypeConverter2<i3.ShoppingCartEntries, String, Object?>
       $converterentries = i3.ShoppingCartEntries.converter;
 }
 
@@ -254,7 +254,7 @@ class ShoppingCart extends i0.DataClass
     return ShoppingCart(
       id: serializer.fromJson<int>(json['id']),
       entries: i2.$ShoppingCartsTable.$converterentries
-          .fromJson(serializer.fromJson<String>(json['entries'])),
+          .fromJson(serializer.fromJson<Object?>(json['entries'])),
     );
   }
   @override
@@ -262,7 +262,7 @@ class ShoppingCart extends i0.DataClass
     serializer ??= i0.driftRuntimeOptions.defaultSerializer;
     return <String, dynamic>{
       'id': serializer.toJson<int>(id),
-      'entries': serializer.toJson<String>(
+      'entries': serializer.toJson<Object?>(
           i2.$ShoppingCartsTable.$converterentries.toJson(entries)),
     };
   }

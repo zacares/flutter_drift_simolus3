@@ -1,3 +1,11 @@
+## 2.24.0-dev
+
+- Add `TypeConverter.jsonb` to directly store values in the JSONB format used
+  by SQLite.
+- Deprecate `TypeConverter.json` utility in favor of `TypeConverter.json2`. The
+  new method avoids encoding values twice when mapping drift row classes to
+  JSON.
+
 ## 2.23.1
 
 - Fix `TableStatements.insertAll` to only apply a database-specific pragma for

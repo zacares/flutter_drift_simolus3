@@ -10,9 +10,9 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  drift:
-  drift_dev: ^2.8.1
-  drift_flutter: ^0.1.0
+  drift: ^2.23.1
+  drift_dev: ^2.23.1
+  drift_flutter: ^0.2.4
   file_picker: ^8.0.0
   flutter_colorpicker: ^1.0.3
   flutter_riverpod: ^2.3.0

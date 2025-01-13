@@ -1,4 +1,4 @@
-@Deprecated('Import `package:drift/migrations_native.dart` instead')
+@Deprecated('Import `package:drift_dev/api/migrations_native.dart` instead')
 library;
 
 export 'migrations_native.dart';

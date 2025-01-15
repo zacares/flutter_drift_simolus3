@@ -8,6 +8,7 @@ import 'package:path/path.dart';
 import 'package:sqlite3/sqlite3.dart';
 
 import '../../../services/schema/schema_files.dart';
+import '../../../services/schema/schema_isolate.dart';
 import '../../../services/schema/sqlite_to_drift.dart';
 import '../../cli.dart';
 import '../schema.dart';
@@ -27,6 +28,7 @@ class DumpSchemaCommand extends Command {
   final DriftDevCli cli;
 
   DumpSchemaCommand(this.cli) {
+    argParser.registerExportSchemaStartupCodeOption();
     argParser.addSeparator("It's recommended to run this commend from the "
         'directory containing your pubspec.yaml so that compiler options '
         'are respected.');
@@ -39,6 +41,7 @@ class DumpSchemaCommand extends Command {
       usageException('Expected input and output files');
     }
 
+    final dumpSchemaCode = argResults!.exportSchemaStartupCode;
     final absolute = File(rest[0]).absolute;
     final AnalyzedDatabase result;
     if (await absolute.isSqlite3File) {
@@ -75,7 +78,8 @@ class DumpSchemaCommand extends Command {
       await parent.create(recursive: true);
     }
 
-    await file.writeAsString(json.encode(await writer.createSchemaJson()));
+    await file.writeAsString(json.encode(
+        await writer.createSchemaJson(dumpStartupCode: dumpSchemaCode)));
     print('Wrote to $target');
   }
 

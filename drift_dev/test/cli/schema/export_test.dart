@@ -1,7 +1,9 @@
 import 'dart:async';
 import 'dart:io';
+import 'dart:isolate';
 
 import 'package:drift/drift.dart';
+import 'package:drift_dev/src/services/schema/schema_isolate.dart';
 import 'package:test/test.dart';
 import 'package:test_descriptor/test_descriptor.dart' as d;
 
@@ -58,6 +60,31 @@ class MyDatabase {}
             ),
           ),
         ),
+      );
+    });
+
+    test('reports sensible error message on failure', () async {
+      final project = await TestDriftProject.create([
+        d.dir('lib', [
+          d.file('test.dart', '''
+import 'package:drift/drift.dart';
+
+class Examples extends Table {
+  BoolColumn get isDraft => boolean().withDefault(invalid)();
+}
+
+@DriftDatabase(tables: [Examples])
+class MyDatabase {}
+''')
+        ])
+      ]);
+
+      await expectLater(
+        () => project.collectSchema('lib/test.dart'),
+        throwsA(isA<SchemaIsolateException>()
+            .having((e) => e.cause, 'cause', isA<IsolateSpawnException>())
+            .having(
+                (e) => e.startupCodeWrittenTo, 'startupCodeWrittenTo', null)),
       );
     });
   });

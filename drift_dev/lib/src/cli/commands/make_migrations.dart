@@ -9,12 +9,15 @@ import 'package:drift_dev/src/cli/commands/schema/steps.dart';
 import 'package:collection/collection.dart';
 
 import 'package:drift_dev/src/services/schema/schema_files.dart';
+import 'package:drift_dev/src/services/schema/schema_isolate.dart';
 import 'package:io/ansi.dart';
 import 'package:path/path.dart' as p;
 import 'package:recase/recase.dart';
 
 class MakeMigrationCommand extends DriftCommand {
-  MakeMigrationCommand(super.cli);
+  MakeMigrationCommand(super.cli) {
+    argParser.registerExportSchemaStartupCodeOption();
+  }
 
   @override
   String get description => """
@@ -93,6 +96,8 @@ targets:
       cli.exit('`test_dir` must be a relative path. Remove the leading slash');
     }
 
+    final dumpGeneratedSchemaCode = argResults?.exportSchemaStartupCode;
+
     /// The root directory where test files for all databases are stored
     /// e.g /test/drift/
     final rootSchemaDir = Directory(
@@ -114,11 +119,13 @@ targets:
         await Future.wait(cli.project.options.databases.entries.map(
       (entry) async {
         final writer = await _MigrationTestEmitter.create(
-            cli: cli,
-            rootSchemaDir: rootSchemaDir,
-            rootTestDir: rootTestDir,
-            dbName: entry.key,
-            relativeDbClassPath: entry.value);
+          cli: cli,
+          rootSchemaDir: rootSchemaDir,
+          rootTestDir: rootTestDir,
+          dbName: entry.key,
+          relativeDbClassPath: entry.value,
+          dumpGeneratedSchemaCode: dumpGeneratedSchemaCode,
+        );
         return writer;
       },
     ));
@@ -173,6 +180,8 @@ class _MigrationTestEmitter {
   /// The parsed drift elements
   final List<DriftElement> driftElements;
 
+  final File? dumpGeneratedSchemaCode;
+
   /// Stores the tempoarary files to be written to the disk
   /// Only is written to the disk once the entire generation process completes without errors
   final writeTasks = <File, String>{};
@@ -207,14 +216,17 @@ class _MigrationTestEmitter {
     required this.db,
     required this.driftElements,
     required this.schemas,
+    required this.dumpGeneratedSchemaCode,
   });
 
-  static Future<_MigrationTestEmitter> create(
-      {required DriftDevCli cli,
-      required Directory rootSchemaDir,
-      required Directory rootTestDir,
-      required String dbName,
-      required String relativeDbClassPath}) async {
+  static Future<_MigrationTestEmitter> create({
+    required DriftDevCli cli,
+    required Directory rootSchemaDir,
+    required Directory rootTestDir,
+    required String dbName,
+    required String relativeDbClassPath,
+    required File? dumpGeneratedSchemaCode,
+  }) async {
     if (p.isAbsolute(relativeDbClassPath)) {
       cli.exit(
           'The path for the "$dbName" database must be a relative path. Remove the leading slash');
@@ -246,19 +258,21 @@ class _MigrationTestEmitter {
     }
     final schemas = await parseSchema(schemaDir);
     return _MigrationTestEmitter(
-        cli: cli,
-        rootSchemaDir: rootSchemaDir,
-        rootTestDir: rootTestDir,
-        dbName: dbName,
-        dbClassFile: dbClassFile,
-        schemaDir: schemaDir,
-        testDir: testDir,
-        db: db,
-        schemas: schemas,
-        driftElements: elements,
-        dbClassName: db.definingDartClass.toString(),
-        testDatabasesDir: testDatabasesDir,
-        schemaVersion: schemaVersion);
+      cli: cli,
+      rootSchemaDir: rootSchemaDir,
+      rootTestDir: rootTestDir,
+      dbName: dbName,
+      dbClassFile: dbClassFile,
+      schemaDir: schemaDir,
+      testDir: testDir,
+      db: db,
+      schemas: schemas,
+      driftElements: elements,
+      dbClassName: db.definingDartClass.toString(),
+      testDatabasesDir: testDatabasesDir,
+      schemaVersion: schemaVersion,
+      dumpGeneratedSchemaCode: dumpGeneratedSchemaCode,
+    );
   }
 
   /// Create a .json dump of the current schema
@@ -274,7 +288,8 @@ class _MigrationTestEmitter {
 
     final writer = SchemaWriter(driftElements, options: cli.project.options);
     final schemaFile = driftSchemaFile(schemaVersion);
-    final content = json.encode(await writer.createSchemaJson());
+    final content = json.encode(await writer.createSchemaJson(
+        dumpStartupCode: dumpGeneratedSchemaCode));
     if (!schemaFile.existsSync()) {
       cli.logger
           .info('$dbName: Creating schema file for version $schemaVersion');

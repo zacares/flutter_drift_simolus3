@@ -1,8 +1,11 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:io';
 import 'dart:isolate';
 
+import 'package:args/args.dart';
 import 'package:drift/drift.dart' show SqlDialect;
+import 'package:path/path.dart' as p;
 
 import '../../analysis/options.dart';
 import '../../analysis/results/file_results.dart';
@@ -99,20 +102,31 @@ class SchemaIsolate {
       SchemaIsolateOptions options, List<String> args) async {
     final code = await generateStartupCode(options);
 
+    if (options.dumpStartupCode case final file?) {
+      await file.parent.create(recursive: true);
+      await file.writeAsString(code);
+    }
+
     final receive = ReceivePort();
     final receiveErrors = ReceivePort();
-    final isolate = await Isolate.spawnUri(
-      Uri.dataFromString(code),
-      args,
-      receive.sendPort,
-      errorsAreFatal: true,
-      onError: receiveErrors.sendPort,
-    );
+    final Isolate isolate;
+    try {
+      isolate = await Isolate.spawnUri(
+        Uri.dataFromString(code),
+        args,
+        receive.sendPort,
+        errorsAreFatal: true,
+        onError: receiveErrors.sendPort,
+      );
+    } catch (e) {
+      throw SchemaIsolateException(e, options.dumpStartupCode);
+    }
 
     final result = await Future.any([
       receive.firstOrNever,
-      receiveErrors.firstOrNever.then((e) =>
-          throw StateError('Error on isolate evaluating database schema: $e'))
+      receiveErrors.firstOrNever.then((e) {
+        throw SchemaIsolateException(e! as Object, options.dumpStartupCode);
+      })
     ]);
 
     isolate.kill();
@@ -131,10 +145,12 @@ class SchemaIsolate {
   static Future<List<CreateStatement>> collectStatements({
     required List<DriftElement> allElements,
     required List<DriftSchemaElement> elementFilter,
+    File? dumpStartupCode,
   }) async {
     final result = await _startAndRun((
       dialect: null,
-      elements: allElements
+      elements: allElements,
+      dumpStartupCode: dumpStartupCode,
     ), [
       'v2',
       json.encode({
@@ -159,6 +175,7 @@ class SchemaIsolate {
 typedef SchemaIsolateOptions = ({
   List<DriftElement> elements,
   SqlDialect? dialect,
+  File? dumpStartupCode,
 });
 
 typedef CreateStatement = ({
@@ -181,5 +198,66 @@ extension<T> on Stream<T> {
       completer.completeError(error, trace);
     });
     return completer.future;
+  }
+}
+
+final class SchemaIsolateException implements Exception {
+  final Object cause;
+  final File? startupCodeWrittenTo;
+
+  SchemaIsolateException(this.cause, this.startupCodeWrittenTo);
+
+  String description({bool isFatal = true}) {
+    var causeDesc = cause.toString();
+    if (causeDesc.length > 300) {
+      causeDesc = '${causeDesc.substring(0, 300)}...';
+    }
+
+    var desc = 'Drift tried to run parts of your database code to obtain a '
+        'complete schema for aspects where static analysis is not enough.\n'
+        'This failed: $causeDesc';
+    if (startupCodeWrittenTo case final file?) {
+      desc += '\nA copy of the code that failed to run has been written to: '
+          '${p.relative(file.path)}.';
+    } else {
+      desc += '\nUse the --export-schema-startup-code=path option to write '
+          'the code drift tried to run to a file, which might help to debug '
+          'this problem.';
+    }
+    if (!isFatal) {
+      desc += '\nDrift will fall-back to only using results obtained through '
+          'static analysis, but restructing your code to avoid this compiler '
+          'error can help drift export more detailed schema descriptions.';
+    }
+
+    desc +=
+        '\nMore information is available here: https://drift.simonbinder.eu/migrations/exports/#debugging-issues-exporting-your-schema';
+
+    return desc;
+  }
+
+  @override
+  String toString() {
+    return description();
+  }
+}
+
+extension RegisterExportSchemaStartupOptions on ArgParser {
+  void registerExportSchemaStartupCodeOption() {
+    addOption(
+      'export-schema-startup-code',
+      valueHelp: 'file',
+      help: 'When drift needs to run parts of your database code to infer '
+          'the schema, emit that code to find possible issues.',
+    );
+  }
+}
+
+extension GetExportSchemaStartupOptions on ArgResults {
+  File? get exportSchemaStartupCode {
+    return switch (option('export-schema-startup-code')) {
+      final path? => File(path),
+      _ => null,
+    };
   }
 }

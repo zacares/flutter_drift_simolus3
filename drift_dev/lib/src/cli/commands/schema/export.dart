@@ -19,6 +19,7 @@ class ExportSchemaCommand extends Command {
       allowed: SqlDialect.values.map((e) => e.name),
       defaultsTo: 'sqlite',
     );
+    argParser.registerExportSchemaStartupCodeOption();
   }
 
   @override
@@ -46,7 +47,11 @@ class ExportSchemaCommand extends Command {
     var (:elements, schemaVersion: _, db: _) =
         await cli.readElementsFromSource(File(rest.single).absolute);
 
-    final options = (dialect: dialect, elements: elements);
+    final options = (
+      dialect: dialect,
+      elements: elements,
+      dumpStartupCode: argResults!.exportSchemaStartupCode,
+    );
     final statements = await SchemaIsolate.collectAllCreateStatements(options);
     for (final statement in statements) {
       if (statement.endsWith(';')) {

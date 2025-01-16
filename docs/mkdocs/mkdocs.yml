@@ -113,7 +113,6 @@ nav:
           - sql_api/types.md
           - sql_api/extensions.md
           - sql_api/custom_queries.md
-          - sql_api/custom_types.md
           - sql_api/sql_ide.md
       - Migrations:
           - Getting Started: Migrations/index.md

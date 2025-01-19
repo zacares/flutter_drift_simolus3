@@ -3469,7 +3469,7 @@ final class $$CategoriesTableReferences
 
   $$TodosTableTableProcessedTableManager get todos {
     final manager = $$TodosTableTableTableManager($_db, $_db.todosTable)
-        .filter((f) => f.category.id($_item.id));
+        .filter((f) => f.category.id.sqlEquals($_itemColumn<int>('id')!));
 
     final cache = $_typedResult.readTableOrNull(_todosTable($_db));
     return ProcessedTableManager(
@@ -3702,9 +3702,10 @@ final class $$TodosTableTableReferences
           $_aliasNameGenerator(db.todosTable.category, db.categories.id));
 
   $$CategoriesTableProcessedTableManager? get category {
-    if ($_item.category == null) return null;
+    final $_column = $_itemColumn<int>('category');
+    if ($_column == null) return null;
     final manager = $$CategoriesTableTableManager($_db, $_db.categories)
-        .filter((f) => f.id($_item.category!));
+        .filter((f) => f.id.sqlEquals($_column));
     final item = $_typedResult.readTableOrNull(_categoryTable($_db));
     if (item == null) return manager;
     return ProcessedTableManager(
@@ -4905,7 +4906,7 @@ final class $$DepartmentTableReferences
 
   $$ProductTableProcessedTableManager get productRefs {
     final manager = $$ProductTableTableManager($_db, $_db.product)
-        .filter((f) => f.department.id($_item.id));
+        .filter((f) => f.department.id.sqlEquals($_itemColumn<int>('id')!));
 
     final cache = $_typedResult.readTableOrNull(_productRefsTable($_db));
     return ProcessedTableManager(
@@ -5107,9 +5108,10 @@ final class $$ProductTableReferences
           $_aliasNameGenerator(db.product.department, db.department.id));
 
   $$DepartmentTableProcessedTableManager? get department {
-    if ($_item.department == null) return null;
+    final $_column = $_itemColumn<int>('department');
+    if ($_column == null) return null;
     final manager = $$DepartmentTableTableManager($_db, $_db.department)
-        .filter((f) => f.id($_item.department!));
+        .filter((f) => f.id.sqlEquals($_column));
     final item = $_typedResult.readTableOrNull(_departmentTable($_db));
     if (item == null) return manager;
     return ProcessedTableManager(
@@ -5123,7 +5125,7 @@ final class $$ProductTableReferences
 
   $$ListingTableProcessedTableManager get listings {
     final manager = $$ListingTableTableManager($_db, $_db.listing)
-        .filter((f) => f.product.sku($_item.sku));
+        .filter((f) => f.product.sku.sqlEquals($_itemColumn<String>('sku')!));
 
     final cache = $_typedResult.readTableOrNull(_listingsTable($_db));
     return ProcessedTableManager(
@@ -5411,7 +5413,7 @@ final class $$StoreTableReferences
 
   $$ListingTableProcessedTableManager get listings {
     final manager = $$ListingTableTableManager($_db, $_db.listing)
-        .filter((f) => f.store.id($_item.id));
+        .filter((f) => f.store.id.sqlEquals($_itemColumn<int>('id')!));
 
     final cache = $_typedResult.readTableOrNull(_listingsTable($_db));
     return ProcessedTableManager(
@@ -5606,8 +5608,10 @@ final class $$ListingTableReferences
       .createAlias($_aliasNameGenerator(db.listing.product, db.product.sku));
 
   $$ProductTableProcessedTableManager get product {
+    final $_column = $_itemColumn<String>('product')!;
+
     final manager = $$ProductTableTableManager($_db, $_db.product)
-        .filter((f) => f.sku($_item.product));
+        .filter((f) => f.sku.sqlEquals($_column));
     final item = $_typedResult.readTableOrNull(_productTable($_db));
     if (item == null) return manager;
     return ProcessedTableManager(
@@ -5618,9 +5622,10 @@ final class $$ListingTableReferences
       db.store.createAlias($_aliasNameGenerator(db.listing.store, db.store.id));
 
   $$StoreTableProcessedTableManager? get store {
-    if ($_item.store == null) return null;
+    final $_column = $_itemColumn<int>('store');
+    if ($_column == null) return null;
     final manager = $$StoreTableTableManager($_db, $_db.store)
-        .filter((f) => f.id($_item.store!));
+        .filter((f) => f.id.sqlEquals($_column));
     final item = $_typedResult.readTableOrNull(_storeTable($_db));
     if (item == null) return manager;
     return ProcessedTableManager(

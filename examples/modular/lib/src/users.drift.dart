@@ -195,10 +195,12 @@ final class $FollowsReferences
               i4.ReadDatabaseContainer(db).resultSet<i1.Users>('users').id));
 
   i1.$UsersProcessedTableManager get followed {
+    final $_column = $_itemColumn<int>('followed')!;
+
     final manager = i1
         .$UsersTableManager(
             $_db, i4.ReadDatabaseContainer($_db).resultSet<i1.Users>('users'))
-        .filter((f) => f.id($_item.followed));
+        .filter((f) => f.id.sqlEquals($_column));
     final item = $_typedResult.readTableOrNull(_followedTable($_db));
     if (item == null) return manager;
     return i0.ProcessedTableManager(
@@ -214,10 +216,12 @@ final class $FollowsReferences
               i4.ReadDatabaseContainer(db).resultSet<i1.Users>('users').id));
 
   i1.$UsersProcessedTableManager get follower {
+    final $_column = $_itemColumn<int>('follower')!;
+
     final manager = i1
         .$UsersTableManager(
             $_db, i4.ReadDatabaseContainer($_db).resultSet<i1.Users>('users'))
-        .filter((f) => f.id($_item.follower));
+        .filter((f) => f.id.sqlEquals($_column));
     final item = $_typedResult.readTableOrNull(_followerTable($_db));
     if (item == null) return manager;
     return i0.ProcessedTableManager(

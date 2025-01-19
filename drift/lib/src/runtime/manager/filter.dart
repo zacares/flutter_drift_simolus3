@@ -16,6 +16,15 @@ abstract class _BaseColumnFilters<T extends Object> {
     return inverted ? expression.not() : expression;
   }
 
+  /// Creates a filter that checks whether the column is equal to the [value].
+  ///
+  /// On columns with type converters, the filter operations invoked with
+  /// `call` or `equals` apply the type converter. This method will always
+  /// bypass any type converter that might be set on the column.
+  Expression<bool> sqlEquals(T value) {
+    return $composableFilter(column.equals(value));
+  }
+
   /// Create a filter that checks if the column is null.
   Expression<bool> isNull() => $composableFilter(column.isNull());
 
@@ -95,11 +104,17 @@ class ColumnWithTypeConverterFilters<CustomType, CustomTypeNonNullable,
   }
 
   /// Create a filter that checks if the column equals a value.
+  ///
+  /// This generates an equals operator in SQL after applying the type converter
+  /// on [value]. To compare a raw SQL value, use [sqlEquals].
   Expression<bool> equals(CustomTypeNonNullable value) {
-    return $composableFilter(column.equals(_customTypeToSql(value)));
+    return sqlEquals(_customTypeToSql(value));
   }
 
-  /// Shortcut for [equals]
+  /// Shortcut for [equals].
+  ///
+  /// This generates an equals operator in SQL after applying the type converter
+  /// on [value]. To compare a raw SQL value, use [sqlEquals].
   Expression<bool> call(CustomTypeNonNullable value) => equals(value);
 
   /// Create a filter that checks if the column is in a list of values.

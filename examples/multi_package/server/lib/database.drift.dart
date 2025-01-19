@@ -38,10 +38,12 @@ final class $$ActiveSessionsTableReferences extends i0.BaseReferences<
                   .id));
 
   i1.$$UsersTableProcessedTableManager get user {
+    final $_column = $_itemColumn<int>('user')!;
+
     final manager = i1
         .$$UsersTableTableManager($_db,
             i5.ReadDatabaseContainer($_db).resultSet<i1.$UsersTable>('users'))
-        .filter((f) => f.id($_item.user));
+        .filter((f) => f.id.sqlEquals($_column));
     final item = $_typedResult.readTableOrNull(_userTable($_db));
     if (item == null) return manager;
     return i0.ProcessedTableManager(
@@ -205,7 +207,41 @@ class $$ActiveSessionsTableTableManager extends i0.RootTableManager<
                     i3.$$ActiveSessionsTableReferences(db, table, e)
                   ))
               .toList(),
-          prefetchHooksCallback: null,
+          prefetchHooksCallback: ({user = false}) {
+            return i0.PrefetchHooks(
+              db: db,
+              explicitlyWatchedTables: [],
+              addJoins: <
+                  T extends i0.TableManagerState<
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic>>(state) {
+                if (user) {
+                  state = state.withJoin(
+                    currentTable: table,
+                    currentColumn: table.user,
+                    referencedTable:
+                        i3.$$ActiveSessionsTableReferences._userTable(db),
+                    referencedColumn:
+                        i3.$$ActiveSessionsTableReferences._userTable(db).id,
+                  ) as T;
+                }
+
+                return state;
+              },
+              getPrefetchedDataCallback: (items) async {
+                return [];
+              },
+            );
+          },
         ));
 }
 

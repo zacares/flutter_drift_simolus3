@@ -44,7 +44,7 @@ final class $$ShoppingCartsTableReferences extends i0.BaseReferences<
             i4.ReadDatabaseContainer($_db)
                 .resultSet<i2.$ShoppingCartEntriesTable>(
                     'shopping_cart_entries'))
-        .filter((f) => f.shoppingCart.id($_item.id));
+        .filter((f) => f.shoppingCart.id.sqlEquals($_itemColumn<int>('id')!));
 
     final cache =
         $_typedResult.readTableOrNull(_shoppingCartEntriesRefsTable($_db));
@@ -263,12 +263,14 @@ final class $$ShoppingCartEntriesTableReferences extends i0.BaseReferences<
                   .id));
 
   i2.$$ShoppingCartsTableProcessedTableManager get shoppingCart {
+    final $_column = $_itemColumn<int>('shopping_cart')!;
+
     final manager = i2
         .$$ShoppingCartsTableTableManager(
             $_db,
             i4.ReadDatabaseContainer($_db)
                 .resultSet<i2.$ShoppingCartsTable>('shopping_carts'))
-        .filter((f) => f.id($_item.shoppingCart));
+        .filter((f) => f.id.sqlEquals($_column));
     final item = $_typedResult.readTableOrNull(_shoppingCartTable($_db));
     if (item == null) return manager;
     return i0.ProcessedTableManager(
@@ -288,12 +290,14 @@ final class $$ShoppingCartEntriesTableReferences extends i0.BaseReferences<
                   .id));
 
   i1.$$BuyableItemsTableProcessedTableManager get item {
+    final $_column = $_itemColumn<int>('item')!;
+
     final manager = i1
         .$$BuyableItemsTableTableManager(
             $_db,
             i4.ReadDatabaseContainer($_db)
                 .resultSet<i1.$BuyableItemsTable>('buyable_items'))
-        .filter((f) => f.id($_item.item));
+        .filter((f) => f.id.sqlEquals($_column));
     final item = $_typedResult.readTableOrNull(_itemTable($_db));
     if (item == null) return manager;
     return i0.ProcessedTableManager(

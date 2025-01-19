@@ -38,13 +38,14 @@ final class $$TodoItemsTableReferences extends i0
                   .id));
 
   i1.$$CategoriesTableProcessedTableManager? get category {
-    if ($_item.category == null) return null;
+    final $_column = $_itemColumn<int>('category');
+    if ($_column == null) return null;
     final manager = i1
         .$$CategoriesTableTableManager(
             $_db,
             i3.ReadDatabaseContainer($_db)
                 .resultSet<i1.$CategoriesTable>('categories'))
-        .filter((f) => f.id($_item.category!));
+        .filter((f) => f.id.sqlEquals($_column));
     final item = $_typedResult.readTableOrNull(_categoryTable($_db));
     if (item == null) return manager;
     return i0.ProcessedTableManager(
@@ -325,7 +326,7 @@ final class $$CategoriesTableReferences extends i0
             $_db,
             i3.ReadDatabaseContainer($_db)
                 .resultSet<i1.$TodoItemsTable>('todo_items'))
-        .filter((f) => f.category.id($_item.id));
+        .filter((f) => f.category.id.sqlEquals($_itemColumn<int>('id')!));
 
     final cache = $_typedResult.readTableOrNull(_todoItemsRefsTable($_db));
     return i0.ProcessedTableManager(

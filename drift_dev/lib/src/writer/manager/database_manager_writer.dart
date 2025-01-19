@@ -1,5 +1,6 @@
 import 'package:collection/collection.dart';
 import 'package:drift_dev/src/analysis/results/results.dart';
+import 'package:drift_dev/src/utils/string_escaper.dart';
 import 'package:drift_dev/src/writer/tables/update_companion_writer.dart';
 import 'package:drift_dev/src/writer/writer.dart';
 

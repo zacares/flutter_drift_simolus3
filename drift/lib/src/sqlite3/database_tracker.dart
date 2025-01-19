@@ -23,11 +23,9 @@ final DatabaseTracker tracker = DatabaseTracker();
 /// this is necessary.
 class DatabaseTracker {
   final Database _db;
-
-  /// Whether this [DatabaseTracker] has been disposed.
   bool _isDisposed = false;
 
-  /// Public getter to check if this tracker has been disposed.
+  /// Whether this [DatabaseTracker] has been disposed.
   bool get isDisposed => _isDisposed;
 
   /// Creates a new tracker with necessary tables.
@@ -68,7 +66,6 @@ CREATE TABLE IF NOT EXISTS open_connections(
 
   /// Closes all tracked database connections that are still open.
   ///
-  /// This operation is wrapped in a transaction (`BEGIN` ... `COMMIT`).
   /// Throws a [StateError] if this tracker has already been disposed.
   void closeExisting() {
     _checkIfDisposed();
@@ -102,10 +99,7 @@ CREATE TABLE IF NOT EXISTS open_connections(
     // Safely close any tracked connections
     closeExisting();
 
-    // Dispose of the in-memory tracker database
     _db.dispose();
-
-    // Mark this tracker as disposed
     _isDisposed = true;
   }
 

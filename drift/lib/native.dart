@@ -356,10 +356,12 @@ class _NativeDelegate extends Sqlite3Delegate<Database> {
       }
 
       db = sqlite3.open(file.path);
-      try {
-        tracker.markOpened(file.path, db);
-      } on SqliteException {
-        // ignore
+      if (!tracker.isDisposed) {
+        try {
+          tracker.markOpened(file.path, db);
+        } on SqliteException {
+          // ignore
+        }
       }
     } else {
       db = sqlite3.openInMemory();
@@ -399,10 +401,12 @@ class _NativeDelegate extends Sqlite3Delegate<Database> {
     await super.close();
 
     if (closeUnderlyingWhenClosed) {
-      try {
-        tracker.markClosed(database);
-      } on SqliteException {
-        // ignore
+      if (!tracker.isDisposed) {
+        try {
+          tracker.markClosed(database);
+        } on SqliteException {
+          // ignore
+        }
       }
 
       database.dispose();

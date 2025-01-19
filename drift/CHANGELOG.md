@@ -7,7 +7,6 @@
   JSON.
 - Add `runWithInterceptor` method to databases to only apply interceptors in
   a restricted block.
-- Add `dispose()` method to `DatabaseTracker` to explicitly release in-memory SQLite resources.
 
 ## 2.23.1
 

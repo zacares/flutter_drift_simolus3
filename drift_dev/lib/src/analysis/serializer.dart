@@ -362,6 +362,7 @@ class ElementSerializer {
       'is_async_factory': existing.isAsyncFactory,
       'positional': existing.positionalColumns,
       'named': existing.namedColumns,
+      'getters': existing.columnGetters,
       'generate_insertable': existing.generateInsertable,
     };
   }
@@ -841,6 +842,7 @@ class ElementDeserializer {
       positionalColumns: (json['positional'] as List).cast(),
       namedColumns: (json['named'] as Map).cast(),
       generateInsertable: json['generate_insertable'] as bool,
+      columnGetters: (json['getters'] as Map).cast(),
     );
   }
 

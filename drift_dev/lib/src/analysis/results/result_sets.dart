@@ -104,6 +104,10 @@ class ExistingRowClass {
   /// passed as named arguments when creating an instance of the data class.
   final Map<String, String> namedColumns;
 
+  /// A map from column names ([DriftColumn.nameInSql]) to getters on the user-
+  /// defined class.
+  final Map<String, String> columnGetters;
+
   /// Whether a `toCompanion` extension should be generated for this data class.
   final bool generateInsertable;
 
@@ -116,6 +120,7 @@ class ExistingRowClass {
     required this.constructor,
     required this.positionalColumns,
     required this.namedColumns,
+    required this.columnGetters,
     this.generateInsertable = false,
     this.isAsyncFactory = false,
   });
@@ -124,6 +129,7 @@ class ExistingRowClass {
     required this.targetType,
     required this.positionalColumns,
     required this.namedColumns,
+    required this.columnGetters,
     this.generateInsertable = false,
   })  : targetClass = null,
         constructor = '',

@@ -1353,8 +1353,8 @@ class _$CustomRowClassInsertable implements Insertable<CustomRowClass> {
     return TableWithoutPKCompanion(
       notReallyAnId: Value(_object.notReallyAnId),
       someFloat: Value(_object.someFloat),
-      custom: Value(_object.custom),
       webSafeInt: Value(_object.webSafeInt),
+      custom: Value(_object.custom),
     ).toColumns(false);
   }
 }

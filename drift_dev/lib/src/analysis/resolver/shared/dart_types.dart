@@ -164,6 +164,13 @@ ExistingRowClass? validateExistingClass(
     }
   }
 
+  final getters = <String, String>{};
+  for (final column in columns) {
+    if (instantiation.getGetter(column.nameInDart) != null) {
+      getters[column.nameInSql] = column.nameInDart;
+    }
+  }
+
   return ExistingRowClass(
     targetClass: AnnotatedDartCode.topLevelElement(desiredClass),
     targetType: instantiation,
@@ -175,6 +182,7 @@ ExistingRowClass? validateExistingClass(
       for (final named in namedColumns.entries)
         named.key.name: named.value.nameInSql,
     },
+    columnGetters: getters,
     generateInsertable: generateInsertable,
     isAsyncFactory: isAsyncFactory,
   );
@@ -195,11 +203,13 @@ ExistingRowClass validateRowClassFromRecordType(
   };
 
   final namedColumns = <String, String>{};
+  final columnGetters = <String, String>{};
 
   for (final parameter in dartType.namedFields) {
     final column = unmatchedColumnsByName.remove(parameter.name);
     if (column != null) {
       namedColumns[parameter.name] = column.nameInSql;
+      columnGetters[column.nameInSql] = parameter.name;
 
       checkType(
         column.sqlType,
@@ -234,6 +244,7 @@ ExistingRowClass validateRowClassFromRecordType(
     positionalColumns: const [],
     namedColumns: namedColumns,
     generateInsertable: generateInsertable,
+    columnGetters: columnGetters,
   );
 }
 
@@ -260,6 +271,9 @@ ExistingRowClass defaultRecordRowClass({
     positionalColumns: [],
     namedColumns: {
       for (final column in columns) column.nameInDart: column.nameInSql,
+    },
+    columnGetters: {
+      for (final column in columns) column.nameInSql: column.nameInDart,
     },
   );
 }

@@ -61,5 +61,12 @@ void main() {
       expect(() => tracker.dispose(), returnsNormally);
       expect(() => tracker.dispose(), returnsNormally);
     });
+
+    test('isDisposed reflects tracker state', () {
+      expect(tracker.isDisposed, isFalse);
+
+      tracker.dispose();
+      expect(tracker.isDisposed, isTrue);
+    });
   });
 }

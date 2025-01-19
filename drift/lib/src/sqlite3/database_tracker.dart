@@ -27,6 +27,9 @@ class DatabaseTracker {
   /// Whether this [DatabaseTracker] has been disposed.
   bool _isDisposed = false;
 
+  /// Public getter to check if this tracker has been disposed.
+  bool get isDisposed => _isDisposed;
+
   /// Creates a new tracker with necessary tables.
   DatabaseTracker()
       : _db = sqlite3.open(

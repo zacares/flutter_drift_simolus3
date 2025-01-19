@@ -953,9 +953,10 @@ final class $$UsersTableReferences
       .createAlias($_aliasNameGenerator(db.users.nextUser, db.users.id));
 
   $$UsersTableProcessedTableManager? get nextUser {
-    if ($_item.nextUser == null) return null;
+    final $_column = $_itemColumn<int>('next_user');
+    if ($_column == null) return null;
     final manager = $$UsersTableTableManager($_db, $_db.users)
-        .filter((f) => f.id($_item.nextUser!));
+        .filter((f) => f.id.sqlEquals($_column));
     final item = $_typedResult.readTableOrNull(_nextUserTable($_db));
     if (item == null) return manager;
     return ProcessedTableManager(
@@ -969,7 +970,7 @@ final class $$UsersTableReferences
 
   $GroupsProcessedTableManager get groupsRefs {
     final manager = $GroupsTableManager($_db, $_db.groups)
-        .filter((f) => f.owner.id($_item.id));
+        .filter((f) => f.owner.id.sqlEquals($_itemColumn<int>('id')!));
 
     final cache = $_typedResult.readTableOrNull(_groupsRefsTable($_db));
     return ProcessedTableManager(
@@ -1265,8 +1266,10 @@ final class $GroupsReferences
       db.users.createAlias($_aliasNameGenerator(db.groups.owner, db.users.id));
 
   $$UsersTableProcessedTableManager get owner {
+    final $_column = $_itemColumn<int>('owner')!;
+
     final manager = $$UsersTableTableManager($_db, $_db.users)
-        .filter((f) => f.id($_item.owner));
+        .filter((f) => f.id.sqlEquals($_column));
     final item = $_typedResult.readTableOrNull(_ownerTable($_db));
     if (item == null) return manager;
     return ProcessedTableManager(

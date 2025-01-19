@@ -738,7 +738,7 @@ final class $$TodoCategoriesTableReferences
 
   $$TodoItemsTableProcessedTableManager get todoItemsRefs {
     final manager = $$TodoItemsTableTableManager($_db, $_db.todoItems)
-        .filter((f) => f.categoryId.id($_item.id));
+        .filter((f) => f.categoryId.id.sqlEquals($_itemColumn<int>('id')!));
 
     final cache = $_typedResult.readTableOrNull(_todoItemsRefsTable($_db));
     return ProcessedTableManager(
@@ -940,8 +940,10 @@ final class $$TodoItemsTableReferences
           $_aliasNameGenerator(db.todoItems.categoryId, db.todoCategories.id));
 
   $$TodoCategoriesTableProcessedTableManager get categoryId {
+    final $_column = $_itemColumn<int>('category_id')!;
+
     final manager = $$TodoCategoriesTableTableManager($_db, $_db.todoCategories)
-        .filter((f) => f.id($_item.categoryId));
+        .filter((f) => f.id.sqlEquals($_column));
     final item = $_typedResult.readTableOrNull(_categoryIdTable($_db));
     if (item == null) return manager;
     return ProcessedTableManager(

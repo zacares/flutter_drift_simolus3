@@ -143,10 +143,12 @@ final class $FriendsReferences
               i3.ReadDatabaseContainer(db).resultSet<i2.Users>('users').id));
 
   i2.$UsersProcessedTableManager get userA {
+    final $_column = $_itemColumn<int>('user_a')!;
+
     final manager = i2
         .$UsersTableManager(
             $_db, i3.ReadDatabaseContainer($_db).resultSet<i2.Users>('users'))
-        .filter((f) => f.id($_item.userA));
+        .filter((f) => f.id.sqlEquals($_column));
     final item = $_typedResult.readTableOrNull(_userATable($_db));
     if (item == null) return manager;
     return i0.ProcessedTableManager(
@@ -162,10 +164,12 @@ final class $FriendsReferences
               i3.ReadDatabaseContainer(db).resultSet<i2.Users>('users').id));
 
   i2.$UsersProcessedTableManager get userB {
+    final $_column = $_itemColumn<int>('user_b')!;
+
     final manager = i2
         .$UsersTableManager(
             $_db, i3.ReadDatabaseContainer($_db).resultSet<i2.Users>('users'))
-        .filter((f) => f.id($_item.userB));
+        .filter((f) => f.id.sqlEquals($_column));
     final item = $_typedResult.readTableOrNull(_userBTable($_db));
     if (item == null) return manager;
     return i0.ProcessedTableManager(

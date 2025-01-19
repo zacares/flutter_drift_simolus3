@@ -27,10 +27,12 @@ final class $PostsReferences
               i3.ReadDatabaseContainer(db).resultSet<i2.Users>('users').id));
 
   i2.$UsersProcessedTableManager get author {
+    final $_column = $_itemColumn<int>('author')!;
+
     final manager = i2
         .$UsersTableManager(
             $_db, i3.ReadDatabaseContainer($_db).resultSet<i2.Users>('users'))
-        .filter((f) => f.id($_item.author));
+        .filter((f) => f.id.sqlEquals($_column));
     final item = $_typedResult.readTableOrNull(_authorTable($_db));
     if (item == null) return manager;
     return i0.ProcessedTableManager(
@@ -49,7 +51,7 @@ final class $PostsReferences
     final manager = i1
         .$LikesTableManager(
             $_db, i3.ReadDatabaseContainer($_db).resultSet<i1.Likes>('likes'))
-        .filter((f) => f.post.id($_item.id));
+        .filter((f) => f.post.id.sqlEquals($_itemColumn<int>('id')!));
 
     final cache = $_typedResult.readTableOrNull(_likesRefsTable($_db));
     return i0.ProcessedTableManager(
@@ -347,10 +349,12 @@ final class $LikesReferences
               i3.ReadDatabaseContainer(db).resultSet<i1.Posts>('posts').id));
 
   i1.$PostsProcessedTableManager get post {
+    final $_column = $_itemColumn<int>('post')!;
+
     final manager = i1
         .$PostsTableManager(
             $_db, i3.ReadDatabaseContainer($_db).resultSet<i1.Posts>('posts'))
-        .filter((f) => f.id($_item.post));
+        .filter((f) => f.id.sqlEquals($_column));
     final item = $_typedResult.readTableOrNull(_postTable($_db));
     if (item == null) return manager;
     return i0.ProcessedTableManager(
@@ -364,10 +368,12 @@ final class $LikesReferences
               i3.ReadDatabaseContainer(db).resultSet<i2.Users>('users').id));
 
   i2.$UsersProcessedTableManager get likedBy {
+    final $_column = $_itemColumn<int>('liked_by')!;
+
     final manager = i2
         .$UsersTableManager(
             $_db, i3.ReadDatabaseContainer($_db).resultSet<i2.Users>('users'))
-        .filter((f) => f.id($_item.likedBy));
+        .filter((f) => f.id.sqlEquals($_column));
     final item = $_typedResult.readTableOrNull(_likedByTable($_db));
     if (item == null) return manager;
     return i0.ProcessedTableManager(

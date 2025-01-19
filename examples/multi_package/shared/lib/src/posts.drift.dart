@@ -30,10 +30,12 @@ final class $PostsReferences
                   .id));
 
   i2.$$UsersTableProcessedTableManager get author {
+    final $_column = $_itemColumn<int>('author')!;
+
     final manager = i2
         .$$UsersTableTableManager($_db,
             i3.ReadDatabaseContainer($_db).resultSet<i2.$UsersTable>('users'))
-        .filter((f) => f.id($_item.author));
+        .filter((f) => f.id.sqlEquals($_column));
     final item = $_typedResult.readTableOrNull(_authorTable($_db));
     if (item == null) return manager;
     return i0.ProcessedTableManager(
@@ -191,7 +193,39 @@ class $PostsTableManager extends i0.RootTableManager<
               .map((e) =>
                   (e.readTable(table), i1.$PostsReferences(db, table, e)))
               .toList(),
-          prefetchHooksCallback: null,
+          prefetchHooksCallback: ({author = false}) {
+            return i0.PrefetchHooks(
+              db: db,
+              explicitlyWatchedTables: [],
+              addJoins: <
+                  T extends i0.TableManagerState<
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic>>(state) {
+                if (author) {
+                  state = state.withJoin(
+                    currentTable: table,
+                    currentColumn: table.author,
+                    referencedTable: i1.$PostsReferences._authorTable(db),
+                    referencedColumn: i1.$PostsReferences._authorTable(db).id,
+                  ) as T;
+                }
+
+                return state;
+              },
+              getPrefetchedDataCallback: (items) async {
+                return [];
+              },
+            );
+          },
         ));
 }
 

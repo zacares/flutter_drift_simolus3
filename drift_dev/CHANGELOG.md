@@ -3,6 +3,7 @@
 - Generate typed reference-resolving queries through the manager API when
   modular code-generation is enabled. Previously, this feature was only enabled
   for monolithic generation modes.
+- Fix generating manager code around references when custom row classes are involved.
 
 ## 2.23.0
 

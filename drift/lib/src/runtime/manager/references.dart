@@ -267,13 +267,26 @@ base class BaseReferences<$Database extends GeneratedDatabase,
   // ignore: non_constant_identifier_names
   final TypedResult $_typedResult;
 
-  // The item these references are for
+  /// The item these references are for.
+  ///
+  /// Drift used to use getters on this class to extract columns when building
+  /// subsequent joins or queries to resolve reference.
+  /// This was broken around custom row classes that might not expose all
+  /// columns.
+  @Deprecated(r'Please re-generate code, should be replaced with $_itemColumn')
   // ignore: public_member_api_docs, non_constant_identifier_names
   late final $Dataclass $_item = $_typedResult.readTable($_table);
 
   /// Create a [BaseReferences] class
   // ignore: non_constant_identifier_names
   BaseReferences(this.$_db, this.$_table, this.$_typedResult);
+
+  /// Extracts the value of a column with the given [name] in the
+  /// [$_typedResult] row.
+  // ignore: non_constant_identifier_names
+  C? $_itemColumn<C extends Object>(String name) {
+    return $_typedResult.read($_table.columnsByName[name]! as Expression<C>);
+  }
 }
 
 /// Type definition for a function that transforms the state of a manager

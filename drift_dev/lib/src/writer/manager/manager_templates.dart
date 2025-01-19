@@ -614,6 +614,8 @@ class _ManagerCodeTemplates {
             .dartCode(leaf.referenceElement(relation.referencedTable, 'db'));
         final currentTable =
             leaf.dartCode(leaf.referenceElement(relation.currentTable, 'db'));
+        final currentColumnType =
+            leaf.dartCode(leaf.innerColumnType(relation.currentColumn.sqlType));
 
         if (relation.isReverse) {
           final aliasedTableMethod = """
@@ -636,7 +638,7 @@ class _ManagerCodeTemplates {
             \$_db, ${leaf.dartCode(leaf.referenceElement(relation.referencedTable, r'$_db'))}
             ).filter(
               (f) => f.${relation.referencedColumn.nameInDart}.${relation.currentColumn.nameInDart}(
-              \$_item.${relation.currentColumn.nameInDart}
+              \$_itemColumn<$currentColumnType>(${asDartLiteral(relation.currentColumn.nameInSql)})
             )
           );
 
@@ -655,18 +657,13 @@ class _ManagerCodeTemplates {
             $referencedTable.${relation.referencedColumn.nameInDart}));
           """;
 
-          var currentColumnOnItem =
-              '\$_item.${relation.currentColumn.nameInDart}';
-          if (relation.currentColumn.nullableInDart) {
-            currentColumnOnItem += '!';
-          }
-
           return """
         $aliasedTableMethod
 
         ${processedTableManagerTypedefName(relation.referencedTable, leaf)}${relation.currentColumn.nullable ? "?" : ""} get ${relation.fieldName} {
-        ${relation.currentColumn.nullable ? "if (\$_item.${relation.currentColumn.nameInDart} == null) return null;" : ""}
-          final manager = ${rootTableManagerWithPrefix(relation.referencedTable, leaf)}(\$_db, ${leaf.dartCode(leaf.referenceElement(relation.referencedTable, r'$_db'))}).filter((f) => f.${relation.referencedColumn.nameInDart}($currentColumnOnItem));
+          final \$_column = \$_itemColumn<$currentColumnType>(${asDartLiteral(relation.currentColumn.nameInSql)});
+          ${relation.currentColumn.nullable ? "if (\$_column == null) return null;" : ""}
+          final manager = ${rootTableManagerWithPrefix(relation.referencedTable, leaf)}(\$_db, ${leaf.dartCode(leaf.referenceElement(relation.referencedTable, r'$_db'))}).filter((f) => f.${relation.referencedColumn.nameInDart}(\$_column));
           final item = \$_typedResult.readTableOrNull(_${relation.fieldName}Table(\$_db));
           if (item == null) return manager;
           return ${leaf.drift("ProcessedTableManager")}(manager.\$state.copyWith(prefetchedData: [item]));

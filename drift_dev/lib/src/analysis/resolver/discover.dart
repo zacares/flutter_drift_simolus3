@@ -1,6 +1,7 @@
 import 'package:analyzer/dart/ast/ast.dart' as dart;
 import 'package:analyzer/dart/constant/value.dart';
 import 'package:analyzer/dart/element/element.dart';
+import 'package:analyzer/dart/element/type.dart';
 import 'package:analyzer/dart/element/visitor.dart';
 import 'package:drift/drift.dart' show TableIndex;
 import 'package:source_gen/source_gen.dart';
@@ -174,12 +175,20 @@ class _FindDartElements extends RecursiveElementVisitor<void> {
 
   _FindDartElements(
       this._discoverStep, this._library, KnownDriftTypes knownTypes)
-      : _isTable = TypeChecker.fromStatic(knownTypes.tableType),
-        _isTableIndex = TypeChecker.fromStatic(knownTypes.tableIndexType),
-        _isView = TypeChecker.fromStatic(knownTypes.viewType),
-        _isTableInfo = TypeChecker.fromStatic(knownTypes.tableInfoType),
-        _isDatabase = TypeChecker.fromStatic(knownTypes.driftDatabase),
-        _isDao = TypeChecker.fromStatic(knownTypes.driftAccessor);
+      : _isTable = _checker(knownTypes.tableType),
+        _isTableIndex = _checker(knownTypes.tableIndexType),
+        _isView = _checker(knownTypes.viewType),
+        _isTableInfo = _checker(knownTypes.tableInfoType),
+        _isDatabase = _checker(knownTypes.driftDatabase),
+        _isDao = _checker(knownTypes.driftAccessor);
+
+  static TypeChecker _checker(InterfaceType type) {
+    // Workaround for https://github.com/dart-lang/build/issues/3796, the
+    // analysis sessions for _knownTypes and this type might be different.
+    final definition = type.element.librarySource;
+    return TypeChecker.fromUrl(
+        definition.uri.replace(fragment: type.element.name));
+  }
 
   Future<void> find() async {
     visitLibraryElement(_library);

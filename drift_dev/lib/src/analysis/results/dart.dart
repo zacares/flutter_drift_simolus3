@@ -350,8 +350,7 @@ class _AddFromDartType extends UnifyingTypeVisitor<void> {
   void visitDartType(DartType type) {
     _builder
       ..addText('dynamic')
-      ..addText(
-          '/* unhandled ${type.getDisplayString(withNullability: true)} */'); // ignore: deprecated_member_use
+      ..addText('/* unhandled ${type.getDisplayString()} */');
   }
 
   @override
@@ -588,8 +587,7 @@ class _AddFromAst extends GeneralizingAstVisitor<void> {
     }
 
     final element = node.methodName.staticElement;
-    // ignore: deprecated_member_use
-    final enclosing = element?.enclosingElement;
+    final enclosing = element?.enclosingElement3;
     if (enclosing is! ExtensionElement || enclosing.name == null) {
       return super.visitMethodInvocation(node);
     }

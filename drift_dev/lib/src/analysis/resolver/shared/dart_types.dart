@@ -470,8 +470,7 @@ bool checkType(
 
   if (!typeSystem.isAssignableTo(expectedDartType, typeToCheck)) {
     error('Parameter must accept '
-        // ignore: deprecated_member_use
-        '${expectedDartType.getDisplayString(withNullability: true)}');
+        '${expectedDartType.getDisplayString()}');
     return false;
   }
 

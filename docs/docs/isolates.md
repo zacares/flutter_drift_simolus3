@@ -120,6 +120,15 @@ This can be helpful when using drift in dependency injection frameworks, since y
 to create the database instance synchronously.
 Internally, drift will connect when the first query is sent to the database.
 
+!!! warning "Avoid connecting with `LazyDatabase`"
+
+    Parts of the drift documentation suggest `LazyDatabase` to setup a database connection
+    asynchronously while still being able to return the database immediately.
+    Using `LazyDatabase` to connect to a drift isolate that might have multiple clients (e.g.
+    a UI isolate and a foreground worker) is not recommended as it only shares the executor
+    responsible for running queries.
+    `DatabaseConnection.delayed` ensures that stream queries are also synchronized.
+
 ### Workaround for old Flutter versions
 
 Before Flutter 3.7, platforms channels weren't [available on background isolates](https://github.com/flutter/flutter/issues/13937).

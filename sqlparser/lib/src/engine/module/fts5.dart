@@ -1,5 +1,4 @@
 import 'package:sqlparser/sqlparser.dart';
-import 'package:sqlparser/src/analysis/types/types.dart';
 
 class Fts5Extension implements Extension {
   const Fts5Extension();

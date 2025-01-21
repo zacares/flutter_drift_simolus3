@@ -417,12 +417,77 @@ class DataClassName {
 }
 
 /// An annotation specifying an existing class to be used as a data class.
+///
+/// By default, drift generates a row class as a typed representation of a row
+/// in the table classes you define.
+/// If you want to, you can replace this row class with your own structure by
+/// applying [UseRowClass] on the table:
+///
+/// ```dart
+/// @UseRowClass(User)
+/// class Users extends Table {
+///   IntColumn get id => integer().autoIncrement()();
+///   TextColumn get name => text()();
+/// }
+///
+/// final class User {
+///   final int id;
+///   final String name;
+///
+///   User(this.id, this.name);
+/// }
+/// ```
+///
+/// The associated row class must have a constructor "compatible" with the
+/// columns from the table (meaning that each parameter on the constructor
+/// matches a column from the table by name and type). Not all columns present
+/// in the table need to be added to the row class, drift will simply ignore the
+/// others. Since drift constructs the row class from a table row however, the
+/// constructor must not have parameters not present as table columns.
+///
+/// Instead of an existing class, you can also use [Record] or a record type
+/// through a typedef as a type to use for rows:
+///
+/// ```dart
+/// typedef User = ({int id, String name});
+///
+/// @UseRowClass(User)
+/// class Users extends Table {
+/// ```
+///
+/// If you want to use instances of your custom row classes as sources for
+/// inserts or update statements, you can enable the `write_to_columns_mixins`
+// ignore: deprecated_member_use_from_same_package
+/// builder option or set [generateInsertable] to true. It will make drift
+/// generate an extension on the row type to return a companion:
+///
+/// ```dart
+/// @UseRowClass(User, generateInsertable: true)
+/// class Users extends Table {
+///   IntColumn get id => integer().autoIncrement()();
+///   TextColumn get name => text()();
+/// }
+///
+/// final class User implements Insertable<User> {
+///   final int id;
+///   final String name;
+///
+///   User(this.id, this.name);
+///
+///   @override
+///   Map<String, Expression> toColumns(bool nullToAbsent) {
+///     return toInsertable().toColumns(nullToAbsent);
+///   }
+/// }
+/// ```
+///
+/// For more details, see the [documentation page](https://drift.simonbinder.eu/dart_api/rows/#custom-dataclass).
 @Target({TargetKind.classType})
 class UseRowClass {
   /// The existing class
   ///
-  /// This type must refer to an existing class. All other types, like functions
-  /// or types with arguments, are not allowed.
+  /// This type must refer to an existing class or a record structure. All other
+  /// types, like functions or types with arguments, are not allowed.
   final Type type;
 
   /// The name of the constructor to use.
@@ -442,7 +507,7 @@ class UseRowClass {
   /// Customize the class used by drift to hold an instance of an annotated
   /// table.
   ///
-  /// For details, see the overall documentation on [UseRowClass].
+  /// For details, see the class documentation on [UseRowClass].
   const UseRowClass(this.type,
       {this.constructor = '', this.generateInsertable = false});
 }

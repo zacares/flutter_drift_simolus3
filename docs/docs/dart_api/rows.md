@@ -179,6 +179,17 @@ On the other hand, note that:
 - A table can have additional columns not reflected in a custom data class.
   Drift will simply not load those columns when mapping a row.
 
+### Using records
+
+To get a very lightweight representation of your database rows, you can instruct drift to generate
+matching a record for them:
+
+{{ load_snippet('record','lib/snippets/custom_row_classes/default.dart.excerpt.json','lib/snippets/custom_row_classes/named.dart.excerpt.json') }}
+
+You can also be explicit about the record type to use:
+
+{{ load_snippet('record-explicit','lib/snippets/custom_row_classes/default.dart.excerpt.json','lib/snippets/custom_row_classes/named.dart.excerpt.json') }}
+
 ### Using another constructor
 
 By default, drift will use the default, unnamed constructor to map a row to the class.
@@ -209,6 +220,20 @@ class User implements Insertable<User> {
       name: Value(name),
       birthDate: Value(birthDate),
     ).toColumns(nullToAbsent);
+  }
+}
+```
+
+As implementing this can be tedious, drift offers the `write_to_columns_mixins` [builder option](../generation_options/index.md). When enabled, drift generates a `toInsertable` extension method on
+custom row classes that can be used:
+
+```dart
+class User implements Insertable<User> {
+  // ...
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    return toInsertable().toColumns(nullToAbsent);
   }
 }
 ```
@@ -340,8 +365,6 @@ While these rules may seem complicated when entirely spelled out, they are desig
 intuitive mapping one would expect.
 Consider this example:
 
-
-
 {{ load_snippet('example','lib/snippets/custom_row_classes/employees_sql.drift.excerpt.json') }}
 
 Using the rules as defined above, let's see how the `EmployeeWithStaff` class can look like:
@@ -397,7 +420,6 @@ design the result classes the way you like.
 If you have questions about existing result classes, or think you have found an edge-case not
 properly handled, please [start a discussion](https://github.com/simolus3/drift/discussions/new) in
 the drift repository, thanks!
-
 
 ## JSON serialization
 

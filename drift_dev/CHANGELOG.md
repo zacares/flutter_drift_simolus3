@@ -1,4 +1,4 @@
-## 2.24.0-dev
+## 2.24.0
 
 - Support versions `7.x` of the `analyzer` package.
 

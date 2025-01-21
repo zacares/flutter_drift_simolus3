@@ -578,7 +578,7 @@ class TypeResolver extends RecursiveVisitor<TypeExpectation, void> {
 
     final extensionHandler = _functionHandlerFor(e);
     if (extensionHandler != null) {
-      return extensionHandler.inferReturnType(session.context, e, params);
+      return extensionHandler.inferReturnType(session, e, params);
     }
 
     session.context.reportError(AnalysisError(
@@ -828,8 +828,8 @@ class TypeResolver extends RecursiveVisitor<TypeExpectation, void> {
 
         final expressionArgument = arg;
 
-        final result = extensionHandler.inferArgumentType(
-            session.context, e, expressionArgument);
+        final result =
+            extensionHandler.inferArgumentType(session, e, expressionArgument);
         final type = result.type;
         if (type != null) {
           session._markTypeResolved(expressionArgument, type);

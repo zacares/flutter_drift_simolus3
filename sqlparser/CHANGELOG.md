@@ -2,6 +2,8 @@
 
 - Replace `ColonNamedVariable` with `NamedVariable` for all named variables.
 - Analysis support for SQLite 3.48.
+- Fix nullability analysis around fts5 tables (enabled when raising the version
+  to 3.48 to preserve backwards-compatibility).
 
 ## 0.40.0
 

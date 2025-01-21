@@ -185,8 +185,10 @@ void main() {
 
       final select = result.root as SelectStatement;
       final column = select.resolvedColumns!.singleWhere((c) => c.name == 'b');
-      expect(result.typeOf(column),
-          const ResolveResult(ResolvedType(type: BasicType.text)));
+      expect(
+          result.typeOf(column),
+          const ResolveResult(
+              ResolvedType(type: BasicType.text, nullable: true)));
     });
 
     test('return type of snippet()', () {
@@ -197,8 +199,10 @@ void main() {
 
       final select = result.root as SelectStatement;
       final column = select.resolvedColumns!.singleWhere((c) => c.name == 'b');
-      expect(result.typeOf(column),
-          const ResolveResult(ResolvedType(type: BasicType.text)));
+      expect(
+          result.typeOf(column),
+          const ResolveResult(
+              ResolvedType(type: BasicType.text, nullable: true)));
     });
   });
 

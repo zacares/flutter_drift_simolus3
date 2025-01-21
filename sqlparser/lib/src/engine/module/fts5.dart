@@ -1,4 +1,5 @@
 import 'package:sqlparser/sqlparser.dart';
+import 'package:sqlparser/src/analysis/types/types.dart';
 
 class Fts5Extension implements Extension {
   const Fts5Extension();
@@ -153,7 +154,7 @@ class _Fts5Functions with ArgumentCountLinter implements FunctionHandler {
 
   @override
   ResolveResult inferArgumentType(
-      AnalysisContext context, SqlInvocation call, Expression argument) {
+      TypeInferenceSession session, SqlInvocation call, Expression argument) {
     int? argumentIndex;
     if (call.parameters is ExprFunctionParameters) {
       argumentIndex = (call.parameters as ExprFunctionParameters)
@@ -196,13 +197,17 @@ class _Fts5Functions with ArgumentCountLinter implements FunctionHandler {
   }
 
   @override
-  ResolveResult inferReturnType(AnalysisContext context, SqlInvocation call,
-      List<Typeable> expandedArgs) {
+  ResolveResult inferReturnType(TypeInferenceSession session,
+      SqlInvocation call, List<Typeable> expandedArgs) {
     switch (call.name.toLowerCase()) {
       case 'bm25':
         return const ResolveResult(ResolvedType(type: BasicType.real));
       case 'highlight':
       case 'snippet':
+        if (call is ExpressionInvocation) {
+          session.graph.addRelation(NullableIfSomeOtherIs(call, expandedArgs));
+        }
+
         return const ResolveResult(
             ResolvedType(type: BasicType.text, nullable: true));
     }

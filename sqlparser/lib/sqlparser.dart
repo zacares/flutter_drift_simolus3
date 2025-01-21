@@ -2,6 +2,7 @@
 library;
 
 export 'src/analysis/analysis.dart';
+export 'src/analysis/types/types.dart';
 export 'src/analysis/types/join_analysis.dart';
 export 'src/ast/ast.dart';
 export 'src/engine/module/dbstat.dart' show DbStatExtension;

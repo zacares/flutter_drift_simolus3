@@ -203,7 +203,8 @@ class _Fts5Functions with ArgumentCountLinter implements FunctionHandler {
         return const ResolveResult(ResolvedType(type: BasicType.real));
       case 'highlight':
       case 'snippet':
-        return const ResolveResult(ResolvedType(type: BasicType.text));
+        return const ResolveResult(
+            ResolvedType(type: BasicType.text, nullable: true));
     }
     return const ResolveResult.unknown();
   }

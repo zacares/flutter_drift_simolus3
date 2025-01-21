@@ -222,8 +222,8 @@ class FileAnalyzer {
         final variable = parameter.variable;
 
         if (parameter.isRequired) {
-          if (variable is ColonNamedVariable) {
-            requiredName.add(variable.name);
+          if (variable is NamedVariable) {
+            requiredName.add(variable.fullName);
           } else if (variable is NumberedVariable) {
             requiredIndex.add(variable.resolvedIndex!);
           }
@@ -234,8 +234,8 @@ class FileAnalyzer {
               .resolveColumnType(parameter.typeName)
               .withNullable(parameter.orNull);
 
-          if (variable is ColonNamedVariable) {
-            namedHints[variable.name] = type;
+          if (variable is NamedVariable) {
+            namedHints[variable.fullName] = type;
           } else if (variable is NumberedVariable) {
             indexedHints[variable.resolvedIndex!] = type;
           }

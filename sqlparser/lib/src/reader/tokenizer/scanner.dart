@@ -171,7 +171,7 @@ class Scanner {
         if (name == null) {
           _addToken(TokenType.colon);
         } else {
-          tokens.add(ColonVariableToken(_currentSpan, ':$name'));
+          tokens.add(ColonVariableToken(_currentSpan, name));
         }
         break;
       case $dollar:

@@ -1,3 +1,7 @@
+## 0.41.0
+
+- Replace `ColonNamedVariable` with `NamedVariable` for all named variables.
+
 ## 0.40.0
 
 - Add support for the `dbstat` module.

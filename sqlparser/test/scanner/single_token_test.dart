@@ -195,4 +195,14 @@ void main() {
       );
     });
   });
+
+  test('named variables', () {
+    for (final prefix in [':', '@', r'$']) {
+      final scanner = Scanner('${prefix}name')..scanTokens();
+      final token = scanner.tokens.first as NamedVariableToken;
+
+      expect(token.name, 'name');
+      expect(token.fullName, '${prefix}name');
+    }
+  });
 }

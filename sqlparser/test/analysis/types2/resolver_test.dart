@@ -367,10 +367,10 @@ WITH RECURSIVE
     ).session;
 
     Variable? start, end;
-    for (final variable in session.context.root.allDescendants
-        .whereType<ColonNamedVariable>()) {
-      if (variable.name == ':start') start = variable;
-      if (variable.name == ':end') end = variable;
+    for (final variable
+        in session.context.root.allDescendants.whereType<NamedVariable>()) {
+      if (variable.name == 'start') start = variable;
+      if (variable.name == 'end') end = variable;
     }
     assert(start != null && end != null);
 

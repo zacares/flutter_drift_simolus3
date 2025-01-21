@@ -373,12 +373,12 @@ class CapturedVariable {
   ///
   /// This variable is not mounted to the same syntax tree as [reference], it
   /// will be mounted into the tree returned by [addHelperNodes].
-  final ColonNamedVariable introducedVariable;
+  final NamedVariable introducedVariable;
 
   String get helperColumn => '\$n_$queryGlobalId';
 
   CapturedVariable(this.reference, this.queryGlobalId)
-      : introducedVariable = ColonNamedVariable.synthetic(':r$queryGlobalId') {
+      : introducedVariable = NamedVariable.synthetic(':', 'r$queryGlobalId') {
     introducedVariable.setMeta<CapturedVariable>(this);
   }
 }

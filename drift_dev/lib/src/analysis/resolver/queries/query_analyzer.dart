@@ -606,7 +606,7 @@ class QueryAnalyzer {
         }
 
         currentIndex = used.resolvedIndex!;
-        final name = (used is ColonNamedVariable) ? used.name : null;
+        final name = (used is NamedVariable) ? used.fullName : null;
         final explicitIndex =
             (used is NumberedVariable) ? used.explicitIndex : null;
         final forCapture = used.meta<CapturedVariable>();

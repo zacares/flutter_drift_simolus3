@@ -974,9 +974,18 @@ class Parser {
         ..token = token
         ..setSpan(token, token);
     } else if (_matchOne(TokenType.colonVariable)) {
-      return ColonNamedVariable(_previous as ColonVariableToken)
+      return NamedVariable(_previous as ColonVariableToken)
         ..setSpan(_previous, _previous);
+    } else if (!enableDriftExtensions) {
+      // These have special meanings in drift files, but are general variables
+      // otherwise.
+      if (_match(
+          const [TokenType.atSignVariable, TokenType.dollarSignVariable])) {
+        return NamedVariable(_previous as NamedVariableToken)
+          ..setSpan(_previous, _previous);
+      }
     }
+
     return null;
   }
 

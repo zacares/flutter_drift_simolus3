@@ -906,9 +906,8 @@ class NodeSqlBuilder extends AstVisitor<void, void> {
   }
 
   @override
-  void visitNamedVariable(ColonNamedVariable e, void arg) {
-    // Note: The name already starts with the colon
-    symbol(e.name, spaceBefore: true, spaceAfter: true);
+  void visitNamedVariable(NamedVariable e, void arg) {
+    symbol(e.fullName, spaceBefore: true, spaceAfter: true);
   }
 
   @override

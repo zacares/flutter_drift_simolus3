@@ -517,11 +517,24 @@ class IdentifierToken extends Token {
       : super(TokenType.identifier, span);
 }
 
-abstract class VariableToken extends Token {
+sealed class VariableToken extends Token {
   VariableToken(super.type, super.span);
 }
 
-class QuestionMarkVariableToken extends Token {
+sealed class NamedVariableToken extends VariableToken {
+  /// The name of this variable, not including the [prefix].
+  final String name;
+
+  /// The prefix introducing this variable, specific to the token type. E.g.
+  /// ":" for [ColonVariableToken].
+  String get prefix;
+
+  String get fullName => prefix + name;
+
+  NamedVariableToken(this.name, super.type, super.span);
+}
+
+class QuestionMarkVariableToken extends VariableToken {
   /// The explicit index, if this variable was of the form `?123`. Otherwise
   /// null.
   final int? explicitIndex;
@@ -530,25 +543,28 @@ class QuestionMarkVariableToken extends Token {
       : super(TokenType.questionMarkVariable, span);
 }
 
-class ColonVariableToken extends Token {
-  final String name;
+class ColonVariableToken extends NamedVariableToken {
+  @override
+  String get prefix => ':';
 
-  ColonVariableToken(FileSpan span, this.name)
-      : super(TokenType.colonVariable, span);
+  ColonVariableToken(FileSpan span, String name)
+      : super(name, TokenType.colonVariable, span);
 }
 
-class DollarSignVariableToken extends Token {
-  final String name;
+class DollarSignVariableToken extends NamedVariableToken {
+  @override
+  String get prefix => r'$';
 
-  DollarSignVariableToken(FileSpan span, this.name)
-      : super(TokenType.dollarSignVariable, span);
+  DollarSignVariableToken(FileSpan span, String name)
+      : super(name, TokenType.dollarSignVariable, span);
 }
 
-class AtSignVariableToken extends Token {
-  final String name;
+class AtSignVariableToken extends NamedVariableToken {
+  @override
+  String get prefix => '@';
 
-  AtSignVariableToken(FileSpan span, this.name)
-      : super(TokenType.atSignVariable, span);
+  AtSignVariableToken(FileSpan span, String name)
+      : super(name, TokenType.atSignVariable, span);
 }
 
 /// Inline Dart appearing in a create table statement. Only parsed when the

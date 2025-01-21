@@ -173,7 +173,7 @@ class SqlWriter extends NodeSqlBuilder {
   }
 
   @override
-  void visitNamedVariable(ColonNamedVariable e, void arg) {
+  void visitNamedVariable(NamedVariable e, void arg) {
     final found = _findVariable(e);
     if (found != null) {
       _writeAnalyzedVariable(found);

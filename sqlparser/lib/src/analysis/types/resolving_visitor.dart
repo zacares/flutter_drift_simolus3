@@ -707,7 +707,20 @@ class TypeResolver extends RecursiveVisitor<TypeExpectation, void> {
         session._addRelation(CopyTypeFrom(e, params.first));
         return const ResolveResult.needsContext();
       case 'iif':
-        checkArgumentCount(3);
+      case 'if':
+        final allowedParamLengths = [
+          3,
+          if (session.context.engineOptions.version >= SqliteVersion.v3_48) 2,
+        ];
+
+        if (!allowedParamLengths.contains(params.length)) {
+          session.context.reportError(AnalysisError(
+            type: AnalysisErrorType.invalidAmountOfParameters,
+            message:
+                '${e.name} expects 3 arguments (2 are allowed since 3.48), got ${params.length}.',
+            relevantNode: e.parameters,
+          ));
+        }
 
         if (params.length == 3) {
           // IIF(a, b, c) is essentially CASE WHEN a THEN b ELSE c END
@@ -715,6 +728,9 @@ class TypeResolver extends RecursiveVisitor<TypeExpectation, void> {
           session
             .._addRelation(CopyEncapsulating(e, cases))
             .._addRelation(HaveSameType(cases));
+        } else if (params.length == 2) {
+          // Newer variant: IIF(a, b) is CASE WHEN a THEN b ELSE NULL END
+          session._addRelation(CopyTypeFrom(e, params[1], makeNullable: true));
         }
 
         return const ResolveResult.needsContext();

@@ -72,6 +72,8 @@ const Map<String, ResolvedType?> _types = {
       ResolvedType(type: BasicType.text, nullable: false),
   "SELECT concat_ws(NULL, 1, 2) = ?":
       ResolvedType(type: BasicType.text, nullable: true),
+  "SELECT \"if\"(1, 'hello') = ?":
+      ResolvedType(type: BasicType.text, nullable: true),
 };
 
 SqlEngine _spawnEngine() {

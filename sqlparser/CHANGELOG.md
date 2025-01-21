@@ -1,6 +1,7 @@
 ## 0.41.0
 
 - Replace `ColonNamedVariable` with `NamedVariable` for all named variables.
+- Analysis support for SQLite 3.48.
 
 ## 0.40.0
 

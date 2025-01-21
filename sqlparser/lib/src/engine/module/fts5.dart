@@ -5,7 +5,7 @@ class Fts5Extension implements Extension {
 
   @override
   void register(SqlEngine engine) {
-    engine.registerModule(_Fts5Module());
+    engine.registerModule(_Fts5Module(engine.options.version));
     engine.registerModule(_Fts5VocabModule());
     engine.registerFunctionHandler(const _Fts5Functions());
   }
@@ -16,7 +16,15 @@ class _Fts5Module extends Module {
   static final RegExp _option = RegExp(r'^(.+)\s*=\s*(.+)$');
   static final RegExp _cleanTicks = RegExp('[\'"]');
 
-  _Fts5Module() : super('fts5');
+  final SqliteVersion _version;
+
+  _Fts5Module(this._version) : super('fts5');
+
+  /// Whether fts5 columns should be assumed to be nullable.
+  ///
+  /// They are nullable, but for backwards compatibility we only enable this
+  /// after the user opts into analysis with sqlite 3.48.
+  bool get assumeNullableColumns => _version >= SqliteVersion.v3_48;
 
   @override
   Table parseTable(CreateVirtualTableStatement stmt) {
@@ -49,7 +57,13 @@ class _Fts5Module extends Module {
       contentRowId: (contentTable != null) ? contentRowId : null,
       columns: [
         for (var arg in columnNames)
-          TableColumn(arg, const ResolvedType(type: BasicType.text)),
+          TableColumn(
+            arg,
+            ResolvedType(
+              type: BasicType.text,
+              nullable: assumeNullableColumns,
+            ),
+          ),
       ],
       definition: stmt,
     );

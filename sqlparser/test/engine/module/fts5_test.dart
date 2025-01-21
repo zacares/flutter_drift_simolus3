@@ -3,7 +3,12 @@ import 'package:test/test.dart';
 
 import '../../analysis/data.dart';
 
-final _fts5Options = EngineOptions(enabledExtensions: const [Fts5Extension()]);
+final _fts5Options = EngineOptions(
+  version: SqliteVersion.current,
+  enabledExtensions: const [
+    Fts5Extension(),
+  ],
+);
 
 void main() {
   group('creating fts5 tables', () {
@@ -20,6 +25,7 @@ void main() {
       final columns = table.resultColumns;
       expect(columns, hasLength(1));
       expect(columns.single.name, 'bar');
+      expect(columns.single.type.nullable, isTrue);
       expect(
         table,
         isA<Fts5Table>()

@@ -338,12 +338,14 @@ class DartTableResolver extends LocalElementResolver<DiscoveredDartTable> {
       }
     }
 
-    final fields = columnNames.map((name) {
-      final getter = element.getGetter(name) ??
-          element.lookUpInheritedConcreteGetter(name, element.library);
-      // ignore: deprecated_member_use
-      return getter!.variable;
-    }).toList();
+    final fields = columnNames
+        .map((name) {
+          final getter = element.getGetter(name) ??
+              element.lookUpInheritedConcreteGetter(name, element.library);
+          return getter!.variable2;
+        })
+        .nonNulls
+        .toList();
     final all = {for (final entry in fields) entry.getter ?? entry: entry.name};
 
     final results = <PendingColumnInformation>[];

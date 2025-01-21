@@ -1,3 +1,7 @@
+## 2.24.0-dev
+
+- Support versions `7.x` of the `analyzer` package.
+
 ## 2.23.1
 
 - Generate typed reference-resolving queries through the manager API when

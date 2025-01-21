@@ -232,8 +232,8 @@ class TestBackend extends DriftBackend {
           await analysisContext.currentSession.getResolvedLibrary(path);
 
       if (result is ResolvedLibraryResult) {
-        // ignore: deprecated_member_use
-        final lookup = result.element.scope.lookup(reference);
+        final lookup =
+            result.element.definingCompilationUnit.scope.lookup(reference);
         return lookup.getter;
       }
     } finally {

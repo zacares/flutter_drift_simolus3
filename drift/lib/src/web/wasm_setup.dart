@@ -305,6 +305,7 @@ final class _ProbeResult implements WasmProbeResult {
     final local = channel.port1.channel(
       explicitClose: message.protocolVersion >= ProtocolVersion.v1,
       webNativeSerialization: message.newSerialization,
+      nativeSerializionVersion: message.protocolVersion.versionCode,
     );
 
     var connection = await connectToRemoteAndInitialize(local,

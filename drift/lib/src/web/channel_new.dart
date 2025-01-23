@@ -7,8 +7,7 @@ import 'package:drift/remote.dart';
 
 import '../remote/protocol.dart';
 import '../remote/web_protocol.dart';
-
-const _protocol = WebProtocol();
+import 'wasm_setup/protocol.dart';
 
 /// Extension to transform a raw [MessagePort] from web workers into a Dart
 /// [StreamChannel].
@@ -34,12 +33,15 @@ extension WebPortToChannel on web.MessagePort {
   /// and is not suitable for any other message.
   /// This allows disabling the `serialize` parameter on [connectToRemoteAndInitialize]
   /// and improves performance. Both endpoints need to use the same values for
-  /// [explicitClose] and [webNativeSerialization].
+  /// [explicitClose], [webNativeSerialization] and [nativeSerializionVersion].
   StreamChannel<Object?> channel({
     bool explicitClose = false,
     bool webNativeSerialization = false,
+    int nativeSerializionVersion = 0,
   }) {
     final controller = StreamChannelController<Object?>();
+    final protocol =
+        WebProtocol(ProtocolVersion.negotiate(nativeSerializionVersion));
 
     onmessage = (web.MessageEvent event) {
       final message = event.data;
@@ -48,7 +50,7 @@ extension WebPortToChannel on web.MessagePort {
         // Other end has closed the connection
         controller.local.sink.close();
       } else if (webNativeSerialization) {
-        controller.local.sink.add(_protocol.deserialize(message as JSArray));
+        controller.local.sink.add(protocol.deserialize(message as JSArray));
       } else {
         controller.local.sink.add(message.dartify());
       }
@@ -56,7 +58,7 @@ extension WebPortToChannel on web.MessagePort {
 
     controller.local.stream.listen((e) {
       if (webNativeSerialization) {
-        final serialized = _protocol.serialize(e as Message);
+        final serialized = protocol.serialize(e as Message);
         postMessage(serialized);
       } else {
         postMessage(e.jsify());

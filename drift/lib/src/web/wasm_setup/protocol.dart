@@ -27,13 +27,22 @@ enum ProtocolVersion {
   /// This adds [ServeDriftDatabase.newSerialization]. When enabled, we
   /// serialize high-level protocol messages to `JSObject`s directly instead of
   /// using `jsify()` / `dartify()`.
-  v3(3);
+  v3(3),
+
+  /// This makes workers serialize [SqliteException]s in a special format that
+  /// allows re-constructing them on the client.
+  /// We can't send arbitrary Dart objects through channels, so exceptions are
+  /// represented by [Object.toString] only. Given that most exceptions
+  /// encountered on web workers will end up being [SqliteException]s, treating
+  /// them specially allows clients to make informed decisions based on the
+  /// exact [SqliteException.resultCode].
+  v4(4);
 
   final int versionCode;
 
   const ProtocolVersion(this.versionCode);
 
-  static const current = v3;
+  static const current = v4;
 
   void writeToJs(JSObject object) {
     object['v'] = versionCode.toJS;
@@ -49,7 +58,8 @@ enum ProtocolVersion {
       <= 0 => legacy,
       1 => v1,
       2 => v2,
-      > 2 => current,
+      3 => v3,
+      > 3 => current,
       _ => throw AssertionError(),
     };
   }

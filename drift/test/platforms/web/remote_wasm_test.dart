@@ -3,6 +3,7 @@ library;
 
 import 'package:drift/remote.dart';
 import 'package:drift/src/web/channel_new.dart';
+import 'package:drift/src/web/wasm_setup/protocol.dart';
 import 'package:drift/wasm.dart';
 import 'package:sqlite3/wasm.dart';
 import 'package:test/test.dart';
@@ -17,7 +18,33 @@ void main() {
   });
 
   group('with new serialization', () {
-    runAllTests(_RemoteWebExecutor(true));
+    final executor = _RemoteWebExecutor(true);
+
+    runAllTests(executor);
+
+    test('recovers sqlite exceptions', () async {
+      final connection = Database(executor.createConnection());
+      await expectLater(
+        () => connection.customSelect(
+          'select throw(?);',
+          variables: [
+            Variable.withString('a'),
+          ],
+        ).get(),
+        throwsA(
+          isA<DriftRemoteException>().having(
+            (e) => e.remoteCause,
+            'remoteCause',
+            isA<SqliteException>().having(
+              (e) => e.toString(),
+              'toString()',
+              'SqliteException(1): while selecting from statement, "exception", SQL logic error (code 1)\n'
+                  '  Causing statement: select throw(?);, parameters: a',
+            ),
+          ),
+        ),
+      );
+    });
   });
 }
 
@@ -44,6 +71,13 @@ final class _RemoteWebExecutor extends TestExecutor {
         WasmDatabase(
           sqlite3: sqlite,
           path: '/db',
+          setup: (database) => {
+            database.createFunction(
+              functionName: 'throw',
+              function: (_) => throw 'exception',
+              argumentCount: const AllowedArgumentCount(1),
+            ),
+          },
         ),
         allowRemoteShutdown: true,
       );
@@ -51,12 +85,14 @@ final class _RemoteWebExecutor extends TestExecutor {
       final clientChannel = channel.port2.channel(
         explicitClose: true,
         webNativeSerialization: _newSerialization,
+        nativeSerializionVersion: ProtocolVersion.current.versionCode,
       );
 
       server.serve(
         channel.port1.channel(
           explicitClose: true,
           webNativeSerialization: _newSerialization,
+          nativeSerializionVersion: ProtocolVersion.current.versionCode,
         ),
         serialize: !_newSerialization,
       );

@@ -267,6 +267,7 @@ class DriftServerController {
       message.port.channel(
         explicitClose: message.protocolVersion >= ProtocolVersion.v1,
         webNativeSerialization: message.newSerialization,
+        nativeSerializionVersion: message.protocolVersion.versionCode,
       ),
       // With the new serialization mode, instruct the drift server not to apply
       // its internal serialization logic.

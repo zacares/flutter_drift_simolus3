@@ -14,7 +14,9 @@ import 'dart:js_interop';
 
 import 'package:drift/drift.dart';
 import 'package:meta/meta.dart';
+import 'package:sqlite3/common.dart' show SqliteException;
 
+import '../web/wasm_setup/protocol.dart';
 import 'protocol.dart';
 
 @JS()
@@ -44,6 +46,7 @@ final class WebProtocol {
   static const _tag_SuccessResponse = 1;
   static const _tag_ErrorResponse = 2;
   static const _tag_CancelledResponse = 3;
+  static const _tag_ErrorResponseSqliteException = 4;
 
   static const _tag_NoArgsRequest_terminateAll = 0;
 
@@ -58,8 +61,19 @@ final class WebProtocol {
   static const _tag_BigInt = 14;
   static const _tag_Double = 15;
 
+  final ProtocolVersion _protocolVersion;
+
+  /// Whether we can send [_tag_ErrorResponseSqliteException].
+  ///
+  /// Since we have to apply serialization, we can't send arbitrary Dart
+  /// obbjects and exceptions are sent with their [Object.toString]
+  /// representation. Since [SqliteException]s are the most common exception
+  /// encountered by workers, we serialize them with their inner fields.
+  bool get canSerializeSqliteExceptions =>
+      _protocolVersion >= ProtocolVersion.v4;
+
   /// Creates the default instance for [WebProtocol].
-  const WebProtocol();
+  const WebProtocol([this._protocolVersion = ProtocolVersion.legacy]);
 
   /// Serializes [Message] into a JavaScript representation that is forwards-
   /// compatible with future drift versions.
@@ -72,6 +86,30 @@ final class WebProtocol {
       SuccessResponse(:final requestId, :final response) => (
           _tag_SuccessResponse,
           _SerializedRequest(i: requestId, p: _serializeResponse(response))
+        ),
+      ErrorResponse(
+        :final requestId,
+        error: final SqliteException e,
+        :final stackTrace
+      )
+          when canSerializeSqliteExceptions =>
+        (
+          _tag_ErrorResponseSqliteException,
+          [
+            requestId.toJS,
+            stackTrace?.toString().toJS,
+            e.message.toJS,
+            e.explanation?.toJS,
+            e.extendedResultCode.toJS,
+            e.operation?.toJS,
+            e.causingStatement?.toJS,
+            switch (e.parametersToStatement) {
+              null => null,
+              final params => <JSAny?>[
+                  for (final parameter in params) _encodeDbValue(parameter),
+                ].toJS,
+            },
+          ].toJS
         ),
       ErrorResponse(:final requestId, :final error, :final stackTrace) => (
           _tag_ErrorResponse,
@@ -105,6 +143,8 @@ final class WebProtocol {
       _tag_Request => decodeRequest(),
       _tag_SuccessResponse => decodeSuccess(),
       _tag_ErrorResponse => _decodeErrorResponse(payload as JSArray),
+      _tag_ErrorResponseSqliteException =>
+        _decodeSqliteErrorResponse(payload as JSArray),
       _tag_CancelledResponse => CancelledResponse(_int(payload)),
       _ => throw ArgumentError('Unknown message tag $tag'),
     };
@@ -331,15 +371,56 @@ final class WebProtocol {
     }
   }
 
+  String? _decodeNullableString(JSAny? value) {
+    return value.isDefinedAndNotNull ? (value as JSString).toDart : null;
+  }
+
+  StackTrace? _decodeStackStrace(JSAny? stackTrace) {
+    return switch (_decodeNullableString(stackTrace)) {
+      var s? => StackTrace.fromString(s),
+      _ => null,
+    };
+  }
+
   ErrorResponse _decodeErrorResponse(JSArray array) {
     final [requestId, error, stackTrace] = array.toDart;
 
     return ErrorResponse(
       _int(requestId),
       (error as JSString).toDart,
-      stackTrace.isDefinedAndNotNull
-          ? StackTrace.fromString((stackTrace as JSString).toDart)
-          : null,
+      _decodeStackStrace(stackTrace),
+    );
+  }
+
+  ErrorResponse _decodeSqliteErrorResponse(JSArray array) {
+    final [
+      requestId,
+      stackTrace,
+      message,
+      explanation,
+      extendedResultCode,
+      operation,
+      causingStatement,
+      parametersToStatement,
+      ..._,
+    ] = array.toDart;
+
+    return ErrorResponse(
+      _int(requestId),
+      SqliteException(
+        _int(extendedResultCode),
+        (message as JSString).toDart,
+        _decodeNullableString(explanation),
+        _decodeNullableString(causingStatement),
+        parametersToStatement.isDefinedAndNotNull
+            ? [
+                for (final raw in (parametersToStatement as JSArray).toDart)
+                  _decodeDbValue(raw),
+              ]
+            : null,
+        _decodeNullableString(operation),
+      ),
+      _decodeStackStrace(stackTrace),
     );
   }
 }

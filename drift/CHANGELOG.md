@@ -1,3 +1,8 @@
+## 2.25.0-dev
+
+- Report `SqliteException`s occurring on workers as a `SqliteException`
+  instance. Previously, they were sent as strings only.
+
 ## 2.24.0
 
 - Add `TypeConverter.jsonb` to directly store values in the JSONB format used

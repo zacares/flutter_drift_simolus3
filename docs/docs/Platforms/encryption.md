@@ -17,36 +17,6 @@ from drift.
 An example of a Flutter app using the new encryption package is available
 [here](https://github.com/simolus3/drift/tree/develop/examples/encryption).
 
-## Using `encrypted_drift`
-
-The drift repository provides a version of drift that can work with encrypted databases by using the
-[sqflite_sqlcipher](https://pub.dev/packages/sqflite_sqlcipher) library
-by [@davidmartos96](https://github.com/davidmartos96). To use it, you need to
-remove the dependency on `drift_sqflite` from your `pubspec.yaml` and replace it
-with this:
-
-
-
-```yaml
-dependencies:
-  drift: ^{{ versions.drift }}
-  encrypted_drift:
-   git:
-    url: https://github.com/simolus3/drift.git
-    path: extras/encryption
-```
-
-Instead of importing `package:drift_sqflite/drift_sqflite.dart` (or `package:drift/native.dart`) in your apps, 
-you would then import both `package:drift/drift.dart` and `package:encrypted_drift/encrypted_drift.dart`.
-
-Finally, you can replace `SqfliteQueryExecutor` (or a `NativeDatabase`) with an `EncryptedExecutor`.
-
-### Extra setup on Android and iOS
-
-Some extra steps may have to be taken in your project so that SQLCipher works correctly. For example, the ProGuard configuration on Android for apps built for release.
-
-[Read instructions](https://pub.dev/packages/sqflite_sqlcipher) (Usage and installation instructions of the package can be ignored, as that is handled internally by `encrypted_drift`)
-
 ## Encrypted version of a `NativeDatabase`
 
 You can also use the new `drift/native` library with an encrypted executor.
@@ -102,7 +72,6 @@ is using the database in any way:
     SQLCipher does not disable double-quoted string literals at compile-time. For consistency,
     it is recommended to manually disable them for databases used with drift.
 
-
 ### Important notice
 
 On the native side, `SQLCipher` and `sqlite3` stand in conflict with each other.
@@ -120,3 +89,50 @@ Next, add an `assert(_debugCheckHasCipher(database))` before using the database.
 {{ load_snippet('encrypted2','lib/snippets/platforms/encryption.dart.excerpt.json') }}
 
 If this check reveals that the encrypted variant is not available, please see [the documentation here](https://github.com/simolus3/sqlite3.dart/tree/master/sqlcipher_flutter_libs#incompatibilities-with-sqlite3-on-ios-and-macos) for advice.
+
+### Encrypting existing databases
+
+If you have an existing database which you now want to encrypt, there are a few steps to consider.
+First, replace your dependencies on `drift_flutter` or `sqlite3_flutter_libs` with
+`sqlcipher_flutter_libs` as shown in the [setup](#setup).
+
+Note however that you can't just apply the `pragma key = ` statement on existing databases!
+To migrate existing databases to encryption, SQLCipher recommends [these steps](https://discuss.zetetic.net/t/how-to-encrypt-a-plaintext-sqlite-database-to-use-sqlcipher-and-avoid-file-is-encrypted-or-is-not-a-database-errors/868):
+
+1. Opening your existing database.
+2. Attaching a new encrypted-variant.
+3. Calling the `sqcipher_export` function to copy the unencrypted database into the encrypted file.
+4. Closing and deleting the unencrypted database.
+
+In drift, you can run these steps in the `isolateSetup` callback when opening a `NativeDatabase`:
+
+{{ load_snippet('migration','lib/snippets/platforms/encryption.dart.excerpt.json') }}
+
+## Using `encrypted_drift`
+
+In addition to the `dart:ffi`-based encrypted executor based on `package:sqlite3`, we also provide
+a version of drift that uses the [sqflite_sqlcipher](https://pub.dev/packages/sqflite_sqlcipher) library
+by [@davidmartos96](https://github.com/davidmartos96).
+
+To use it, you need to remove a dependency on `drift_sqflite` you might have in your `pubspec.yaml`
+and replace it with this:
+
+```yaml
+dependencies:
+  drift: ^{{ versions.drift }}
+  encrypted_drift:
+   git:
+    url: https://github.com/simolus3/drift.git
+    path: extras/encryption
+```
+
+Instead of importing `package:drift_sqflite/drift_sqflite.dart` (or `package:drift/native.dart`) in your apps, 
+you would then import both `package:drift/drift.dart` and `package:encrypted_drift/encrypted_drift.dart`.
+
+Finally, you can replace `SqfliteQueryExecutor` (or a `NativeDatabase`) with an `EncryptedExecutor`.
+
+### Extra setup on Android and iOS
+
+Some extra steps may have to be taken in your project so that SQLCipher works correctly. For example, the ProGuard configuration on Android for apps built for release.
+
+[Read instructions](https://pub.dev/packages/sqflite_sqlcipher) (Usage and installation instructions of the package can be ignored, as that is handled internally by `encrypted_drift`)

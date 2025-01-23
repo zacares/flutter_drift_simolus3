@@ -56,4 +56,47 @@ void databases() {
     },
   );
   // #enddocregion encrypted2
+
+  // #docregion migration
+  final existingDatabasePath = '/path/to/your/database.db';
+  final encryptedDatabasePath = '/path/to/your/encrypted.db';
+  const yourKey = 'passphrase';
+
+  String escapeString(String source) {
+    return source.replaceAll('\'', '\'\'');
+  }
+
+  // This database can be passed to the constructor of your database class
+  NativeDatabase.createInBackground(
+    File(encryptedDatabasePath),
+    isolateSetup: () async {
+      BackgroundIsolateBinaryMessenger.ensureInitialized(token);
+      await setupSqlCipher();
+
+      final existing = File(existingDatabasePath);
+      final encrypted = File(encryptedDatabasePath);
+
+      if (await existing.exists() && !await encrypted.exists()) {
+        // We have an existing database to migrate.
+        sqlite3.open(existingDatabasePath)
+          ..execute("ATTACH DATABASE '${escapeString(encryptedDatabasePath)}' "
+              "AS encrypted KEY '${escapeString(yourKey)}';")
+          ..execute("SELECT sqlcipher_export('encrypted');")
+          ..execute('DETACH DATABASE encrypted;')
+          ..dispose();
+
+        // This should have created the encrypted database.
+        assert(await encrypted.exists());
+        await existing.delete();
+      }
+    },
+    setup: (rawDb) {
+      assert(_debugCheckHasCipher(rawDb));
+      rawDb.execute("PRAGMA key = '${escapeString(yourKey)}';");
+
+      // Recommended option, not enabled by default on SQLCipher
+      rawDb.config.doubleQuotedStringLiterals = false;
+    },
+  );
+  // #enddocregion migration
 }

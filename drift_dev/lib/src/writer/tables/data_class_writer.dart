@@ -30,7 +30,7 @@ class DataClassWriter {
       final nullable = converter.canBeSkippedForNulls && column.nullable;
       final code = AnnotatedDartCode([
         ...AnnotatedDartCode.type(converter.jsonType!).elements,
-        if (nullable) const DartLexeme('?'),
+        if (nullable && !converter.jsonTypeIsNullable) const DartLexeme('?'),
       ]);
 
       return _emitter.dartCode(code);
@@ -170,7 +170,9 @@ class DataClassWriter {
       if (typeConverter != null && typeConverter.alsoAppliesToJsonConversion) {
         var type =
             _emitter.dartCode(AnnotatedDartCode.type(typeConverter.jsonType!));
-        if (column.nullable && typeConverter.canBeSkippedForNulls) {
+        if (column.nullable &&
+            typeConverter.canBeSkippedForNulls &&
+            !typeConverter.jsonTypeIsNullable) {
           type = '$type?';
         }
 

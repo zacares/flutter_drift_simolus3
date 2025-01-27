@@ -206,7 +206,8 @@ abstract class _NodeOrWriter {
         b
           ..addText(',')
           ..addDartType(converter.jsonType!)
-          ..questionMarkIfNullable(makeNullable);
+          ..questionMarkIfNullable(
+              makeNullable && !converter.jsonTypeIsNullable);
       }
 
       b.addText('>');

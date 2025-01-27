@@ -175,6 +175,9 @@ class AppliedTypeConverter {
   /// In other words, [sqlType] is potentially nullable.
   final bool sqlTypeIsNullable;
 
+  /// Whether the [jsonType] of this converter is nullable.
+  final bool jsonTypeIsNullable;
+
   /// Whether this converter is one of the enum type converters built into
   /// drift.
   final bool isDriftEnumTypeConverter;
@@ -221,6 +224,7 @@ class AppliedTypeConverter {
     required this.sqlType,
     required this.dartTypeIsNullable,
     required this.sqlTypeIsNullable,
+    required this.jsonTypeIsNullable,
     required this.jsonType,
     required this.isDriftEnumTypeConverter,
   });

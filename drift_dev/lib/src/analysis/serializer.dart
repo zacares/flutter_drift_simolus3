@@ -348,6 +348,7 @@ class ElementSerializer {
       'sql_type': _serializeColumnType(converter.sqlType),
       'dart_type_is_nullable': converter.dartTypeIsNullable,
       'sql_type_is_nullable': converter.sqlTypeIsNullable,
+      'json_type_is_nullable': converter.jsonTypeIsNullable,
       'is_drift_enum_converter': converter.isDriftEnumTypeConverter,
       if (converter.owningColumn != appliedTo)
         'owner': _serializeColumnReference(converter.owningColumn!),
@@ -822,6 +823,7 @@ class ElementDeserializer {
       sqlType: await _readColumnType(json['sql_type'] as Map, definition),
       dartTypeIsNullable: json['dart_type_is_nullable'] as bool,
       sqlTypeIsNullable: json['sql_type_is_nullable'] as bool,
+      jsonTypeIsNullable: json['json_type_is_nullable'] as bool,
       isDriftEnumTypeConverter: json['is_drift_enum_converter'] as bool,
     );
 

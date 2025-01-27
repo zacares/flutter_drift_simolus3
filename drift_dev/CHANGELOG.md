@@ -1,3 +1,8 @@
+## 2.24.1-dev
+
+- Fix incorrect code when applying non-nullable type converters with a nullable
+  JSON type to nullable column.
+
 ## 2.24.0
 
 - Support versions `7.x` of the `analyzer` package.

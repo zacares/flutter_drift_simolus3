@@ -291,8 +291,15 @@ class _ManagerCodeTemplates {
                     dbClassName: dbClassName,
                     leaf: leaf,
                     withTypeArgs: false);
+
+                final currentDataClass = leaf.dartCode(leaf.rowType(table));
+                final currentTable = leaf.dartCode(leaf.entityInfoType(table));
+                final referencedDataClass =
+                    leaf.dartCode(leaf.rowType(relation.referencedTable));
+
                 return """
-          if (${relation.fieldName}) await ${leaf.drift("\$_getPrefetchedData")}(
+          if (${relation.fieldName}) await ${leaf.drift("\$_getPrefetchedData")}
+            <$currentDataClass, $currentTable, $referencedDataClass>(
                   currentTable: table,
                   referencedTable:
                       $referencesClassName._${relation.fieldName}Table(db),

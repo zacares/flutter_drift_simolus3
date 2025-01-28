@@ -3647,7 +3647,8 @@ class $$CategoriesTableTableManager extends RootTableManager<
               getPrefetchedDataCallback: (items) async {
                 return [
                   if (todos)
-                    await $_getPrefetchedData(
+                    await $_getPrefetchedData<Category, $CategoriesTable,
+                            TodoEntry>(
                         currentTable: table,
                         referencedTable:
                             $$CategoriesTableReferences._todosTable(db),
@@ -5056,7 +5057,8 @@ class $$DepartmentTableTableManager extends RootTableManager<
               getPrefetchedDataCallback: (items) async {
                 return [
                   if (productRefs)
-                    await $_getPrefetchedData(
+                    await $_getPrefetchedData<DepartmentData, $DepartmentTable,
+                            ProductData>(
                         currentTable: table,
                         referencedTable:
                             $$DepartmentTableReferences._productRefsTable(db),
@@ -5364,7 +5366,8 @@ class $$ProductTableTableManager extends RootTableManager<
               getPrefetchedDataCallback: (items) async {
                 return [
                   if (listings)
-                    await $_getPrefetchedData(
+                    await $_getPrefetchedData<ProductData, $ProductTable,
+                            ListingData>(
                         currentTable: table,
                         referencedTable:
                             $$ProductTableReferences._listingsTable(db),
@@ -5558,7 +5561,8 @@ class $$StoreTableTableManager extends RootTableManager<
               getPrefetchedDataCallback: (items) async {
                 return [
                   if (listings)
-                    await $_getPrefetchedData(
+                    await $_getPrefetchedData<StoreData, $StoreTable,
+                            ListingData>(
                         currentTable: table,
                         referencedTable:
                             $$StoreTableReferences._listingsTable(db),

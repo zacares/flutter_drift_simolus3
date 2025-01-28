@@ -888,7 +888,8 @@ class $$TodoCategoriesTableTableManager extends RootTableManager<
               getPrefetchedDataCallback: (items) async {
                 return [
                   if (todoItemsRefs)
-                    await $_getPrefetchedData(
+                    await $_getPrefetchedData<TodoCategory,
+                            $TodoCategoriesTable, TodoItem>(
                         currentTable: table,
                         referencedTable: $$TodoCategoriesTableReferences
                             ._todoItemsRefsTable(db),

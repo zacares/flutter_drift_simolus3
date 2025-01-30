@@ -210,8 +210,9 @@ mixin JsonTypeConverter2<D, S, J> on TypeConverter<D, S> {
   /// The returned type converter will use the [inner] type converter for non-
   /// null values. Further, `null` is mapped to `null` in both directions (from
   /// Dart to SQL and vice-versa).
-  static JsonTypeConverter2<D?, S?, J?> asNullable<D, S extends Object, J>(
-      JsonTypeConverter2<D, S, J> inner) {
+  static JsonTypeConverter2<D?, S?, J?>
+      asNullable<D, S extends Object, J extends Object>(
+          JsonTypeConverter2<D, S, J?> inner) {
     return _NullWrappingTypeConverterWithJson(inner);
   }
 }
@@ -412,7 +413,7 @@ class _NullWrappingTypeConverter<D, S extends Object>
 class _NullWrappingTypeConverterWithJson<D, S extends Object, J>
     extends NullAwareTypeConverter<D, S>
     implements JsonTypeConverter2<D?, S?, J?> {
-  final JsonTypeConverter2<D, S, J> _inner;
+  final JsonTypeConverter2<D, S, J?> _inner;
 
   const _NullWrappingTypeConverterWithJson(this._inner);
 

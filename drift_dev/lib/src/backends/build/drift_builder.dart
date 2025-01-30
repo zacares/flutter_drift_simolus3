@@ -240,6 +240,19 @@ class _DriftBuildRun {
 
   /// Checks if the input file contains elements drift should generate code for.
   Future<bool> _checkForElementsToBuild() async {
+    final isDartFile = buildStep.inputId.extension == '.dart';
+
+    if (mode == DriftGenerationMode.modular && isDartFile) {
+      // For modular drift file generation, we need to know about imports which
+      // are only available when discovery ran.
+      final state = driver.cache.stateForUri(buildStep.inputId.uri);
+      await driver.discoverIfNecessary(state);
+
+      if (state.definedElements.isEmpty) {
+        return false;
+      }
+    }
+
     if (mode.embeddedAnalyzer) {
       // Check if there are any elements defined locally that would need code
       // to be generated for this file.
@@ -256,14 +269,6 @@ class _DriftBuildRun {
         // there's nothing for drift to generate code for.
         return false;
       }
-    }
-
-    if (mode == DriftGenerationMode.modular &&
-        buildStep.inputId.extension != '.dart') {
-      // For modular drift file generation, we need to know about imports which
-      // are only available when discovery ran.
-      final state = driver.cache.stateForUri(buildStep.inputId.uri);
-      await driver.discoverIfNecessary(state);
     }
 
     return true;

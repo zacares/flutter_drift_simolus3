@@ -83,7 +83,7 @@ class ModularAccessorWriter {
     }
 
     // Also make imports available
-    final imports = file.discovery?.importDependencies ?? const [];
+    final imports = file.imports ?? const [];
     for (final import in imports) {
       final file = driver.cache.knownFiles[import.uri];
 

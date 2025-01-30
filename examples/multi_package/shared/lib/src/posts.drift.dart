@@ -2,8 +2,8 @@
 // ignore_for_file: type=lint
 import 'package:drift/drift.dart' as i0;
 import 'package:shared/src/posts.drift.dart' as i1;
-import 'package:shared/src/users.drift.dart' as i2;
-import 'package:drift/internal/modular.dart' as i3;
+import 'package:drift/internal/modular.dart' as i2;
+import 'package:shared/src/users.drift.dart' as i3;
 
 typedef $PostsCreateCompanionBuilder = i1.PostsCompanion Function({
   required int author,
@@ -20,21 +20,21 @@ final class $PostsReferences
     extends i0.BaseReferences<i0.GeneratedDatabase, i1.Posts, i1.Post> {
   $PostsReferences(super.$_db, super.$_table, super.$_typedResult);
 
-  static i2.$UsersTable _authorTable(i0.GeneratedDatabase db) =>
-      i3.ReadDatabaseContainer(db)
-          .resultSet<i2.$UsersTable>('users')
+  static i3.$UsersTable _authorTable(i0.GeneratedDatabase db) =>
+      i2.ReadDatabaseContainer(db)
+          .resultSet<i3.$UsersTable>('users')
           .createAlias(i0.$_aliasNameGenerator(
-              i3.ReadDatabaseContainer(db).resultSet<i1.Posts>('posts').author,
-              i3.ReadDatabaseContainer(db)
-                  .resultSet<i2.$UsersTable>('users')
+              i2.ReadDatabaseContainer(db).resultSet<i1.Posts>('posts').author,
+              i2.ReadDatabaseContainer(db)
+                  .resultSet<i3.$UsersTable>('users')
                   .id));
 
-  i2.$$UsersTableProcessedTableManager get author {
+  i3.$$UsersTableProcessedTableManager get author {
     final $_column = $_itemColumn<int>('author')!;
 
-    final manager = i2
+    final manager = i3
         .$$UsersTableTableManager($_db,
-            i3.ReadDatabaseContainer($_db).resultSet<i2.$UsersTable>('users'))
+            i2.ReadDatabaseContainer($_db).resultSet<i3.$UsersTable>('users'))
         .filter((f) => f.id.sqlEquals($_column));
     final item = $_typedResult.readTableOrNull(_authorTable($_db));
     if (item == null) return manager;
@@ -54,20 +54,20 @@ class $PostsFilterComposer extends i0.Composer<i0.GeneratedDatabase, i1.Posts> {
   i0.ColumnFilters<String> get content => $composableBuilder(
       column: $table.content, builder: (column) => i0.ColumnFilters(column));
 
-  i2.$$UsersTableFilterComposer get author {
-    final i2.$$UsersTableFilterComposer composer = $composerBuilder(
+  i3.$$UsersTableFilterComposer get author {
+    final i3.$$UsersTableFilterComposer composer = $composerBuilder(
         composer: this,
         getCurrentColumn: (t) => t.author,
         referencedTable:
-            i3.ReadDatabaseContainer($db).resultSet<i2.$UsersTable>('users'),
+            i2.ReadDatabaseContainer($db).resultSet<i3.$UsersTable>('users'),
         getReferencedColumn: (t) => t.id,
         builder: (joinBuilder,
                 {$addJoinBuilderToRootComposer,
                 $removeJoinBuilderFromRootComposer}) =>
-            i2.$$UsersTableFilterComposer(
+            i3.$$UsersTableFilterComposer(
               $db: $db,
-              $table: i3.ReadDatabaseContainer($db)
-                  .resultSet<i2.$UsersTable>('users'),
+              $table: i2.ReadDatabaseContainer($db)
+                  .resultSet<i3.$UsersTable>('users'),
               $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
               joinBuilder: joinBuilder,
               $removeJoinBuilderFromRootComposer:
@@ -89,20 +89,20 @@ class $PostsOrderingComposer
   i0.ColumnOrderings<String> get content => $composableBuilder(
       column: $table.content, builder: (column) => i0.ColumnOrderings(column));
 
-  i2.$$UsersTableOrderingComposer get author {
-    final i2.$$UsersTableOrderingComposer composer = $composerBuilder(
+  i3.$$UsersTableOrderingComposer get author {
+    final i3.$$UsersTableOrderingComposer composer = $composerBuilder(
         composer: this,
         getCurrentColumn: (t) => t.author,
         referencedTable:
-            i3.ReadDatabaseContainer($db).resultSet<i2.$UsersTable>('users'),
+            i2.ReadDatabaseContainer($db).resultSet<i3.$UsersTable>('users'),
         getReferencedColumn: (t) => t.id,
         builder: (joinBuilder,
                 {$addJoinBuilderToRootComposer,
                 $removeJoinBuilderFromRootComposer}) =>
-            i2.$$UsersTableOrderingComposer(
+            i3.$$UsersTableOrderingComposer(
               $db: $db,
-              $table: i3.ReadDatabaseContainer($db)
-                  .resultSet<i2.$UsersTable>('users'),
+              $table: i2.ReadDatabaseContainer($db)
+                  .resultSet<i3.$UsersTable>('users'),
               $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
               joinBuilder: joinBuilder,
               $removeJoinBuilderFromRootComposer:
@@ -124,20 +124,20 @@ class $PostsAnnotationComposer
   i0.GeneratedColumn<String> get content =>
       $composableBuilder(column: $table.content, builder: (column) => column);
 
-  i2.$$UsersTableAnnotationComposer get author {
-    final i2.$$UsersTableAnnotationComposer composer = $composerBuilder(
+  i3.$$UsersTableAnnotationComposer get author {
+    final i3.$$UsersTableAnnotationComposer composer = $composerBuilder(
         composer: this,
         getCurrentColumn: (t) => t.author,
         referencedTable:
-            i3.ReadDatabaseContainer($db).resultSet<i2.$UsersTable>('users'),
+            i2.ReadDatabaseContainer($db).resultSet<i3.$UsersTable>('users'),
         getReferencedColumn: (t) => t.id,
         builder: (joinBuilder,
                 {$addJoinBuilderToRootComposer,
                 $removeJoinBuilderFromRootComposer}) =>
-            i2.$$UsersTableAnnotationComposer(
+            i3.$$UsersTableAnnotationComposer(
               $db: $db,
-              $table: i3.ReadDatabaseContainer($db)
-                  .resultSet<i2.$UsersTable>('users'),
+              $table: i2.ReadDatabaseContainer($db)
+                  .resultSet<i3.$UsersTable>('users'),
               $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
               joinBuilder: joinBuilder,
               $removeJoinBuilderFromRootComposer:
@@ -442,3 +442,45 @@ class PostsCompanion extends i0.UpdateCompanion<i1.Post> {
         .toString();
   }
 }
+
+class PostsDrift extends i2.ModularAccessor {
+  PostsDrift(i0.GeneratedDatabase db) : super(db);
+  i0.Selectable<AllPostsResult> allPosts({required AllPosts$limit limit}) {
+    var $arrayStartIndex = 1;
+    final generatedlimit = $write(
+        limit(this.posts, alias(this.users, 'author')),
+        hasMultipleTables: true,
+        startIndex: $arrayStartIndex);
+    $arrayStartIndex += generatedlimit.amountOfVariables;
+    return customSelect(
+        'SELECT"posts"."author" AS "nested_0.author", "posts"."content" AS "nested_0.content","author"."id" AS "nested_1.id", "author"."name" AS "nested_1.name" FROM posts INNER JOIN users AS author ON author.id = posts.author ${generatedlimit.sql}',
+        variables: [
+          ...generatedlimit.introducedVariables
+        ],
+        readsFrom: {
+          posts,
+          users,
+          ...generatedlimit.watchedTables,
+        }).asyncMap((i0.QueryRow row) async => AllPostsResult(
+          posts: await posts.mapFromRow(row, tablePrefix: 'nested_0'),
+          author: await users.mapFromRow(row, tablePrefix: 'nested_1'),
+        ));
+  }
+
+  i1.Posts get posts =>
+      i2.ReadDatabaseContainer(attachedDatabase).resultSet<i1.Posts>('posts');
+  i3.$UsersTable get users => i2.ReadDatabaseContainer(attachedDatabase)
+      .resultSet<i3.$UsersTable>('users');
+}
+
+class AllPostsResult {
+  final i1.Post posts;
+  final i3.User author;
+  AllPostsResult({
+    required this.posts,
+    required this.author,
+  });
+}
+
+typedef AllPosts$limit = i0.Limit Function(
+    i1.Posts posts, i3.$UsersTable author);

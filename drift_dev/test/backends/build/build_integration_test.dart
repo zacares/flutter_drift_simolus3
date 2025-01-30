@@ -1272,4 +1272,30 @@ class Database {}
       build.writer,
     );
   });
+
+  test('generates modular accessor for drift file that only has imports',
+      () async {
+    final build = await emulateDriftBuild(
+      inputs: {
+        'a|lib/a.drift': '''
+import 'src/first.drift';
+import 'src/second.drift';
+''',
+        'a|lib/src/first.drift': '''
+first: SELECT 1;
+''',
+        'a|lib/src/second.drift': '''
+second: SELECT 2;
+''',
+      },
+      modularBuild: true,
+      logger: loggerThat(neverEmits(anything)),
+    );
+
+    checkOutputs({
+      'a|lib/a.drift.dart': decodedMatches(contains('ModularAccessor')),
+      'a|lib/src/first.drift.dart': anything,
+      'a|lib/src/second.drift.dart': anything,
+    }, build.dartOutputs, build.writer);
+  });
 }

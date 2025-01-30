@@ -2,6 +2,8 @@
 
 - Fix incorrect code when applying non-nullable type converters with a nullable
   JSON type to nullable column.
+- Fix missing outputs for drift files only consisting of imports in modular
+  generation mode.
 
 ## 2.24.0
 

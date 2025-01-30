@@ -284,15 +284,12 @@ class DriftAnalysisDriver {
   /// necessary work up until that point.
   Future<FileState> resolveElements(Uri uri) async {
     var known = cache.stateForUri(uri);
-    if (known.isFullyAnalyzed) {
-      // Well, there's nothing to do now.
-      return known;
+    if (!known.isFullyAnalyzed) {
+      // We couldn't recover all analyzed elements. Let's run an analysis run
+      // then.
+      await findLocalElements(uri);
+      await _warnAboutUnresolvedImportsInDriftFile(known);
     }
-
-    // We couldn't recover all analyzed elements. Let's run an analysis run
-    // then.
-    await findLocalElements(uri);
-    await _warnAboutUnresolvedImportsInDriftFile(known);
 
     // Also make sure elements in transitive imports have been resolved.
     final seen = <Uri>{};

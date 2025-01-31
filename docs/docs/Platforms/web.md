@@ -56,7 +56,7 @@ browser in that case.
     Clicking on the button will start a feature detection run, so you can see which file system
     implementation drift would pick on this browser and which web APIs are missing.
 
-    <button class="md-button" id="drift-compat-btn">Check compatibility</button>
+    <button class="md-button" id="drift-compat-btn" onClick="start_compat_check()">Check compatibility</button>
 
     <pre id="drift-compat-results", style="display: flex; flex-direction: column;">
     Compatibility check not started yet

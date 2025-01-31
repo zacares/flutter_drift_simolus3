@@ -454,7 +454,8 @@ class $CategoriesTableManager extends i0.RootTableManager<
               getPrefetchedDataCallback: (items) async {
                 return [
                   if (todosRefs)
-                    await i0.$_getPrefetchedData(
+                    await i0.$_getPrefetchedData<i1.Category, i1.Categories,
+                            i1.Todo>(
                         currentTable: table,
                         referencedTable:
                             i1.$CategoriesReferences._todosRefsTable(db),

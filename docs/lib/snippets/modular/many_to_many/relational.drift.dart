@@ -202,7 +202,8 @@ class $$ShoppingCartsTableTableManager extends i0.RootTableManager<
               getPrefetchedDataCallback: (items) async {
                 return [
                   if (shoppingCartEntriesRefs)
-                    await i0.$_getPrefetchedData(
+                    await i0.$_getPrefetchedData<i2.ShoppingCart,
+                            i2.$ShoppingCartsTable, i2.ShoppingCartEntry>(
                         currentTable: table,
                         referencedTable: i2.$$ShoppingCartsTableReferences
                             ._shoppingCartEntriesRefsTable(db),
